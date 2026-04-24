@@ -19,7 +19,7 @@
 
 ## D2 — 백엔드 런타임 (단일화)
 
-**결정:** **TypeScript 단일 런타임.** Next.js 15 App Router + Route Handlers 하나로 프론트 + API 통합.
+**결정:** **TypeScript 단일 런타임.** Next.js 16 App Router (2026-04 stable; Turbopack default) + Route Handlers 하나로 프론트 + API 통합.
 
 **Python SDK는 stub 수준**으로만 제공 (`pip install ledgerline` → 1개 span 발생 + TS SDK 참조 안내). Python 풀 피처는 Phase 2.
 
@@ -137,7 +137,7 @@
 
 ## D10 — 프론트엔드 스택 (웹 비주얼 우선순위)
 
-**결정:** Next.js 15 App Router + Tailwind CSS + **shadcn/ui** + **Framer Motion**. 차트는 **Recharts**. 다크 테마 기본(금융권 친화 "Midnight Executive" 팔레트).
+**결정:** Next.js 16 App Router (2026-04 stable; Turbopack default) + Tailwind CSS + **shadcn/ui** + **Framer Motion**. 차트는 **Recharts**. 다크 테마 기본(금융권 친화 "Midnight Executive" 팔레트).
 
 **근거:**
 - shadcn/ui는 Radix 기반으로 접근성·애니메이션 수준 우수, GitHub 스타 많음 → 심사 신뢰도
