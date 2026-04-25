@@ -1,0 +1,66 @@
+{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440004",
+  "timestamp": "2026-04-26T16:44:08.000Z",
+  "agent_id": "bloom-design-agent-v1",
+  "subject": "product-magnesium-glycinate-label-r3",
+  "decision_class": "refer",
+  "risk_level": "high",
+  "policy_refs": [
+    "policy://kr-mfds-health-functional-food-labeling-standard",
+    "policy://internal-label-claim-allowlist-v2"
+  ],
+  "human_in_the_loop": {
+    "reviewer_id": "sunny@bloomco.kr",
+    "reviewed_at": "2026-04-26T16:55:00.000Z"
+  },
+  "inputs": {
+    "evidence_hashes": [
+      "0x9693bfb21590676f45f7a33185bf8482938c70f444e284c893a477d7e09acd6e"
+    ],
+    "context_refs": [
+      "figma://design/abc123/frame/label-front-r2"
+    ],
+    "user_prompt_hash": "0xff402be1bc52d3ae558d3c676d4d9df922e71ba8e5759c3c78dc4045beab00ac"
+  },
+  "llm_calls": [
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "prompt_hash": "0x4509afe8b3c7b5ac411f65ac2d0473fb33c11a6eb11ea21d5c143a2e0d71209c",
+      "response_hash": "0x081b694a5c1079e76c146ba4dac1f18b9500bab36a200c468eb4caa359c65b8e",
+      "temperature": 0.0,
+      "token_usage": { "input": 3200, "output": 920 }
+    }
+  ],
+  "candidates": [
+    {
+      "output_hash": "0x0967ac1a7b0cb69070de137617666358ce46747c185c064f3e569007a90d6422",
+      "score": 0.15,
+      "reason": "approve as-is — 'calming effect'"
+    },
+    {
+      "output_hash": "0x51ed83259aea850ffdd4e14e8ec0489e8c95f3058cc2c26a5ae0275d4493f5e7",
+      "score": 0.30,
+      "reason": "approve — 'reduces stress'"
+    },
+    {
+      "output_hash": "0x6535806946422ea3e76a4ae06ebecfd9dbb1873b9d783f85bd2aee69d9c0fa96",
+      "score": 0.85,
+      "reason": "refer to founder — 'supports relaxation' is allowlist match but flag for human review"
+    }
+  ],
+  "selected": {
+    "output_hash": "0x30f44f1eb53587886674b407cd8a00203dac5e53159cfd2d40575f154e41c376",
+    "tool_calls": [
+      {
+        "tool": "figma.comments.create",
+        "args_hash": "0xbcc618270cc654a2af59e86fd6a9d1e1f4278a113214f6cdb846722146b1c86f",
+        "result_hash": "0x2201068d1699ce9c77ac79fb53c7c7b9e115c5a1fac54566e59103b8baab997b"
+      }
+    ]
+  },
+  "rationale": {
+    "summary": "'Calming effect' phrasing carries treatment-claim risk under MFDS labeling standard §4.1. 'Supports relaxation' is on the internal allowlist (verified by Claude policy review). Recommended substitution + flagged for founder review before print. Founder approved 11 minutes later.",
+    "summary_hash": "0x74ebde939c67016ebec9f5bef1a6ad4c1fd6fcfebd2514ca09f9ec4bf5b3e9b1"
+  }
+}

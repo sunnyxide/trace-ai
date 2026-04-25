@@ -1,0 +1,68 @@
+{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440007",
+  "timestamp": "2026-04-26T22:14:55.000Z",
+  "agent_id": "shinhan-fraud-detection-v12",
+  "subject": "tx-2026-04-26-22-14-bf3e",
+  "decision_class": "refer",
+  "risk_level": "high",
+  "policy_refs": [
+    "policy://shinhan-fraud-detection-v12.1",
+    "policy://kr-electronic-financial-transactions-act-§21"
+  ],
+  "inputs": {
+    "evidence_hashes": [
+      "0xb50181e86e99c4d863336a0dcd55e77e8d63a65ee39022e5802eb11328827319"
+    ],
+    "context_refs": [
+      "internal://transaction/tx-2026-04-26-22-14-bf3e",
+      "internal://customer-tx-history-90d/customer-2294"
+    ],
+    "user_prompt_hash": "0xfd9d42c7b79b304659b3db6368827dddb224aabdf317bad0e64e28c6ea54641c"
+  },
+  "llm_calls": [
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "prompt_hash": "0xe5610198cf88d49055eaa820d11152d7cd8881a7faad709d64cc9065f7ec0d7c",
+      "response_hash": "0x4f2f91bf52cea1101de13d0228520c166bc560f369c4772950520c8c26ad4b5e",
+      "temperature": 0.0,
+      "token_usage": { "input": 3800, "output": 420 }
+    }
+  ],
+  "candidates": [
+    {
+      "output_hash": "0x1b993270278dff933b2b1c4d920af5242f4f4d3086a0095af87e6d36b935ec65",
+      "score": 0.18,
+      "reason": "ALLOW — appears benign"
+    },
+    {
+      "output_hash": "0x988ec176be15b4569cdb42328388331e842ba32fb4f3b5903f46abd020e9f3b8",
+      "score": 0.74,
+      "reason": "HOLD + step-up — geo + amount anomaly"
+    },
+    {
+      "output_hash": "0xd4d4800af0c60cc35a7b91fb8886f0fa64293fe1d1d152252b53628379972124",
+      "score": 0.30,
+      "reason": "DENY outright — too aggressive"
+    }
+  ],
+  "selected": {
+    "output_hash": "0x3bb1f048a6a03128b3eb891d447fe8e007045c99aae2519442b5a71a2216a909",
+    "tool_calls": [
+      {
+        "tool": "card-system.hold",
+        "args_hash": "0x19c87dffc7fc2f74157d71bb2a29332f3f3e13b29e953482fe1e96b9bad0a164",
+        "result_hash": "0x9db1558356592b382c5eb07fa755a6da5cfd256311ff2a814f745ec6d8799311"
+      },
+      {
+        "tool": "sms-otp.send",
+        "args_hash": "0x7b2bc52156b68892f96cc9101dd2bfe482d30398c4a126d1665a36745b7048b6",
+        "result_hash": "0x4ecd0f46388a25e2d4a9cbcda598b26b1b5d59367781cfd52376cbeace999cf1"
+      }
+    ]
+  },
+  "rationale": {
+    "summary": "Tx amount ₩820K to a merchant in Macau. Customer's last 90-day transactions are all in Korea, all under ₩200K. Geo + amount + merchant category combine to anomaly score 0.74. Step-up authentication (SMS OTP) is policy-correct first response. Avoiding outright denial preserves customer experience if benign.",
+    "summary_hash": "0x07bb0428c57e5426173e91dd07f853430c45244b0c606b541af8e0b47a139bf3"
+  }
+}

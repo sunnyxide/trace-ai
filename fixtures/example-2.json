@@ -1,0 +1,69 @@
+{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440002",
+  "timestamp": "2026-04-26T10:11:42.000Z",
+  "agent_id": "bloom-marketing-agent-v2",
+  "subject": "ad-campaign-meta-2026-q2-melatonin",
+  "decision_class": "approve",
+  "risk_level": "high",
+  "policy_refs": [
+    "policy://kr-mfds-health-functional-food-ad-guidelines-2024",
+    "policy://internal-claim-disallow-list-v4"
+  ],
+  "human_in_the_loop": {
+    "reviewer_id": "sunny@bloomco.kr",
+    "reviewed_at": "2026-04-26T10:09:30.000Z"
+  },
+  "inputs": {
+    "evidence_hashes": [
+      "0x25e8b95b52ef125a30298cdcfab1bb16327b3ff853df7459d86062676d6ffbd2"
+    ],
+    "context_refs": [
+      "meta://ad-account/9981/draft/ad-22841"
+    ],
+    "user_prompt_hash": "0x79692de3833d34558e82a25b6988551800a9e2f2aec4259775cbb4babf0cfcbf"
+  },
+  "llm_calls": [
+    {
+      "provider": "openai",
+      "model": "gpt-5-2026-04",
+      "prompt_hash": "0xfd72906d838a301a4c3780242c0afa49630f89d1850db0b5c75d150194fd8bda",
+      "response_hash": "0x4aa71d9b5c9a78225a00113b3eb3beb784fbbd86f07aae94c3d0dc8dbc6b68ae",
+      "temperature": 0.7,
+      "token_usage": { "input": 540, "output": 280 }
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "prompt_hash": "0x40e0097dd90f800007104eb95215fb628da604c8f08f53c2f2a7073c636b59c4",
+      "response_hash": "0xd3633d04dfa3b68e313557c457909c0684660a23fd9a4d06064d563c9c6083a3",
+      "temperature": 0.0,
+      "token_usage": { "input": 1100, "output": 410 }
+    }
+  ],
+  "candidates": [
+    {
+      "output_hash": "0x8ecf1784327fa0b791844e0deb8a270fe76724f8f82a21ba40f8c10efe026eaf",
+      "score": 0.20,
+      "reason": "REJECTED — 'cures insomnia' violates MFDS guidelines (treatment claim)"
+    },
+    {
+      "output_hash": "0x545220e85d3318efb42662563097f6df8864acf11ad6b581239b24db41ed1ddb",
+      "score": 0.95,
+      "reason": "APPROVED — 'supports relaxation before sleep' (structure-function claim)"
+    }
+  ],
+  "selected": {
+    "output_hash": "0x7a1f1ff7c038eee0b5b997cec6556973fa5e8953f4aa1672489a57b5535c8e56",
+    "tool_calls": [
+      {
+        "tool": "meta.ads.create_ad_draft",
+        "args_hash": "0x83eac145cc48897044b7c8b3b83afbcc38e7f3af6f87d8562e5b2a028bb631fc",
+        "result_hash": "0x62fd8ceb14e28ecd90f4105a4a30ca784de54995a9f51046fa28130471fe0603"
+      }
+    ]
+  },
+  "rationale": {
+    "summary": "Selected variant uses 'supports relaxation before sleep' framing, which is permissible under MFDS Health Functional Food Advertisement Guidelines §3.2 (structure-function claims). Two rejected variants explicitly used disease-cure language ('cures insomnia', 'fights sleep disorder'). Founder reviewed and signed off at 10:09 KST.",
+    "summary_hash": "0xbfcd746e0d6a03773fa80ea61c01e26bca6453c9b1b721f34033b607276c3ee8"
+  }
+}

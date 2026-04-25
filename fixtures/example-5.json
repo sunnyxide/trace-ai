@@ -1,0 +1,63 @@
+{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440005",
+  "timestamp": "2026-04-26T03:00:14.000Z",
+  "agent_id": "bloom-inventory-agent-v2",
+  "subject": "sku-MELATONIN-3MG-30CT",
+  "decision_class": "approve",
+  "risk_level": "low",
+  "policy_refs": [
+    "policy://reorder-threshold-v3",
+    "policy://supplier-allowlist-v5"
+  ],
+  "inputs": {
+    "evidence_hashes": [
+      "0x9aaeef3df9d9919fdf90b498f5302df348ec90a62c4d1ad4208030544a1fd6e3"
+    ],
+    "context_refs": [
+      "shopify://product/8294234/inventory",
+      "supplier://foundry-materials/contract/2026-Q1"
+    ],
+    "user_prompt_hash": "0xb01e97bdf0d8cf38cd8d732f2fc36200bbec85970009b9a32b1cf4869d6b3b70"
+  },
+  "llm_calls": [
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "prompt_hash": "0x783c2d3fbe789f8a0b63f4cf5828f334e062e5fb041851288367b4b096b59f30",
+      "response_hash": "0x02459d13c7a67889cf4f4d061459096c872d8b4ee06209a29b36540526a4cfc5",
+      "temperature": 0.0,
+      "token_usage": { "input": 1800, "output": 240 }
+    }
+  ],
+  "candidates": [
+    {
+      "output_hash": "0x9ff5c4f62e1634f4d5edb78f064ac0d6f947aa0a8c137e3d17f59b515e9c9ee1",
+      "score": 0.20,
+      "reason": "wait — recent demand drop?"
+    },
+    {
+      "output_hash": "0x3ec02ae6ecd53201fb8c9b33849e2cf0d29381fc50ffa73db9acdf2a56384cc7",
+      "score": 0.82,
+      "reason": "reorder now — lead time exceeds runway"
+    }
+  ],
+  "selected": {
+    "output_hash": "0xd20e855ffa546e6980ff4d4443c7767a9bd9b9c9b8185899f2b31e139ca2fb65",
+    "tool_calls": [
+      {
+        "tool": "supplier.foundry.po.create",
+        "args_hash": "0x1139e2278cb188c91e37bd3f85838f4cb41e3abed5ce3bad54ef8ba8dd6b31ed",
+        "result_hash": "0xf73649477d180ca47674a293ef92d73c8c61f88659f5e6a42ad4783d3cef88d2"
+      },
+      {
+        "tool": "slack.post",
+        "args_hash": "0xf75b1df190047d02da4df36fed1156b92e7f6cc0ef0746c636b10ed51d4eaf88",
+        "result_hash": "0xd9d0ad4739ea812dcf7a3e15bc656669c9044e7c985b836403963d0ff1fac42a"
+      }
+    ]
+  },
+  "rationale": {
+    "summary": "Current on-hand: 4,200 units (28 days at 30-day rolling avg demand). Foundry lead time: 35 days. Reorder triggered. PO #2026-04-26-001 for 12,000 units at $0.42/unit. Notification posted to #ops-inventory.",
+    "summary_hash": "0x1b0e2afa542ccc4f56c3131db8264473db8c95869006684b7e4c3d8033b3c087"
+  }
+}

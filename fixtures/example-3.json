@@ -1,0 +1,58 @@
+{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440003",
+  "timestamp": "2026-04-26T09:01:22.000Z",
+  "agent_id": "bloom-accounting-agent-v1",
+  "subject": "invoice-supplier-foundry-2026-04-22",
+  "decision_class": "approve",
+  "risk_level": "medium",
+  "policy_refs": [
+    "policy://kr-vat-reverse-charge-cross-border-services",
+    "policy://internal-cogs-categorization-v1"
+  ],
+  "inputs": {
+    "evidence_hashes": [
+      "0x4a65138fcaf825de4e685841a4d406fc7ee3ca56325e40ddf26c259130cb7412"
+    ],
+    "context_refs": [
+      "quickbooks://invoice/INV-2204-FOUNDRY",
+      "drive://invoices/2026-04/foundry.pdf"
+    ],
+    "user_prompt_hash": "0x7e78261de2885802473741c6a3409a5e0881f86eb8be31038da10c1d3d4a3320"
+  },
+  "llm_calls": [
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "prompt_hash": "0xc05a4715afe8da1a4a3a0114137f78f4295ecf2f899cb0a9c45b09914c0fdcc4",
+      "response_hash": "0xcc618474efab6dc572294915ce7609584252c50acbf4860571f5b2b8dfe4d17a",
+      "temperature": 0.0,
+      "token_usage": { "input": 2100, "output": 580 }
+    }
+  ],
+  "candidates": [
+    {
+      "output_hash": "0x2d01bb125ff275c6b03249a7601348f7ef577f0f6ce4fc995193c20fab64cfe1",
+      "score": 0.10,
+      "reason": "OPEX — generic services"
+    },
+    {
+      "output_hash": "0x6e5c847d21a744fd1714c233ba40e545fe6d85b0f6d4aa32b4ce136b2efec578",
+      "score": 0.90,
+      "reason": "COGS — direct materials, with VAT reverse-charge per KR §10-2"
+    }
+  ],
+  "selected": {
+    "output_hash": "0x69f450d297937249a77acf0d1a16c2474fc6c72cf226fbc4c30e1f250fae9eb1",
+    "tool_calls": [
+      {
+        "tool": "quickbooks.bills.update",
+        "args_hash": "0xb5be3137be2857632dd5c67b0be630b31fbdca9634c204de954744e15828d4e6",
+        "result_hash": "0xfb1db451e1d0f205a3c5cf6270c03aea3a093909852b6ca62f62c67e5fa17f92"
+      }
+    ]
+  },
+  "rationale": {
+    "summary": "Foundry Materials supplied 50kg of melatonin raw extract — direct material for product manufacture. Categorized as COGS. VAT 10% reverse-charge applied per Korean VAT Act §10-2 (cross-border services). Net to ledger: ₩5,690,000 + ₩569,000 reverse-charge VAT.",
+    "summary_hash": "0x9c004aed3161fd9930345ac77322607519bf8f806bc45b08ddfc225abe0c934a"
+  }
+}

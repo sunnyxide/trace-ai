@@ -1,0 +1,58 @@
+{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440001",
+  "timestamp": "2026-04-26T14:23:11.000Z",
+  "agent_id": "bloom-cs-agent-v3",
+  "subject": "customer-7f3e2a1b",
+  "decision_class": "approve",
+  "risk_level": "low",
+  "policy_refs": [
+    "policy://refund-policy-v2.1",
+    "policy://kr-consumer-protection-act"
+  ],
+  "inputs": {
+    "evidence_hashes": [
+      "0xb5aef190301e2cfea8d5d9559bfd3d041e970ce873f3b51fffeb2eb511807100"
+    ],
+    "context_refs": [
+      "gorgias://ticket/482910",
+      "shopify://order/SO-87234"
+    ],
+    "user_prompt_hash": "0xcb02981fef325811590215c9066cf8bc4906d746d471d0bb584e772080a52f91"
+  },
+  "llm_calls": [
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "prompt_hash": "0x331ad64775114edc6985dc482ac91865f075230d1ccf20b1fd53f915a9d74788",
+      "response_hash": "0x31f1ed45b4cafe3a70e08e30076c8ae38aea877a389ea7fa5b78931f68acdcce",
+      "temperature": 0.2,
+      "token_usage": { "input": 1842, "output": 312 }
+    }
+  ],
+  "candidates": [
+    {
+      "output_hash": "0x95983611f976e2172b97dc4b2a0657a02db1a6aedf6b4bd5021158007a759c7c",
+      "score": 0.34,
+      "reason": "deny — opened > 14 days?"
+    },
+    {
+      "output_hash": "0x5430bf878f62cef0b8496f2b7888c80e4c252ae49c696a8e08e4f9d3852f318a",
+      "score": 0.91,
+      "reason": "approve — within window, first refund"
+    }
+  ],
+  "selected": {
+    "output_hash": "0x79f675883b4128bc3c7c4f7f9c8a6f3410a9b6ff9da96d91192af26f3b8ee54c",
+    "tool_calls": [
+      {
+        "tool": "shopify.refunds.create",
+        "args_hash": "0x49b29161fb9cf6d1fe9cbc157a6f27b8599af5c7fda15b66792b48384af8626e",
+        "result_hash": "0x7bf48010308dc7614ef03e6ce0b5ff3aa1fd337fa2b4596eb91aa7848a3e3ba6"
+      }
+    ]
+  },
+  "rationale": {
+    "summary": "Order SO-87234 placed 9 days ago. Within 14-day refund window. First-time refund for this customer. Refund policy v2.1 explicitly approves. No prior abuse signals. Approving full refund of ₩42,000.",
+    "summary_hash": "0x152e8ce5cf8fda5a9e138b06955d9c56e980ec930dbdbffbbf083b9e735f3ba7"
+  }
+}

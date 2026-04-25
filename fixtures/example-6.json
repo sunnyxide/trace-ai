@@ -1,0 +1,63 @@
+{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440006",
+  "timestamp": "2026-04-26T11:42:09.000Z",
+  "agent_id": "kb-personal-loan-ai-v8",
+  "subject": "applicant-7f3e2a1b",
+  "decision_class": "approve",
+  "risk_level": "high",
+  "policy_refs": [
+    "policy://kb-personal-loan-underwriting-v8.2",
+    "policy://kr-credit-information-act-§35",
+    "policy://kr-ai-basic-act-2026-high-impact-ai"
+  ],
+  "human_in_the_loop": {
+    "reviewer_id": "underwriter-ks-park-emp-2294",
+    "reviewed_at": "2026-04-26T11:50:33.000Z"
+  },
+  "inputs": {
+    "evidence_hashes": [
+      "0x9d636670112f54fc59db7052ac6172a0fc819f66db9cb3d085995041e31efb05"
+    ],
+    "context_refs": [
+      "kcb://credit-report/redacted-7f3e2a1b",
+      "internal://customer-relationship/CR-118-2026"
+    ],
+    "user_prompt_hash": "0x1af4744e9cd8e47bb7ef62aad7c69c36b07d94da5b710941d2ba076ade0d520f"
+  },
+  "llm_calls": [
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "prompt_hash": "0xa8e60f099f6b49da5a776f81f97cd407c64afdc147a32f6f390910a6f88e13df",
+      "response_hash": "0x4192ff176b32f9a02ec85cf7677e8095ca702ad69027df689b1d6abdf5357452",
+      "temperature": 0.0,
+      "token_usage": { "input": 4200, "output": 680 }
+    }
+  ],
+  "candidates": [
+    {
+      "output_hash": "0x8eeba40e9e38a426be2eebd544cbf759070d82fd9e29bb3c519ffdc95b987467",
+      "score": 0.45,
+      "reason": "REJECT — DTI margin too thin under stress test"
+    },
+    {
+      "output_hash": "0xa7ae1ce96dd704c124dae173bc2cbe6eb66c6ddb4a37973092664a4fdc526056",
+      "score": 0.92,
+      "reason": "APPROVE — within underwriting v8.2 envelope, rate 5.4%"
+    }
+  ],
+  "selected": {
+    "output_hash": "0x7ba10a710d2f483a2b881b384b538f1fd91ecc14dd491861ea73511b7dd13159",
+    "tool_calls": [
+      {
+        "tool": "kb.loan-system.create-offer",
+        "args_hash": "0xab207b77769af3a28dc71871a90a79be981dc73b8d2bb182e17894eb43f52a75",
+        "result_hash": "0x0b6856ef711243a71cf27d76e9a131b8d2bb7040f2dbdcadbf22f509a2335c1f"
+      }
+    ]
+  },
+  "rationale": {
+    "summary": "Applicant credit score 740, DTI 28% (well under 40% policy ceiling). Stress-test scenario (+200bps rate shock) keeps DTI at 33%. No prior delinquencies. Approving ₩30M unsecured loan at 5.4% APR (24-month term). Underwriter K.S. Park reviewed and signed at 11:50 KST.",
+    "summary_hash": "0x9c394f9c0520ed30a49c812f6d9e93e38a63a651634e497133cf292b09f0454f"
+  }
+}

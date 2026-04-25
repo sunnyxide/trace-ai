@@ -166,6 +166,40 @@ importers:
         specifier: ^2.1.0
         version: 2.1.9(@types/node@22.7.5)(lightningcss@1.32.0)(msw@2.13.5(@types/node@22.7.5)(typescript@5.9.3))
 
+  scripts/seed:
+    dependencies:
+      '@ledgerline/schema':
+        specifier: workspace:*
+        version: link:../../packages/schema
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.104.1
+      bcryptjs:
+        specifier: ^2.4.3
+        version: 2.4.3
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
+      viem:
+        specifier: ^2.21.0
+        version: 2.48.4(typescript@5.9.3)(zod@3.25.76)
+    devDependencies:
+      '@types/bcryptjs':
+        specifier: ^2.4.6
+        version: 2.4.6
+      '@types/node':
+        specifier: ^20
+        version: 20.19.39
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.0
+        version: 2.1.9(@types/node@20.19.39)(lightningcss@1.32.0)(msw@2.13.5(@types/node@20.19.39)(typescript@5.9.3))
+
 packages:
 
   '@adraffy/ens-normalize@1.10.1':
