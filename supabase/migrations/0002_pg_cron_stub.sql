@@ -1,0 +1,13 @@
+-- =============================================================================
+-- pg_cron stub
+--
+-- Original plan considered Supabase pg_cron + pg_net for batch anchor scheduling.
+-- We unified on Vercel Cron because pg_net availability on Supabase Free is
+-- not guaranteed (per code-reviewer feedback). This file is intentionally a
+-- no-op so the migration sequence stays stable for future Phase 2 reintroduction.
+-- =============================================================================
+
+-- Phase 2: re-enable when migrating to Supabase Pro:
+--   create extension if not exists pg_cron;
+--   create extension if not exists pg_net;
+--   ... cron.schedule(...) calling Vercel deployment URL

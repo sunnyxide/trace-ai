@@ -1,0 +1,16 @@
+project_id = "oobcbccermdzlvpzrvai"
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[storage]
+enabled = true
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+
+[functions]
+enabled = false
