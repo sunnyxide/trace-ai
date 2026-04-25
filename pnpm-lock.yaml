@@ -26,6 +26,9 @@ importers:
       '@base-ui/react':
         specifier: ^1.4.1
         version: 1.4.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@ledgerline/attester':
+        specifier: workspace:*
+        version: link:../../packages/attester
       '@ledgerline/schema':
         specifier: workspace:*
         version: link:../../packages/schema
