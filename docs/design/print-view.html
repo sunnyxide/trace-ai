@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Decision Record · 550e8400-…0001 · Ledgerline</title>
+<link rel="stylesheet" href="shared.css" />
+<style>
+  /* Page-only override for the printable view: slightly lighter dark in screen
+   * preview, cleanly switches to white via @media print. */
+  @page { size: A4; margin: 18mm 16mm; }
+  body.print-preview { background: #FFFFFF; color: #0A0A14; padding: 40px 0; }
+  body.print-preview .doc { max-width: 760px; margin: 0 auto; padding: 0 24px; color: #0A0A14; }
+  body.print-preview .doc * { color: inherit; }
+  body.print-preview .doc .json { background: #F5F6FA; border-color: #B8BCD0; color: #1A1F38; }
+  body.print-preview .doc .hash { background: #F5F6FA; border-color: #B8BCD0; }
+  body.print-preview .doc .hash .label { color: #6F77A0; }
+  body.print-preview .doc .hash .value { color: #0A0A14; }
+  body.print-preview .doc .rule, body.print-preview .doc hr { background: #B8BCD0; }
+  body.print-preview .doc .seal-grid { border-color: #B8BCD0; background: #FFF; }
+  body.print-preview .doc .seal { border-right-color: #B8BCD0; }
+  body.print-preview .doc .seal-icon { border-color: #14B886; color: #14B886; }
+  body.print-preview .doc .seal-detail .key { color: #6F77A0; }
+  body.print-preview .doc .caption, body.print-preview .doc .eyebrow { color: #6F77A0; }
+  body.print-preview .doc .display em { color: #1E2761; }
+  body.print-preview .stamp {
+    position: fixed; top: 18mm; right: 16mm;
+    border: 1.5px solid #1E2761;
+    color: #1E2761;
+    padding: 12px 18px;
+    text-align: center;
+    font: 500 0.6875rem var(--font-mono);
+    letter-spacing: 0.18em;
+    transform: rotate(2deg);
+  }
+  body.print-preview .qr {
+    width: 120px; height: 120px;
+    border: 1px solid #B8BCD0;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 2px;
+    padding: 4px;
+  }
+  body.print-preview .qr div { background: #0A0A14; }
+  body.print-preview .qr div:nth-child(odd) { background: transparent; }
+  body.print-preview .qr div:nth-child(7n) { background: #0A0A14; }
+  body.print-preview .ribbon { color: #6F77A0; font: 500 0.625rem var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; }
+  body.print-preview .reveal-toolbar {
+    position: sticky; top: 0; background: #1E2761; color: #FFF;
+    padding: 12px 24px; text-align: center;
+    font: 500 0.75rem var(--font-mono); letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  @media print {
+    .reveal-toolbar { display: none; }
+    .stamp { color: #1E2761 !important; border-color: #1E2761 !important; }
+  }
+</style>
+</head>
+<body class="print-preview">
+
+<div class="reveal-toolbar no-print">
+  This is the print-preview. Press <strong>⌘P</strong> (or Ctrl+P) to export to PDF. Click anywhere outside to close.
+</div>
+
+<div class="stamp">
+  ◆ LEDGERLINE<br/>
+  EVIDENCE OF<br/>
+  DECISION
+</div>
+
+<article class="doc">
+
+  <header style="border-bottom: 2px solid #0A0A14; padding-bottom: 18px;">
+    <div class="ribbon">FORMAL EVIDENCE OF AI DECISION · DR-1 · 2026-04-25</div>
+    <h1 style="font: 400 2.25rem/1.15 var(--font-display); margin: 8px 0 6px;">CS Agent · Refund approval</h1>
+    <div class="mono-small" style="color: #6F77A0;">
+      Bloom Co. <code>bloom-cs-agent-v3</code> · applicant <code>customer-7f3e2a1b</code>
+    </div>
+  </header>
+
+  <!-- METADATA BLOCK -->
+  <section style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid #B8BCD0; margin-top: 24px;">
+    <div style="padding: 16px 20px; border-right: 1px solid #B8BCD0;">
+      <div class="caption">DECISION ID</div>
+      <div class="mono-small" style="color: #0A0A14; margin-top: 4px;">550e8400-…-446655440001</div>
+    </div>
+    <div style="padding: 16px 20px; border-right: 1px solid #B8BCD0;">
+      <div class="caption">TIMESTAMP (UTC)</div>
+      <div class="mono-small" style="color: #0A0A14; margin-top: 4px;">2026-04-25 14:23:11Z</div>
+    </div>
+    <div style="padding: 16px 20px;">
+      <div class="caption">DECISION CLASS</div>
+      <div class="mono-small" style="color: #14B886; margin-top: 4px; font-weight: 700;">APPROVE</div>
+    </div>
+  </section>
+
+  <!-- DUAL CHECK -->
+  <section style="margin-top: 28px;">
+    <div class="caption">CHAIN-OF-CUSTODY · DUAL VERIFICATION</div>
+    <div class="seal-grid" style="margin-top: 10px;">
+      <div class="seal" style="padding: 22px 24px;">
+        <div class="seal-icon" style="width: 28px; height: 28px; margin-bottom: 12px;">✓</div>
+        <div class="seal-label">SEAL № 1 — NOTARY</div>
+        <div style="font: 500 0.95rem var(--font-mono); margin: 6px 0 10px; color: #0A0A14;">
+          Ledgerline anchored on Base Sepolia
+        </div>
+        <div class="mono-small" style="color: #6F77A0;">
+          block <strong style="color: #0A0A14;">40 677 426</strong> · attester <strong style="color: #0A0A14;">0x4eC5…0Bf2</strong>
+        </div>
+      </div>
+      <div class="seal" style="padding: 22px 24px;">
+        <div class="seal-icon" style="width: 28px; height: 28px; margin-bottom: 12px;">✓</div>
+        <div class="seal-label">SEAL № 2 — AUTHOR</div>
+        <div style="font: 500 0.95rem var(--font-mono); margin: 6px 0 10px; color: #0A0A14;">
+          Bloom Co. signed the record
+        </div>
+        <div class="mono-small" style="color: #6F77A0;">
+          ECDSA-secp256k1 · 2026-04-25 14:23:11Z
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HASH PLATES -->
+  <section style="margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+    <div class="hash">
+      <span class="label">CANONICAL HASH · SHA-256</span>
+      <span class="value">0xc7a3b1e9d4f2c801b56e8d4f2a1b9e6c3d7f8a91b2c3d4e5f6a7b8c9d0e1f2a3</span>
+    </div>
+    <div class="hash">
+      <span class="label">EAS ATTESTATION UID</span>
+      <span class="value">0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6</span>
+    </div>
+    <div class="hash">
+      <span class="label">MERKLE ROOT · KECCAK256</span>
+      <span class="value">0x2e8b5a7c1f3d4e6a8b9c0d1e2f3a4b5c6d7e8f90a1b2c3d4e5f6a7b8c9d0e1f2a</span>
+    </div>
+    <div class="hash">
+      <span class="label">TX HASH · BASE SEPOLIA</span>
+      <span class="value">0x1ba49e53a087af2813cd42d4932b3c8e34afdb2c73d6ba979c860e154f1766c5</span>
+    </div>
+  </section>
+
+  <!-- DR-1 RECORD -->
+  <section style="margin-top: 28px;">
+    <div class="caption">CANONICAL RECORD · DR-1 v1 · RFC 8785 JCS</div>
+    <pre class="json" style="margin-top: 10px; font-size: 0.6875rem; line-height: 1.5;">{
+  "decision_id": "550e8400-e29b-41d4-a716-446655440001",
+  "timestamp": "2026-04-25T14:23:11.000Z",
+  "agent_id": "bloom-cs-agent-v3",
+  "subject": "customer-7f3e2a1b",
+  "decision_class": "approve",
+  "risk_level": "low",
+  "policy_refs": ["policy://refund-policy-v2.1", "policy://kr-consumer-protection-act"],
+  "inputs": { "evidence_hashes": ["0xa1b2c3d4..."] },
+  "llm_calls": [{
+    "provider": "anthropic", "model": "claude-opus-4-7",
+    "prompt_hash": "0xc3d4...", "response_hash": "0xd4e5...",
+    "temperature": 0.2,
+    "token_usage": { "input": 1842, "output": 312 }
+  }],
+  "candidates": [
+    { "score": 0.34, "reason": "deny — opened &gt; 14 days?" },
+    { "score": 0.91, "reason": "approve — within window, first refund" }
+  ],
+  "selected": {
+    "output_hash": "0xf6789012...",
+    "tool_calls": [{ "tool": "shopify.refunds.create", ... }]
+  },
+  "rationale": {
+    "summary": "Order SO-87234 placed 9 days ago. Within 14-day refund
+    window. First-time refund. Refund policy v2.1 explicitly approves.
+    No prior abuse signals. Approving full refund of ₩42 000.",
+    "summary_hash": "0x34567890..."
+  },
+  "operator_signature": {
+    "scheme": "ECDSA-secp256k1",
+    "public_key": "0x4eC5A6876332EFc3d9991FFC42e06a78952C0Bf2",
+    "signature": "0x...",
+    "digest_algo": "keccak256"
+  }
+}</pre>
+  </section>
+
+  <!-- FOOTER -->
+  <section style="margin-top: 36px; padding-top: 18px; border-top: 1px solid #B8BCD0; display: grid; grid-template-columns: 1fr 140px; gap: 24px; align-items: end;">
+    <div>
+      <div class="ribbon" style="margin-bottom: 8px;">PUBLICLY VERIFIABLE AT</div>
+      <div class="mono-small" style="color: #0A0A14; word-break: break-all;">
+        https://base-sepolia.easscan.org/attestation/view/<br />
+        0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6
+      </div>
+      <div class="mono-small" style="color: #6F77A0; margin-top: 14px;">
+        This document is cryptographic evidence. Tampering with the canonical
+        record will invalidate the SHA-256 hash and the on-chain Merkle proof.
+        This is not insurance, not a verdict, and not legal advice.
+      </div>
+      <div class="mono-small" style="color: #6F77A0; margin-top: 8px;">
+        Issued by Ledgerline · DR-1 v1 · MIT-licensed protocol · 2026.
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <div class="qr" aria-label="QR code linking to easscan attestation">
+        <!-- Decorative QR-like grid; replaced at runtime by a real QR encoder -->
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+      <div class="ribbon" style="margin-top: 8px; text-align: right;">SCAN TO VERIFY</div>
+    </div>
+  </section>
+
+</article>
+
+</body>
+</html>

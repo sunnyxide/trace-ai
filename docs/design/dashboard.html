@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard · Ledgerline</title>
+<link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+
+<header class="shell">
+  <nav class="nav">
+    <a href="landing.html" class="nav-brand"><span class="dot">◆</span> LEDGERLINE</a>
+    <div class="nav-links">
+      <a href="dashboard.html" style="color: var(--ink);">Traces</a>
+      <a href="dashboard.html#batches">Batches</a>
+      <a href="verify.html">Verify</a>
+      <span class="caption" style="border: 1px solid var(--rule); padding: 4px 10px; color: var(--ink-mid);">BLOOM CO. · sunny@bloomco.kr</span>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<!-- Page header + filters -->
+<section style="padding: 48px 0 32px;">
+  <div class="shell">
+    <div class="eyebrow">EXHIBIT <span class="num">№ 02 / 07 · DECISION TRACES</span></div>
+    <h1 class="h1" style="margin: 16px 0 8px;">Today's traces — Bloom Co.</h1>
+    <p class="mono-small" style="color: var(--ink-low);">
+      127 decisions · 5 agents · 3 batches anchored · 0 failed
+    </p>
+  </div>
+</section>
+
+<!-- Filter rail -->
+<section style="padding: 0 0 24px;">
+  <div class="shell">
+    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+      <span class="caption" style="margin-right: 8px;">FILTER</span>
+      <button class="pill pill--info">all agents (5)</button>
+      <button class="pill" style="color: var(--ink-mid);">cs · 38</button>
+      <button class="pill" style="color: var(--ink-mid);">marketing · 11</button>
+      <button class="pill" style="color: var(--ink-mid);">accounting · 47</button>
+      <button class="pill" style="color: var(--ink-mid);">design · 4</button>
+      <button class="pill" style="color: var(--ink-mid);">inventory · 7</button>
+      <span style="margin-left: auto;"></span>
+      <button class="pill" style="color: var(--ink-low);">⌕ search Decision ID</button>
+    </div>
+  </div>
+</section>
+
+<!-- TRACES TABLE -->
+<section style="padding: 0 0 96px;">
+  <div class="shell">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 12%;">Time</th>
+          <th style="width: 14%;">Agent</th>
+          <th style="width: 8%;">Class</th>
+          <th style="width: 7%;">Risk</th>
+          <th style="width: 30%;">Decision ID</th>
+          <th style="width: 14%;">Batch</th>
+          <th style="width: 15%; text-align: right;">Anchor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="color: var(--ink-mid);">14:23:11</span></td>
+          <td>bloom-cs-agent-v3</td>
+          <td><span class="pill pill--verified" style="border: 0; padding: 0;">approve</span></td>
+          <td><span style="color: var(--ink-low);">low</span></td>
+          <td class="truncate">550e8400-e29b-41d4-a716-446655440001</td>
+          <td><code style="color: var(--ink-mid);">b-7f3e</code></td>
+          <td class="num"><span class="pill pill--verified">✓ ANCHORED</span></td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--ink-mid);">11:42:09</span></td>
+          <td>bloom-marketing-agent-v2</td>
+          <td><span class="pill pill--verified" style="border: 0; padding: 0;">approve</span></td>
+          <td><span style="color: var(--failed);">high</span></td>
+          <td class="truncate">550e8400-e29b-41d4-a716-446655440002</td>
+          <td><code style="color: var(--ink-mid);">b-7f3e</code></td>
+          <td class="num"><span class="pill pill--verified">✓ ANCHORED</span></td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--ink-mid);">10:11:42</span></td>
+          <td>bloom-accounting-agent-v1</td>
+          <td><span class="pill pill--verified" style="border: 0; padding: 0;">approve</span></td>
+          <td><span style="color: var(--pending);">med</span></td>
+          <td class="truncate">550e8400-e29b-41d4-a716-446655440003</td>
+          <td><code style="color: var(--ink-mid);">b-7f3e</code></td>
+          <td class="num"><span class="pill pill--verified">✓ ANCHORED</span></td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--ink-mid);">09:01:22</span></td>
+          <td>bloom-design-agent-v1</td>
+          <td><span class="pill pill--info" style="border: 0; padding: 0;">refer</span></td>
+          <td><span style="color: var(--failed);">high</span></td>
+          <td class="truncate">550e8400-e29b-41d4-a716-446655440004</td>
+          <td><code style="color: var(--ink-mid);">b-7f3e</code></td>
+          <td class="num"><span class="pill pill--verified">✓ ANCHORED</span></td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--ink-mid);">03:00:14</span></td>
+          <td>bloom-inventory-agent-v2</td>
+          <td><span class="pill pill--verified" style="border: 0; padding: 0;">approve</span></td>
+          <td><span style="color: var(--ink-low);">low</span></td>
+          <td class="truncate">550e8400-e29b-41d4-a716-446655440005</td>
+          <td><code style="color: var(--ink-mid);">b-7f3e</code></td>
+          <td class="num"><span class="pill pill--verified">✓ ANCHORED</span></td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--ink-mid);">02:18:50</span></td>
+          <td>bloom-accounting-agent-v1</td>
+          <td><span class="pill pill--verified" style="border: 0; padding: 0;">approve</span></td>
+          <td><span style="color: var(--pending);">med</span></td>
+          <td class="truncate">550e8400-e29b-41d4-a716-446655440008</td>
+          <td><code style="color: var(--ink-mid);">b-2c0a</code></td>
+          <td class="num"><span class="pill pill--pending">◆ PENDING</span></td>
+        </tr>
+        <tr>
+          <td><span style="color: var(--ink-mid);">01:11:05</span></td>
+          <td>bloom-cs-agent-v3</td>
+          <td><span class="pill" style="border: 0; padding: 0; color: var(--failed);">reject</span></td>
+          <td><span style="color: var(--ink-low);">low</span></td>
+          <td class="truncate">550e8400-e29b-41d4-a716-446655440009</td>
+          <td><code style="color: var(--ink-mid);">b-2c0a</code></td>
+          <td class="num"><span class="pill pill--pending">◆ PENDING</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="mono-small" style="color: var(--ink-low); margin-top: 16px;">
+      Showing 7 of 127 traces · <a href="#">show all →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- DETAIL PANEL — selected trace -->
+<section style="padding: 96px 0 48px;">
+  <div class="shell">
+    <div class="eyebrow">DETAIL · DECISION RECORD</div>
+    <div style="display: flex; align-items: baseline; justify-content: space-between; margin: 16px 0 32px; gap: 24px; flex-wrap: wrap;">
+      <h2 class="h1" style="margin: 0;">CS Agent — refund approval</h2>
+      <span class="pill pill--verified"><span class="mark-check">✓</span> ANCHORED · BLOCK 40 677 426</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px;">
+
+      <!-- LEFT: DR-1 JSON viewer -->
+      <div>
+        <div class="caption" style="margin-bottom: 12px;">DR-1 RECORD · CANONICAL JSON</div>
+        <div class="json"><span class="k">"decision_id"</span>: <span class="s">"550e8400-e29b-41d4-a716-446655440001"</span>,
+<span class="k">"timestamp"</span>: <span class="s">"2026-04-25T14:23:11.000Z"</span>,
+<span class="k">"agent_id"</span>: <span class="s">"bloom-cs-agent-v3"</span>,
+<span class="k">"subject"</span>: <span class="s">"customer-7f3e2a1b"</span>,
+<span class="k">"decision_class"</span>: <span class="s">"approve"</span>,
+<span class="k">"risk_level"</span>: <span class="s">"low"</span>,
+<span class="k">"policy_refs"</span>: [
+  <span class="s">"policy://refund-policy-v2.1"</span>,
+  <span class="s">"policy://kr-consumer-protection-act"</span>
+],
+<span class="k">"inputs"</span>: {
+  <span class="k">"evidence_hashes"</span>: [<span class="s">"0xa1b2c3...abcd"</span>],
+  <span class="k">"context_refs"</span>: [
+    <span class="s">"gorgias://ticket/482910"</span>,
+    <span class="s">"shopify://order/SO-87234"</span>
+  ]
+},
+<span class="k">"llm_calls"</span>: [{
+  <span class="k">"provider"</span>: <span class="s">"anthropic"</span>,
+  <span class="k">"model"</span>: <span class="s">"claude-opus-4-7"</span>,
+  <span class="k">"prompt_hash"</span>: <span class="s">"0xc3d4...ef12"</span>,
+  <span class="k">"response_hash"</span>: <span class="s">"0xd4e5...1234"</span>,
+  <span class="k">"temperature"</span>: <span class="n">0.2</span>,
+  <span class="k">"token_usage"</span>: { <span class="k">"input"</span>: <span class="n">1842</span>, <span class="k">"output"</span>: <span class="n">312</span> }
+}],
+<span class="k">"candidates"</span>: [
+  { <span class="k">"score"</span>: <span class="n">0.34</span>, <span class="k">"reason"</span>: <span class="s">"deny — opened &gt; 14 days?"</span> },
+  { <span class="k">"score"</span>: <span class="n">0.91</span>, <span class="k">"reason"</span>: <span class="s">"approve — within window"</span> }
+],
+<span class="k">"selected"</span>: {
+  <span class="k">"output_hash"</span>: <span class="s">"0xf678...5678"</span>,
+  <span class="k">"tool_calls"</span>: [
+    { <span class="k">"tool"</span>: <span class="s">"shopify.refunds.create"</span>, ... }
+  ]
+},
+<span class="k">"rationale"</span>: {
+  <span class="k">"summary"</span>: <span class="s">"Within 14-day window. First-time refund. Approving ₩42 000."</span>,
+  <span class="k">"summary_hash"</span>: <span class="s">"0x3456...ef01"</span>
+}</div>
+      </div>
+
+      <!-- RIGHT: evidence rail -->
+      <aside class="rail">
+        <div>
+          <div class="caption" style="margin-bottom: 12px;">EVIDENCE</div>
+          <div class="hash" style="margin-bottom: 16px;">
+            <span class="label">CANONICAL HASH (SHA-256)</span>
+            <span class="value">0xc7a3b1e9d4f2c801b56e8d4f2a1b9e6c3d7f8a91b2c3d4e5f6a7b8c9d0e1f2a3</span>
+          </div>
+          <div class="hash" style="margin-bottom: 16px;">
+            <span class="label">MERKLE ROOT</span>
+            <span class="value">0x2e8b5a7c1f3d4e6a8b9c0d1e2f3a4b5c6d7e8f90a1b2c3d4e5f6a7b8c9d0e1f2a</span>
+          </div>
+          <div class="hash" style="margin-bottom: 16px;">
+            <span class="label">EAS ATTESTATION UID</span>
+            <span class="value">0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6</span>
+          </div>
+          <div class="hash">
+            <span class="label">TX HASH</span>
+            <span class="value">0x1ba49e53a087af2813cd42d4932b3c8e34afdb2c73d6ba979c860e154f1766c5</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="caption" style="margin-bottom: 12px;">SIGNATURES</div>
+          <div style="border: 1px solid var(--rule); padding: 18px;">
+            <div style="display: flex; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid var(--rule-faint);">
+              <span class="mono-small" style="color: var(--ink-low);">notary</span>
+              <span class="mono-small" style="color: var(--verified);">✓ ledgerline</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-top: 12px;">
+              <span class="mono-small" style="color: var(--ink-low);">author</span>
+              <span class="mono-small" style="color: var(--verified);">✓ bloom co.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="https://base-sepolia.easscan.org/attestation/view/0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6" target="_blank" class="btn btn--ghost">View on easscan ↗</a>
+          <a href="print-view.html" class="btn btn--ghost">⎘ Print to PDF</a>
+        </div>
+
+        <div style="border: 1px solid var(--rule); padding: 18px;">
+          <div class="caption" style="margin-bottom: 8px;">MERKLE PROOF · 3 STEPS</div>
+          <div class="mono-small" style="color: var(--ink-mid); word-break: break-all; line-height: 1.7;">
+            ↳ 0x84a9…<br />
+            ↳ 0xc1d8…<br />
+            ↳ 0x52ef…
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-global">
+  <div class="shell" style="display: contents;">
+    <div>
+      <span class="caption" style="color: var(--ink-mid);">LEDGERLINE</span>
+      <span class="caption" style="margin-left: 16px;">BLOOM CO. TENANT</span>
+    </div>
+    <div>
+      <span class="caption">127 traces · 3 batches today</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

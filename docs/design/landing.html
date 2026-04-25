@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ledgerline · Tamper-evident audit ledger for AI agent decisions</title>
+<link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Top nav -->
+<header class="shell">
+  <nav class="nav">
+    <a href="landing.html" class="nav-brand"><span class="dot">◆</span> LEDGERLINE</a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#what">What we are</a>
+      <a href="verify.html">Verify</a>
+      <a href="https://github.com/" target="_blank">GitHub ↗</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero blueprint-bg">
+  <div class="shell">
+    <div class="eyebrow fade">EXHIBIT <span class="num">№ 00 / 07 · LEDGERLINE PROTOTYPE 0.1</span></div>
+
+    <h1 class="display fade fade-1" style="margin-top: 32px;">
+      AI's every decision,<br />
+      <em>on the record.</em>
+    </h1>
+
+    <p class="hero-sub fade fade-2">
+      A neutral, tamper-evident audit ledger for AI agent decisions.
+      Every output gets a SHA-256 canonical hash, a Merkle proof, and an EAS
+      attestation on Base L2 — independently verifiable by regulators,
+      insurers, and courts. From solo founders to enterprise CIOs.
+    </p>
+
+    <div class="hero-cta fade fade-3">
+      <a href="verify.html" class="btn">Try the Live Verify</a>
+      <a href="https://base-sepolia.easscan.org/attestation/view/0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6" target="_blank" class="btn btn--ghost">See first attestation ↗</a>
+    </div>
+
+    <!-- Live evidence callout -->
+    <div class="hash fade fade-4" style="max-width: 720px; margin-top: 64px;">
+      <span class="label">Golden Attestation · Base Sepolia · Block 40 677 426</span>
+      <span class="value">0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6</span>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- WHO IS THIS FOR (two ICPs) -->
+<section class="section">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">EXHIBIT <span class="num">№ 01 / 07</span></div>
+        <h2 class="h1" style="margin-top: 12px;">Two audiences, one protocol.</h2>
+      </div>
+      <p class="meta">DR-1 spec serves both. Same SDK call, same on-chain receipt.</p>
+    </div>
+
+    <div class="split-2">
+      <div>
+        <div class="caption" style="color: var(--ice); margin-bottom: 18px;">SOLO &amp; SMB · STARTER ₩99 K / MO</div>
+        <h3 class="h2" style="margin-bottom: 16px;">Bloom Co.</h3>
+        <p class="mono-body" style="margin: 0 0 20px;">
+          DTC supplement brand. 2 humans + 5 AI agents (CS, marketing, design,
+          accounting, inventory). When a customer disputes the refund the bot
+          promised, Sunny needs the receipt — including which policy the bot
+          followed, which alternatives it rejected, and at what timestamp.
+        </p>
+        <div class="mono-small" style="color: var(--ink-low);">
+          ≈ 50–130 decisions / day · ≈ 3 000 attestations / mo
+        </div>
+      </div>
+
+      <div>
+        <div class="caption" style="color: var(--pending); margin-bottom: 18px;">FINANCIAL ENTERPRISE · ₩30–50 M / YR</div>
+        <h3 class="h2" style="margin-bottom: 16px;">5대 금융지주</h3>
+        <p class="mono-body" style="margin: 0 0 20px;">
+          Korea's AI Basic Act (2026-01-22) and EU AI Act Article 12 (2026-08-02)
+          require automatic, technically-immutable logging for every high-impact
+          AI decision. Self-attested logs are not third-party evidence by
+          definition — regulators need a neutral notary.
+        </p>
+        <div class="mono-small" style="color: var(--ink-low);">
+          high-impact AI per AI 기본법 · audit-ready in &lt; 2 hours
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">EXHIBIT <span class="num">№ 02 / 07 · ARCHITECTURE</span></div>
+        <h2 class="h1" style="margin-top: 12px;">Five layers. Three are reused.<br />We integrate, we don't reinvent.</h2>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="stack-layer">
+        <div class="layer-num">L1</div>
+        <div>
+          <div class="layer-name">Capture</div>
+          <div class="layer-detail">SDK auto-instruments every LLM call &amp; tool invocation.</div>
+        </div>
+        <div class="layer-tools">OpenLLMetry · OTel GenAI</div>
+      </div>
+      <div class="stack-layer">
+        <div class="layer-num">L2</div>
+        <div>
+          <div class="layer-name">Structure</div>
+          <div class="layer-detail">DR-1 schema (PROV-O based) · 12 fields incl. policy_refs, risk_level.</div>
+        </div>
+        <div class="layer-tools">Zod · RFC 8785 JCS</div>
+      </div>
+      <div class="stack-layer">
+        <div class="layer-num">L3</div>
+        <div>
+          <div class="layer-name">Batch</div>
+          <div class="layer-detail">Sorted SHA-256 leaves · keccak256 Merkle tree · 1 000:1 anchor compression.</div>
+        </div>
+        <div class="layer-tools">OpenZeppelin StandardMerkleTree</div>
+      </div>
+      <div class="stack-layer">
+        <div class="layer-num">L4</div>
+        <div>
+          <div class="layer-name">Anchor</div>
+          <div class="layer-detail">Base L2 EAS today · Bitcoin OpenTimestamps stub for Phase 2 dual-anchor.</div>
+        </div>
+        <div class="layer-tools">EAS · viem · ethers v6</div>
+      </div>
+      <div class="stack-layer">
+        <div class="layer-num">L5</div>
+        <div>
+          <div class="layer-name">Verify</div>
+          <div class="layer-detail">Public dual-check page · easscan.org &amp; Basescan · printer-ready PDF.</div>
+        </div>
+        <div class="layer-tools">Next.js · QR · @media print</div>
+      </div>
+    </div>
+
+    <p class="caption" style="margin-top: 24px; color: var(--ink-low);">
+      Reused open-source ≈ 73% · New code ≈ 4 080 LOC · Built by 2 students × 9 days.
+    </p>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- WHAT WE ARE -->
+<section class="section" id="what">
+  <div class="shell">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">EXHIBIT <span class="num">№ 03 / 07 · POSITIONING</span></div>
+        <h2 class="h1" style="margin-top: 12px;">What we are. <em style="color: var(--failed); font-style: italic;">What we are not.</em></h2>
+      </div>
+    </div>
+
+    <div class="split-2">
+      <div>
+        <div class="caption label-yes" style="margin-bottom: 18px;">+ WE ARE</div>
+        <ul class="mono-body" style="list-style: none; padding: 0; margin: 0;">
+          <li style="padding: 12px 0; border-bottom: 1px solid var(--rule-faint);">A <strong style="color: var(--ink);">neutral notary</strong> for AI agent decisions.</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid var(--rule-faint);">An <strong style="color: var(--ink);">integrator</strong> of OpenLLMetry, OZ Merkle, and EAS.</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid var(--rule-faint);">A <strong style="color: var(--ink);">protocol</strong> — DR-1 is open and proposed for ISO/IEC 24970.</li>
+          <li style="padding: 12px 0;"><strong style="color: var(--ink);">Plaid</strong> for AI agents · <strong style="color: var(--ink);">Carfax</strong> for AI decisions.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="caption label-no" style="margin-bottom: 18px;">– WE ARE NOT</div>
+        <ul class="mono-body" style="list-style: none; padding: 0; margin: 0;">
+          <li style="padding: 12px 0; border-bottom: 1px solid var(--rule-faint);">An <strong style="color: var(--ink);">insurance</strong> carrier — we don't underwrite.</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid var(--rule-faint);">A <strong style="color: var(--ink);">custodian</strong> — we hold no customer funds, ever.</li>
+          <li style="padding: 12px 0; border-bottom: 1px solid var(--rule-faint);">A <strong style="color: var(--ink);">verdict</strong> provider — we don't decide who's at fault.</li>
+          <li style="padding: 12px 0; color: var(--ink); border-top: 1px solid var(--failed); margin-top: 4px;">In this <strong>prototype</strong>, the operator_signature is signed by a key held by Ledgerline — production requires the customer to hold this key.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- TRY IT -->
+<section class="section">
+  <div class="shell" style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px;">
+    <div>
+      <div class="eyebrow">EXHIBIT <span class="num">№ 04 / 07 · QUICKSTART</span></div>
+      <h2 class="h1" style="margin: 12px 0 20px;">One SDK call.<br /><em>That's the integration.</em></h2>
+      <p class="mono-body" style="max-width: 460px;">
+        Drop into any AI agent that uses Anthropic, OpenAI, Gemini, LangChain,
+        LlamaIndex, CrewAI, or a local Ollama. OpenLLMetry handles auto-
+        instrumentation; we handle the audit ledger.
+      </p>
+
+      <div style="margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="verify.html" class="btn">Verify a decision →</a>
+        <a href="dashboard.html" class="btn btn--ghost">See a live dashboard</a>
+      </div>
+    </div>
+
+    <pre class="code"><span class="c">// CS Agent at Bloom Co. — 1 line of Ledgerline added</span>
+<span class="k">import</span> Anthropic <span class="k">from</span> <span class="s">'@anthropic-ai/sdk'</span>;
+<span class="k">import</span> { LedgerlineClient, DecisionRecordBuilder }
+  <span class="k">from</span> <span class="s">'@ledgerline/sdk'</span>;
+
+<span class="k">const</span> claude = <span class="k">new</span> Anthropic();
+<span class="k">const</span> ledger = <span class="k">new</span> LedgerlineClient({
+  apiKey: process.env.LEDGERLINE_API_KEY!,
+});
+
+<span class="k">const</span> response = <span class="k">await</span> claude.messages.create({...});
+
+<span class="k">const</span> record = <span class="k">new</span> DecisionRecordBuilder({
+  agentId: <span class="s">'bloom-cs-agent-v3'</span>,
+  decisionClass: <span class="s">'approve'</span>,
+})
+  .addLlmCall({ provider: <span class="s">'anthropic'</span>, ... })
+  .select({ output: response.content[0].text })
+  .withRationale({ summary: <span class="s">'within refund window'</span> })
+  .build();
+
+<span class="k">await</span> ledger.submit(record);
+<span class="c">// → anchored on Base Sepolia in &lt; 60s</span>
+</pre>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- FAQ -->
+<section class="section">
+  <div class="shell" style="max-width: 880px;">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">EXHIBIT <span class="num">№ 05 / 07 · FAQ</span></div>
+        <h2 class="h1" style="margin-top: 12px;">Two questions, asked twice a day.</h2>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Why blockchain, not a tamper-evident database?</div>
+      <p class="a">A database is signed by the same party that runs it. In a refund chargeback,
+        an FTC review, or a 식약처 audit, the operator's own log is &mdash; by
+        legal definition &mdash; not third-party evidence. A Merkle root anchored on a
+        public chain by an independent attester gives you a notary that no
+        single party can rewind. SHA-256 collision bound is 2<sup>-128</sup> by
+        birthday — keccak256 the same. Mathematically immutable.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="q">Why Base Sepolia, not mainnet?</div>
+      <p class="a">This is a 9-day prototype submitted to a university competition.
+        Sepolia attestations are functionally identical to mainnet; an EAS UID
+        on Sepolia satisfies every architectural claim we make. Mainnet
+        switchover is Phase 2 with a paying customer. Skipping it now means
+        zero gas costs, zero key-management exposure on a live HSM. The
+        attestation you see linked here is real.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-global">
+  <div class="shell" style="display: contents;">
+    <div>
+      <span class="caption" style="color: var(--ink-mid);">LEDGERLINE</span>
+      <span class="caption" style="margin-left: 16px;">PROTOTYPE · 2026-04 SPRINT</span>
+    </div>
+    <div>
+      <span class="caption">MIT LICENSE</span>
+      <span class="caption" style="margin-left: 16px;">BUILT BY 김민수 · 주선우 · 이현민</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

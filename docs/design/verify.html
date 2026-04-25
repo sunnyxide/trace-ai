@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verify · Ledgerline</title>
+<link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+
+<header class="shell">
+  <nav class="nav">
+    <a href="landing.html" class="nav-brand"><span class="dot">◆</span> LEDGERLINE</a>
+    <div class="nav-links">
+      <a href="landing.html#how">How it works</a>
+      <a href="landing.html#what">What we are</a>
+      <a href="verify.html" style="color: var(--ink);">Verify</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<!-- Page header -->
+<section style="padding: 80px 0 48px;">
+  <div class="shell">
+    <div class="eyebrow fade">VERIFICATION RECEIPT <span class="num">№ 01 / 07</span></div>
+    <h1 class="h1 fade fade-1" style="margin-top: 16px; max-width: 820px;">Independent verification.<br /><em style="color: var(--ice); font-style: italic;">No party trusts a party.</em></h1>
+    <p class="mono-body fade fade-2" style="margin-top: 20px; max-width: 720px;">
+      Paste a Decision ID — or pick one of the seven seeded examples below.
+      We re-compute the canonical hash, fetch the on-chain attestation from
+      Base Sepolia, and check the customer's signature. Two independent
+      green checks must pass for the receipt to validate.
+    </p>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- Tabs -->
+<section style="padding: 32px 0 0;">
+  <div class="shell">
+    <div class="caption" style="margin-bottom: 16px;">SEEDED EXAMPLES — CLICK TO LOAD</div>
+    <div class="tabs">
+      <button class="tab is-active">№ 01 · Bloom Co. — CS REFUND <span class="badge">SMB</span></button>
+      <button class="tab">№ 02 · Bloom Co. — AD CLAIM REVIEW <span class="badge">SMB</span></button>
+      <button class="tab">№ 03 · Bloom Co. — INVOICE CLASSIFY <span class="badge">SMB</span></button>
+      <button class="tab">№ 04 · Bloom Co. — LABEL COPY <span class="badge">SMB</span></button>
+      <button class="tab">№ 05 · Bloom Co. — REORDER <span class="badge">SMB</span></button>
+      <button class="tab">№ 06 · KB BANK — LOAN APPROVE <span class="badge" style="color: var(--pending);">ENT</span></button>
+      <button class="tab">№ 07 · SHINHAN — FRAUD HOLD <span class="badge" style="color: var(--pending);">ENT</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- Loaded example header (Decision metadata) -->
+<section style="padding: 48px 0 0;">
+  <div class="shell">
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 64px;">
+      <div>
+        <div class="caption" style="color: var(--verified); margin-bottom: 12px;">DECISION RECORD · DR-1</div>
+        <h2 class="h2" style="margin-bottom: 8px;">CS Agent — Refund approval</h2>
+        <p class="mono-body" style="color: var(--ink-mid); margin: 0;">
+          Bloom Co. <code>bloom-cs-agent-v3</code>, applicant <code>customer-7f3e2a1b</code>,
+          ₩42 000 refund within 14-day window. Policy v2.1.
+        </p>
+      </div>
+      <div style="text-align: right;">
+        <span class="pill pill--verified">
+          <span class="mark-check">✓</span> ANCHORED · BLOCK 40 677 426
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE DUAL-CHECK SEAL — main reveal -->
+<section style="padding: 48px 0;">
+  <div class="shell">
+    <div class="seal-grid fade fade-1">
+
+      <div class="seal">
+        <div class="seal-icon"><span class="mark-check">✓</span></div>
+        <div class="seal-label">SEAL № 1 · NOTARY</div>
+        <div class="seal-name">Ledgerline anchored on Base Sepolia</div>
+        <div class="seal-detail">
+          <div style="margin-bottom: 8px;"><span class="key">block · </span> 40 677 426</div>
+          <div style="margin-bottom: 8px;"><span class="key">tx hash · </span> 0x1ba49e53…f1766c5</div>
+          <div style="margin-bottom: 8px;"><span class="key">attester · </span> 0x4eC5…0Bf2</div>
+          <div style="margin-bottom: 8px;"><span class="key">at · </span> 2026-04-25 21:18:56 KST</div>
+          <div style="margin-top: 16px; font-size: 0.6875rem; color: var(--ink-low);">
+            Verified by re-fetching attestation via raw EAS contract ABI.
+          </div>
+        </div>
+      </div>
+
+      <div class="seal">
+        <div class="seal-icon"><span class="mark-check">✓</span></div>
+        <div class="seal-label">SEAL № 2 · AUTHOR</div>
+        <div class="seal-name">Bloom Co. signed the record</div>
+        <div class="seal-detail">
+          <div style="margin-bottom: 8px;"><span class="key">scheme · </span> ECDSA-secp256k1</div>
+          <div style="margin-bottom: 8px;"><span class="key">key · </span> 0x4eC5…0Bf2 *</div>
+          <div style="margin-bottom: 8px;"><span class="key">digest · </span> keccak256</div>
+          <div style="margin-bottom: 8px;"><span class="key">at · </span> 2026-04-25 14:23:11 KST</div>
+          <div style="margin-top: 16px; font-size: 0.6875rem; color: var(--pending);">
+            * Prototype: this key is held by Ledgerline as a demo stand-in.<br />
+            Production requires the customer to hold this key.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 24px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <p class="mono-small" style="color: var(--ink-low); max-width: 720px;">
+        Both seals verified independently. The notary uses a different key
+        than the author by design — neither party can forge a record alone.
+        Mathematically immutable: a tamper would require finding a SHA-256
+        collision <em>and</em> rewriting a confirmed Base block.
+      </p>
+      <a href="https://base-sepolia.easscan.org/attestation/view/0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6" target="_blank" class="btn">Open on easscan ↗</a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- Evidence detail panel (inspector) -->
+<section class="section">
+  <div class="shell" style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px;">
+
+    <!-- LEFT: hash plates -->
+    <div>
+      <div class="eyebrow" style="margin-bottom: 16px;">EVIDENCE · HASH PLATES</div>
+
+      <div class="hash" style="margin-bottom: 20px;">
+        <span class="label">DECISION ID</span>
+        <span class="value">550e8400-e29b-41d4-a716-446655440001</span>
+      </div>
+
+      <div class="hash" style="margin-bottom: 20px;">
+        <span class="label">CANONICAL HASH (SHA-256, RFC 8785)</span>
+        <span class="value">0xc7a3b1e9d4f2c801b56e8d4f2a1b9e6c3d7f8a91b2c3d4e5f6a7b8c9d0e1f2a3</span>
+      </div>
+
+      <div class="hash" style="margin-bottom: 20px;">
+        <span class="label">MERKLE ROOT (KECCAK256, OZ STANDARD)</span>
+        <span class="value">0x2e8b5a7c1f3d4e6a8b9c0d1e2f3a4b5c6d7e8f90a1b2c3d4e5f6a7b8c9d0e1f2a</span>
+      </div>
+
+      <div class="hash" style="margin-bottom: 20px;">
+        <span class="label">EAS ATTESTATION UID</span>
+        <span class="value">0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6</span>
+      </div>
+
+      <div class="hash">
+        <span class="label">SCHEMA UID</span>
+        <span class="value">0xadedddd375ab7f7603e25c0f6dda36e95f5699efda7737e75e9e0cf7a470d7c7</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: chain of checks -->
+    <div>
+      <div class="eyebrow" style="margin-bottom: 16px;">VERIFICATION CHAIN</div>
+
+      <div style="border: 1px solid var(--rule);">
+        <div style="padding: 18px 24px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 24px 1fr auto; gap: 16px; align-items: center;">
+          <span class="mark-check" style="color: var(--verified);">✓</span>
+          <span class="mono-small">Schema parses against DR-1 v1</span>
+          <span class="caption" style="color: var(--ink-low);">PASSED</span>
+        </div>
+        <div style="padding: 18px 24px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 24px 1fr auto; gap: 16px; align-items: center;">
+          <span class="mark-check" style="color: var(--verified);">✓</span>
+          <span class="mono-small">Re-computed canonical_hash matches stored hash</span>
+          <span class="caption" style="color: var(--ink-low);">PASSED</span>
+        </div>
+        <div style="padding: 18px 24px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 24px 1fr auto; gap: 16px; align-items: center;">
+          <span class="mark-check" style="color: var(--verified);">✓</span>
+          <span class="mono-small">Merkle proof verifies against on-chain root</span>
+          <span class="caption" style="color: var(--ink-low);">PASSED</span>
+        </div>
+        <div style="padding: 18px 24px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 24px 1fr auto; gap: 16px; align-items: center;">
+          <span class="mark-check" style="color: var(--verified);">✓</span>
+          <span class="mono-small">EAS attestation found at <code>UID 0x0ff6…</code></span>
+          <span class="caption" style="color: var(--ink-low);">PASSED</span>
+        </div>
+        <div style="padding: 18px 24px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 24px 1fr auto; gap: 16px; align-items: center;">
+          <span class="mark-check" style="color: var(--verified);">✓</span>
+          <span class="mono-small">Attester == platform wallet (notary check)</span>
+          <span class="caption" style="color: var(--ink-low);">PASSED</span>
+        </div>
+        <div style="padding: 18px 24px; display: grid; grid-template-columns: 24px 1fr auto; gap: 16px; align-items: center;">
+          <span class="mark-check" style="color: var(--verified);">✓</span>
+          <span class="mono-small">operator_signature recovers to declared public_key (author check)</span>
+          <span class="caption" style="color: var(--ink-low);">PASSED</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 28px; display: flex; gap: 12px;">
+        <a href="dashboard.html" class="btn btn--ghost">View full DR-1 record</a>
+        <a href="print-view.html" class="btn btn--ghost">Export to PDF</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- Try it yourself -->
+<section class="section">
+  <div class="shell" style="max-width: 880px;">
+    <div class="eyebrow" style="margin-bottom: 16px;">EXHIBIT <span class="num">№ 06 / 07 · TRY-IT-YOURSELF</span></div>
+    <h2 class="h1" style="margin-bottom: 24px;">Verify a record we've never seen.</h2>
+    <p class="mono-body" style="margin-bottom: 32px;">
+      Paste any DR-1 record JSON below — or use a Decision ID from your own
+      Ledgerline tenant. We won't store it; the verification runs in your
+      browser against our public read endpoint.
+    </p>
+
+    <div style="border: 1px solid var(--rule); padding: 24px; background: var(--bg-surface);">
+      <label class="caption" style="display: block; margin-bottom: 12px;">DECISION ID OR JSON</label>
+      <textarea rows="5" style="width: 100%; background: var(--bg-base); border: 1px solid var(--rule); color: var(--ink); padding: 14px; font: 400 0.8125rem var(--font-mono); resize: vertical;" placeholder="550e8400-e29b-41d4-a716-446655440001 — or paste a full DR-1 record"></textarea>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+        <span class="mono-small" style="color: var(--ink-low);">No data leaves your browser.</span>
+        <button class="btn">Verify →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer-global">
+  <div class="shell" style="display: contents;">
+    <div>
+      <span class="caption" style="color: var(--ink-mid);">LEDGERLINE</span>
+      <span class="caption" style="margin-left: 16px;">PROTOTYPE · 2026-04 SPRINT</span>
+    </div>
+    <div>
+      <a href="https://base-sepolia.easscan.org/attestation/view/0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6" target="_blank" class="caption">EVIDENCE ON EASSCAN ↗</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
