@@ -6,10 +6,17 @@
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test"
+    "test": "pnpm -r test",
+    "spike:eas": "tsx scripts/spike/eas-attest.ts"
   },
   "packageManager": "pnpm@9.15.0",
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "@ethereum-attestation-service/eas-sdk": "^2.7.0",
+    "dotenv": "^17.4.2",
+    "ethers": "^6.13.0",
+    "tsx": "^4.21.0"
   }
 }
