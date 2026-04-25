@@ -1,6 +1,8 @@
 import { StandardMerkleTree } from '@openzeppelin/merkle-tree';
 
-export type Hex32 = `0x${string}`;
+import type { Hex32 } from './types';
+
+export type { Hex32 };
 
 export type BuildResult = {
   tree: StandardMerkleTree<[string]>;
