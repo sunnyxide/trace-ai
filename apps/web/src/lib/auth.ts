@@ -1,4 +1,8 @@
-import bcrypt from 'bcryptjs';
+// bcryptjs ships dual CJS/ESM. Default import works in vitest (esbuild) but
+// is unreliable under Next.js 16 + Turbopack — `bcrypt` resolves to undefined,
+// and `bcrypt.compare` becomes a TypeError that surfaces as an opaque 500.
+// Use the named export, which is stable across both runtimes.
+import { compare as bcryptCompare } from 'bcryptjs';
 import { supabaseAdmin } from './supabase';
 
 export type Tenant = {
@@ -57,7 +61,7 @@ export async function authenticate(headerValue: string | null): Promise<Tenant> 
   }
 
   for (const t of data) {
-    const ok = await bcrypt.compare(token, t.api_key_hash);
+    const ok = await bcryptCompare(token, t.api_key_hash);
     if (ok) {
       return {
         id: t.id,
