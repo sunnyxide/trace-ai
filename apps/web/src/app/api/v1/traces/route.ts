@@ -101,13 +101,15 @@ export async function processRecord(
   // of the redacted bytes we keep.
   const canonical = sha256Hex(canonicalJson(toStore));
 
-  // Step 8: storage upload to private bucket.
+  // Step 8: storage upload to private bucket. upsert=true so re-submitting
+  // the same decision_id is idempotent at the storage layer too — the DB
+  // unique constraint already makes the insert idempotent.
   const path = `${tenant.slug}/${rec.decision_id}.json`;
   const { error: upErr } = await deps.supabase.storage
     .from('payloads')
     .upload(path, JSON.stringify(toStore), {
       contentType: 'application/json',
-      upsert: false,
+      upsert: true,
     });
   if (upErr && !upErr.message.includes('already exists')) {
     return {
