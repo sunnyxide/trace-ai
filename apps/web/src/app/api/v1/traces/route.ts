@@ -139,6 +139,21 @@ export async function processRecord(
 }
 
 export async function POST(req: NextRequest) {
+  try {
+    return await handlePost(req);
+  } catch (err) {
+    // Last-resort handler so an unhandled exception (e.g. an invalid env at
+    // boot, a crashed Supabase client, or a viem error subclass that fights
+    // Next.js's instrumentation) surfaces a useful message rather than an
+    // opaque empty-body 500. The detail field is safe to include because
+    // we don't put secrets into Error messages.
+    const msg = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+    console.error('[POST /api/v1/traces] uncaught:', err);
+    return NextResponse.json({ error: 'route uncaught', detail: msg }, { status: 500 });
+  }
+}
+
+async function handlePost(req: NextRequest) {
   // Step 3: authenticate.
   let tenant: Tenant;
   try {
