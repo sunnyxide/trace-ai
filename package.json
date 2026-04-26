@@ -7,8 +7,8 @@
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
-    "spike:eas": "tsx scripts/spike/eas-attest.ts",
-    "seed:demo": "tsx scripts/seed/load-examples.ts"
+    "spike:eas": "NODE_OPTIONS='--dns-result-order=ipv4first' tsx scripts/spike/eas-attest.ts",
+    "seed:demo": "NODE_OPTIONS='--dns-result-order=ipv4first' tsx scripts/seed/load-examples.ts"
   },
   "packageManager": "pnpm@9.15.0",
   "engines": {
