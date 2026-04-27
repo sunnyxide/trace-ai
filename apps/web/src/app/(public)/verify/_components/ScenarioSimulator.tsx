@@ -4,6 +4,33 @@ import { useEffect, useRef, useState } from 'react';
 import { SimulatorStage, type StageScenario } from './SimulatorStage';
 import { DOMAIN_COLORS, DOMAIN_LABEL, type Domain } from './domainColors';
 
+function PlayIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden fill="currentColor">
+      <path d="M2.5 1.5L10 6L2.5 10.5V1.5Z" />
+    </svg>
+  );
+}
+
+function ReplayIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 7a5 5 0 1 0 1.5-3.5" />
+      <path d="M2 1.5V4h2.5" />
+    </svg>
+  );
+}
+
 type StepId = 'agent' | 'llm' | 'sign' | 'merkle' | 'anchor' | 'verify' | 'done';
 
 type Scenario = {
@@ -284,7 +311,7 @@ export function ScenarioSimulator() {
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
               {!running && !isDone ? (
                 <button type="button" className="ll-btn ll-btn-brand" onClick={play}>
-                  ▶ Play
+                  <PlayIcon /> Play
                 </button>
               ) : null}
               {isDone ? (
@@ -296,7 +323,7 @@ export function ScenarioSimulator() {
                     play();
                   }}
                 >
-                  ↻ Replay
+                  <ReplayIcon /> Replay
                 </button>
               ) : null}
               {running ? (

@@ -373,75 +373,69 @@ function StepSign({ scenario }: { scenario: Props['scenario'] }) {
         <span style={{ color: 'var(--ll-brand)' }}>{'}'}</span>
 
         {/*
-         * Cursive autograph — actually spells "Sunny" using a handwriting
-         * font (Caveat). The signature is masked by a width animation
-         * that wipes left-to-right, simulating real-time penmanship. The
-         * resulting glyph is the actual customer name, not abstract waves.
+         * Cursive autograph — "Sunny" in Caveat. clip-path wipes from
+         * left to right (more reliable than width animation across
+         * Tailwind/Turbopack reflow). The text is fully laid out; only
+         * the visible portion changes.
          */}
         <div
           style={{
             marginTop: 18,
             position: 'relative',
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'flex-start',
-            gap: 18,
+            paddingBottom: 18,
           }}
         >
           <div
             style={{
-              position: 'relative',
-              width: 'min(360px, 100%)',
-              minHeight: 76,
+              fontFamily:
+                'var(--font-caveat), "Caveat", "Brush Script MT", "Snell Roundhand", cursive',
+              fontWeight: 700,
+              fontSize: '4.25rem',
+              lineHeight: 1,
+              color: 'var(--ll-brand)',
+              letterSpacing: '0.005em',
+              whiteSpace: 'nowrap',
+              animation:
+                'll-sign-wipe 1.8s cubic-bezier(.4,.05,.2,1) 250ms both',
+              clipPath: 'inset(0 100% 0 0)',
+              WebkitClipPath: 'inset(0 100% 0 0)',
+              display: 'inline-block',
+              transform: 'rotate(-3deg)',
+              transformOrigin: 'left center',
+            }}
+            aria-label="Signed: Sunny"
+          >
+            Sunny
+          </div>
+          {/* Underline flourish — appears after name finishes */}
+          <svg
+            width="320"
+            height="14"
+            viewBox="0 0 320 14"
+            aria-hidden
+            style={{
+              display: 'block',
+              marginTop: 6,
+              opacity: 0,
+              animation: 'll-fade-up 320ms ease 1.9s forwards',
             }}
           >
-            <div
-              style={{
-                fontFamily: 'var(--font-caveat, "Caveat", cursive)',
-                fontWeight: 700,
-                fontSize: '4.25rem',
-                lineHeight: 1,
-                color: 'var(--ll-brand)',
-                letterSpacing: '0.01em',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                width: 0,
-                animation:
-                  'll-sign-reveal 1.8s cubic-bezier(.4,.05,.2,1) 200ms forwards',
-              }}
-              aria-label="Signed: Sunny"
-            >
-              Sunny
-            </div>
-            {/* Underline flourish — drawn after name finishes */}
-            <svg
-              width="100%"
-              height="14"
-              viewBox="0 0 360 14"
-              aria-hidden
-              style={{
-                position: 'absolute',
-                left: 0,
-                bottom: -4,
-                opacity: 0.6,
-              }}
-            >
-              <path
-                d="M 6 8 C 70 4, 180 12, 280 6 S 350 8, 354 10"
-                stroke="var(--ll-brand)"
-                strokeWidth="1.4"
-                fill="none"
-                strokeLinecap="round"
-                strokeDasharray="500"
-                strokeDashoffset="500"
-                style={{
-                  animation:
-                    'sign-trace 1s cubic-bezier(.45,.05,.2,1) 1.6s forwards',
-                }}
-              />
-            </svg>
-          </div>
+            <path
+              d="M 4 8 C 70 4, 180 12, 240 6 S 308 8, 314 10"
+              stroke="var(--ll-brand)"
+              strokeWidth="1.6"
+              fill="none"
+              strokeLinecap="round"
+              opacity="0.55"
+            />
+          </svg>
         </div>
+        <style>{`
+          @keyframes ll-sign-wipe {
+            from { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); }
+            to   { clip-path: inset(0 0% 0 0);   -webkit-clip-path: inset(0 0% 0 0); }
+          }
+        `}</style>
         <div
           style={{
             position: 'absolute',
