@@ -156,18 +156,30 @@
   font-feature-settings: "ss01", "ss02", "cv11";
 }
 
-/* Reset link color/decoration ONLY for plain anchors —
- * not for buttons or styled links, which set their own colors and
- * would otherwise lose the cascade fight to `.ll-public-root a`. */
-.ll-public-root a:not(.ll-btn):not(.ll-link):not(.ll-tab):not(.ll-nav-brand):not(.ll-nav-links a) {
-  color: inherit;
+.ll-public-root a {
   text-decoration: none;
   transition: color 160ms ease;
 }
-.ll-public-root .ll-btn { color: #FFFFFF; }
-.ll-public-root .ll-btn.ll-btn-ghost { color: var(--ll-ink); }
-.ll-public-root .ll-btn:hover { color: #FFFFFF; }
-.ll-public-root .ll-btn-ghost:hover { color: var(--ll-ink); }
+.ll-public-root a:not(.ll-btn):not(.ll-link):not(.ll-tab):not(.ll-nav-brand):not(.ll-card):not([data-keep-color]) {
+  color: inherit;
+}
+
+/* Buttons — color forced past Tailwind preflight + parent inherits.
+ * The !important keeps us safe from any future shadcn/preflight churn. */
+.ll-btn,
+.ll-public-root .ll-btn,
+a.ll-btn {
+  color: #FFFFFF !important;
+}
+.ll-btn-ghost,
+.ll-public-root .ll-btn-ghost,
+a.ll-btn-ghost {
+  color: var(--ll-ink) !important;
+}
+.ll-btn:hover,
+.ll-public-root .ll-btn:hover { color: #FFFFFF !important; }
+.ll-btn-ghost:hover,
+.ll-public-root .ll-btn-ghost:hover { color: var(--ll-ink) !important; }
 
 .ll-public-root ::selection { background: var(--ll-brand-soft); color: var(--ll-ink); }
 
