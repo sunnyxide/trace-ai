@@ -13,39 +13,39 @@ type Outcome = {
 
 export const EXAMPLE_OUTCOMES: Record<number, Outcome[]> = {
   1: [
-    { metric: '~₩500K', label: 'chargeback prevented',  detail: 'Stripe accepted the merchant policy proof on first review.', tone: 'ok' },
-    { metric: '8 hrs',  label: 'auditor time saved',     detail: 'No manual log archaeology. The receipt links the trail.', tone: 'brand' },
-    { metric: '0',      label: 'tickets re-opened',      detail: 'The customer accepted the documented reasoning.', tone: 'warm' },
+    { metric: '94%',    label: 'chargeback dispute win-rate', detail: 'Merchant policy + AI reasoning trail clears Stripe review on the first reply.', tone: 'ok' },
+    { metric: '8 hrs',  label: 'auditor time saved per case', detail: 'No more digging through Slack and Gorgias. The receipt is the trail.', tone: 'brand' },
+    { metric: '< 3 min', label: 'time to close a refund dispute', detail: 'Customer accepts the documented reasoning before opening a ticket.', tone: 'warm' },
   ],
   2: [
-    { metric: '₩50M',   label: 'MFDS fine avoided',      detail: 'Headline-level proof that all variants were policy-checked.', tone: 'ok' },
-    { metric: '5 sec',  label: 'audit response time',    detail: 'A regulator query becomes a public URL, not a project.', tone: 'brand' },
-    { metric: '10x',    label: 'compliance review speed', detail: 'Two LLM calls + one human signature, all timestamped.', tone: 'warm' },
+    { metric: '₩50M',   label: 'avg MFDS fine avoided',          detail: 'Every ad ships with proof that disallow-listed claims were rejected, not used.', tone: 'ok' },
+    { metric: '5 sec',  label: 'regulator audit response',       detail: 'A URL replaces the 4-week document discovery project.', tone: 'brand' },
+    { metric: '10×',    label: 'faster compliance review',        detail: 'Two LLM calls + one human signature, all timestamped on a public chain.', tone: 'warm' },
   ],
   3: [
-    { metric: '~₩4M',   label: 'recoverable VAT logged', detail: 'Reverse-charge applied correctly per KR §10-2.', tone: 'ok' },
-    { metric: '40 hrs', label: 'monthly close shaved',   detail: 'Each invoice already carries its policy citation.', tone: 'brand' },
-    { metric: '0',      label: 'reclassifications',      detail: 'External accountants signed off on the existing trail.', tone: 'warm' },
+    { metric: '~₩4M',   label: 'recoverable VAT booked correctly', detail: 'Reverse-charge applied per KR §10-2 the first time, every time.', tone: 'ok' },
+    { metric: '40 hrs', label: 'monthly close shortened',           detail: 'Each invoice already carries its policy citation and rejected alternatives.', tone: 'brand' },
+    { metric: '0',      label: 'audit reclassifications',           detail: 'External accountants signed off on the existing trail without rework.', tone: 'warm' },
   ],
   4: [
-    { metric: '₩30M',   label: 'reprint avoided',        detail: 'AI flagged the risky claim before the press ran.', tone: 'ok' },
-    { metric: '11 min', label: 'human review window',    detail: 'AI identified the risk; human authority kept its place.', tone: 'brand' },
-    { metric: 'Zero',   label: 'product recalls',        detail: 'The labeling decision survives an MFDS post-audit.', tone: 'warm' },
+    { metric: '₩30M',   label: 'recall + reprint avoided',          detail: 'The AI flagged a borderline therapeutic claim before the press ran.', tone: 'ok' },
+    { metric: '11 min', label: 'time from flag to founder approval', detail: 'AI surfaces the risk; human authority keeps the final call.', tone: 'brand' },
+    { metric: 'Zero',   label: 'product recalls under MFDS audit',   detail: 'Each label decision survives a post-publication review.', tone: 'warm' },
   ],
   5: [
-    { metric: '0 days', label: 'stockouts',              detail: 'Reorder fired before lead time exceeded runway.', tone: 'ok' },
-    { metric: '~$0.42', label: 'unit cost preserved',    detail: 'Locked under the supplier-allowlist contract.', tone: 'brand' },
-    { metric: '4 hrs',  label: 'ops review skipped',     detail: 'Decision auditable on the spot.', tone: 'warm' },
+    { metric: '0 days', label: 'stockouts in 12 months',            detail: 'Reorder fires before lead time exceeds runway, every time.', tone: 'ok' },
+    { metric: '~$0.42', label: 'unit cost preserved per order',      detail: 'Locked under the active supplier-allowlist contract.', tone: 'brand' },
+    { metric: '4 hrs',  label: 'ops review eliminated',              detail: 'No weekly meeting to justify last week’s reorders. Receipts speak.', tone: 'warm' },
   ],
   6: [
-    { metric: 'Live',   label: 'AI Basic Act compliance', detail: 'Tamper-proof log requirement satisfied automatically.', tone: 'ok' },
-    { metric: '8 min',  label: 'underwriter sign-off',    detail: 'AI surfaced the stress-test math; human approved fast.', tone: 'brand' },
-    { metric: 'Zero',   label: 'discrimination claims',   detail: 'Same policy applied uniformly. The receipt proves it.', tone: 'warm' },
+    { metric: 'Live',   label: 'AI Basic Act compliance',           detail: 'Tamper-proof logging satisfied automatically for every high-impact decision.', tone: 'ok' },
+    { metric: '8 min',  label: 'avg underwriter sign-off time',      detail: 'AI shows the stress test; humans approve fast and explain it later.', tone: 'brand' },
+    { metric: 'Zero',   label: 'open discrimination claims',         detail: 'Same policy applied uniformly across applicants — the receipt proves it.', tone: 'warm' },
   ],
   7: [
-    { metric: '< 3s',   label: 'fraud decision latency', detail: 'Hold + step-up issued in real time.', tone: 'ok' },
-    { metric: '74%',    label: 'anomaly score',           detail: 'AI surfaced its reasoning, not just its verdict.', tone: 'brand' },
-    { metric: '0',      label: 'unjust denials',          detail: 'Step-up first, deny only on signal escalation.', tone: 'warm' },
+    { metric: '< 3s',   label: 'fraud decision latency',             detail: 'Hold + step-up issued in real time without waiting on a human.', tone: 'ok' },
+    { metric: '−42%',   label: 'unjust card denials',                detail: 'Step-up is the first response; outright deny is rare and explained.', tone: 'brand' },
+    { metric: 'Zero',   label: 'audit-trail rewrites',               detail: 'A regulator can pull the same evidence the cardholder sees.', tone: 'warm' },
   ],
 };
 

@@ -327,6 +327,8 @@ a.ll-btn-ghost {
   border-radius: 999px;
   border: 1px solid currentColor;
   background: color-mix(in oklab, currentColor 6%, transparent);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .ll-pill-ok    { color: var(--ll-ok); }
 .ll-pill-warn  { color: var(--ll-warn); }

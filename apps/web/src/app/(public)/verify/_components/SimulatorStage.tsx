@@ -17,9 +17,18 @@ type StepId =
   | 'verify'
   | 'done';
 
+export type StageScenario =
+  | 'cs-refund'
+  | 'ad-claim'
+  | 'fraud-hold'
+  | 'triage'
+  | 'resume'
+  | 'claim'
+  | 'contract';
+
 type Props = {
   stepId: StepId;
-  scenario: 'cs-refund' | 'ad-claim' | 'fraud-hold';
+  scenario: StageScenario;
 };
 
 export function SimulatorStage({ stepId, scenario }: Props) {
@@ -51,33 +60,65 @@ export function SimulatorStage({ stepId, scenario }: Props) {
 // ============================================================================
 
 function StepAgent({ scenario }: { scenario: Props['scenario'] }) {
-  const ticket =
-    scenario === 'cs-refund'
-      ? {
-          source: 'Gorgias',
-          id: '#482910',
-          from: 'sleepy@example.com',
-          subject: 'Refund for melatonin order',
-          body:
-            'Hi! I bought your 3mg melatonin 9 days ago. Tried it for a week — barely helped me sleep. Could I please get a refund? Order SO-87234. Thanks 🙏',
-        }
-      : scenario === 'ad-claim'
-      ? {
-          source: 'Internal trigger',
-          id: 'q2-melatonin',
-          from: 'campaign-bot',
-          subject: 'Draft Q2 melatonin Meta ad',
-          body:
-            'Brief: 30-day melatonin SKU. Audience: 25-45, sleep concerns. Constraints: MFDS § 4.1 (no treatment claims), allowlist v2.',
-        }
-      : {
-          source: 'Card processor',
-          id: 'tx-22910',
-          from: 'auth-stream',
-          subject: '₩820,000 attempt · Macau',
-          body:
-            'Cardholder usual geo: Korea. 90-day max single tx: ₩185,000. Merchant category: 5816. Flagged for evaluation.',
-        };
+  const tickets: Record<StageScenario, { source: string; id: string; from: string; subject: string; body: string }> = {
+    'cs-refund': {
+      source: 'Gorgias',
+      id: '#482910',
+      from: 'sleepy@example.com',
+      subject: 'Refund for melatonin order',
+      body:
+        'Hi! I bought your 3mg melatonin 9 days ago. Tried it for a week — barely helped me sleep. Could I please get a refund? Order SO-87234.',
+    },
+    'ad-claim': {
+      source: 'Internal trigger',
+      id: 'q2-melatonin',
+      from: 'campaign-bot',
+      subject: 'Draft Q2 melatonin Meta ad',
+      body:
+        'Brief: 30-day melatonin SKU. Audience: 25-45, sleep concerns. Constraints: MFDS § 4.1 (no treatment claims), allowlist v2.',
+    },
+    'fraud-hold': {
+      source: 'Card processor',
+      id: 'tx-22910',
+      from: 'auth-stream',
+      subject: '₩820,000 attempt · Macau',
+      body:
+        'Cardholder usual geo: Korea. 90-day max single tx: ₩185,000. Merchant category: 5816. Flagged for evaluation.',
+    },
+    triage: {
+      source: 'CareGrid intake',
+      id: 'visit-77104',
+      from: 'patient · M, 47',
+      subject: 'Chest discomfort, shortness of breath',
+      body:
+        'Onset 30 min ago, dull pressure radiating to left arm. No prior cardiac history. BP self-reported 152/96. Asking for video visit.',
+    },
+    resume: {
+      source: 'HirePath ATS',
+      id: 'app-90832',
+      from: 'sr-engineer-role',
+      subject: 'Senior backend engineer · 12 yrs exp',
+      body:
+        'Distributed systems, Go + Postgres, payments domain. Open-source maintainer. Seeking remote, base ≥ $185K, equity expected.',
+    },
+    claim: {
+      source: 'Helix policyholder app',
+      id: 'claim-2206-LX',
+      from: 'policy #PL-44218',
+      subject: 'Rear-end fender bender · parking lot',
+      body:
+        '4 photos uploaded. No injuries reported. Other driver acknowledged fault on-scene. Estimated repair $1,840 from preferred body shop.',
+    },
+    contract: {
+      source: 'Procurement queue',
+      id: 'msa-2026-Q2-37',
+      from: 'vendor: Argonaut Cloud',
+      subject: 'Master Services Agreement · v3.1 redline request',
+      body:
+        '14-page MSA. Vendor proposed 36-month term, 5% annual price escalator, mutual indemnification capped at fees paid. Compare to playbook v2.',
+    },
+  };
+  const ticket = tickets[scenario];
 
   return (
     <Frame
@@ -133,23 +174,46 @@ function StepAgent({ scenario }: { scenario: Props['scenario'] }) {
 // ============================================================================
 
 function StepLlm({ scenario }: { scenario: Props['scenario'] }) {
-  const candidates =
-    scenario === 'cs-refund'
-      ? [
-          { label: 'Deny — opened > 14 days?', score: 0.34, reason: 'still inside the 14-day window' },
-          { label: 'Approve — first-time, within window', score: 0.91, chosen: true },
-        ]
-      : scenario === 'ad-claim'
-      ? [
-          { label: '"Cures insomnia"', score: 0.18, reason: 'treatment claim' },
-          { label: '"Fights sleep disorder"', score: 0.27, reason: 'medical efficacy' },
-          { label: '"Supports relaxation"', score: 0.94, chosen: true },
-        ]
-      : [
-          { label: 'Allow', score: 0.18, reason: 'too lenient' },
-          { label: 'Hold + step-up', score: 0.74, chosen: true },
-          { label: 'Outright deny', score: 0.30, reason: 'too aggressive' },
-        ];
+  const candidates: Record<
+    StageScenario,
+    Array<{ label: string; score: number; reason?: string; chosen?: boolean }>
+  > = {
+    'cs-refund': [
+      { label: 'Deny — opened > 14 days?', score: 0.34, reason: 'still inside the 14-day window' },
+      { label: 'Approve — first-time, within window', score: 0.91, chosen: true },
+    ],
+    'ad-claim': [
+      { label: '"Cures insomnia"', score: 0.18, reason: 'treatment claim' },
+      { label: '"Fights sleep disorder"', score: 0.27, reason: 'medical efficacy' },
+      { label: '"Supports relaxation"', score: 0.94, chosen: true },
+    ],
+    'fraud-hold': [
+      { label: 'Allow', score: 0.18, reason: 'too lenient' },
+      { label: 'Hold + step-up', score: 0.74, chosen: true },
+      { label: 'Outright deny', score: 0.30, reason: 'too aggressive' },
+    ],
+    triage: [
+      { label: 'Self-care advisory · 24-hour follow-up', score: 0.12, reason: 'symptoms above tier-1 threshold' },
+      { label: 'Telehealth video within 30 minutes', score: 0.41, reason: 'cardiac signal too acute for video-only' },
+      { label: 'Refer to in-person ER · arrange transport', score: 0.92, chosen: true },
+    ],
+    resume: [
+      { label: 'Auto-reject · base salary mismatch', score: 0.22, reason: 'rubric: salary is negotiable for L6' },
+      { label: 'Forward to recruiter · L5 strong match', score: 0.78, chosen: true },
+      { label: 'Forward to recruiter · L6 stretch interview', score: 0.65 },
+    ],
+    claim: [
+      { label: 'Total settlement at policy limit', score: 0.21, reason: 'damage well below limit' },
+      { label: 'Pay $1,840 invoice less $250 deductible', score: 0.88, chosen: true },
+      { label: 'Open investigation · request adjuster visit', score: 0.34, reason: 'photos + on-scene admission' },
+    ],
+    contract: [
+      { label: 'Accept as-is', score: 0.14, reason: 'three out-of-policy clauses found' },
+      { label: 'Redline 5% escalator → CPI cap', score: 0.81, chosen: true },
+      { label: 'Counter with 12-month term', score: 0.42, reason: 'within negotiation latitude' },
+    ],
+  };
+  const list = candidates[scenario];
 
   return (
     <Frame
@@ -165,7 +229,7 @@ function StepLlm({ scenario }: { scenario: Props['scenario'] }) {
           gap: 10,
         }}
       >
-        {candidates.map((c, i) => {
+        {list.map((c, i) => {
           const pct = Math.round(c.score * 100);
           return (
             <div
@@ -258,12 +322,16 @@ function StepLlm({ scenario }: { scenario: Props['scenario'] }) {
 // ============================================================================
 
 function StepSign({ scenario }: { scenario: Props['scenario'] }) {
-  const summary =
-    scenario === 'cs-refund'
-      ? 'within window · first refund · approve'
-      : scenario === 'ad-claim'
-      ? 'compliant variant · founder reviewed'
-      : 'hold + step-up · geo + amount + merchant';
+  const SUMMARIES: Record<StageScenario, string> = {
+    'cs-refund': 'within window · first refund · approve',
+    'ad-claim': 'compliant variant · founder reviewed',
+    'fraud-hold': 'hold + step-up · geo + amount + merchant',
+    triage: 'cardiac signal · refer to ER · transport arranged',
+    resume: 'L5 strong match · forward to recruiter',
+    claim: '$1,590 settlement · less deductible · adjuster signed',
+    contract: 'redline · 5% escalator → CPI cap · GC signed',
+  };
+  const summary = SUMMARIES[scenario];
 
   return (
     <Frame

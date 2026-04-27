@@ -1,35 +1,42 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { SimulatorStage } from './SimulatorStage';
+import { SimulatorStage, type StageScenario } from './SimulatorStage';
 
-type ScenarioId = 'cs-refund' | 'ad-claim' | 'fraud-hold';
 type StepId = 'agent' | 'llm' | 'sign' | 'merkle' | 'anchor' | 'verify' | 'done';
 
 type Scenario = {
-  id: ScenarioId;
+  id: StageScenario;
   title: string;
   blurb: string;
-  domain: 'ecommerce' | 'finance';
+  domain: 'ecommerce' | 'finance' | 'healthcare' | 'hr' | 'insurance' | 'legal';
   tenant: string;
   steps: { id: Exclude<StepId, 'done'>; label: string; durationMs: number }[];
 };
+
+const STEP_DEFAULTS = (
+  customLabels?: Partial<Record<Exclude<StepId, 'done'>, string>>,
+): Scenario['steps'] => [
+  { id: 'agent',  label: customLabels?.agent  ?? 'Agent receives event',     durationMs: 2400 },
+  { id: 'llm',    label: customLabels?.llm    ?? 'AI considers options',     durationMs: 2800 },
+  { id: 'sign',   label: customLabels?.sign   ?? 'Operator signs the record', durationMs: 2600 },
+  { id: 'merkle', label: customLabels?.merkle ?? 'Hash joins next batch',     durationMs: 2800 },
+  { id: 'anchor', label: customLabels?.anchor ?? 'Anchored on Base Sepolia',  durationMs: 2400 },
+  { id: 'verify', label: customLabels?.verify ?? 'Anyone can verify',         durationMs: 2200 },
+];
 
 const SCENARIOS: Scenario[] = [
   {
     id: 'cs-refund',
     title: 'CS bot processes a refund',
-    blurb: 'Bloom Co.’s customer service agent evaluates a 9-day-old order against the refund policy.',
+    blurb: 'Bloom Co.’s customer-service agent evaluates a 9-day-old order against the refund policy.',
     domain: 'ecommerce',
     tenant: 'Bloom Co. · CS Agent',
-    steps: [
-      { id: 'agent',  label: 'Agent receives ticket',     durationMs: 2400 },
-      { id: 'llm',    label: 'AI considers options',      durationMs: 2800 },
-      { id: 'sign',   label: 'Operator signs the record', durationMs: 2600 },
-      { id: 'merkle', label: 'Hash joins next batch',     durationMs: 2800 },
-      { id: 'anchor', label: 'Anchored on Base Sepolia',  durationMs: 2400 },
-      { id: 'verify', label: 'Anyone can verify',         durationMs: 2200 },
-    ],
+    steps: STEP_DEFAULTS({
+      agent: 'Agent receives ticket',
+      llm: 'AI considers options',
+      verify: 'Customer · bank · auditor verify',
+    }),
   },
   {
     id: 'ad-claim',
@@ -37,14 +44,12 @@ const SCENARIOS: Scenario[] = [
     blurb: 'Two LLMs and a human reviewer collaborate on a Meta ad — MFDS guidelines must hold.',
     domain: 'ecommerce',
     tenant: 'Bloom Co. · Marketing Agent',
-    steps: [
-      { id: 'agent',  label: 'Marketing brief arrives',         durationMs: 2400 },
-      { id: 'llm',    label: 'GPT-5 + Claude weigh headlines',  durationMs: 2800 },
-      { id: 'sign',   label: 'Founder signs at 10:09 KST',      durationMs: 2600 },
-      { id: 'merkle', label: 'Hash joins next batch',           durationMs: 2800 },
-      { id: 'anchor', label: 'Anchored on Base Sepolia',        durationMs: 2400 },
-      { id: 'verify', label: 'MFDS audit gets the receipt',     durationMs: 2200 },
-    ],
+    steps: STEP_DEFAULTS({
+      agent: 'Marketing brief arrives',
+      llm: 'GPT-5 + Claude weigh headlines',
+      sign: 'Founder signs at 10:09 KST',
+      verify: 'MFDS audit gets the receipt',
+    }),
   },
   {
     id: 'fraud-hold',
@@ -52,16 +57,84 @@ const SCENARIOS: Scenario[] = [
     blurb: 'Shinhan Bank’s real-time AI sees an unusual Macau transaction.',
     domain: 'finance',
     tenant: 'Shinhan · Fraud Agent',
-    steps: [
-      { id: 'agent',  label: 'Tx event arrives',           durationMs: 2400 },
-      { id: 'llm',    label: 'AI scores anomaly',          durationMs: 2800 },
-      { id: 'sign',   label: 'Hold + step-up signed',      durationMs: 2400 },
-      { id: 'merkle', label: 'Hash joins next batch',      durationMs: 2400 },
-      { id: 'anchor', label: 'Anchored on Base Sepolia',   durationMs: 2400 },
-      { id: 'verify', label: 'Regulator audit-ready',      durationMs: 2200 },
-    ],
+    steps: STEP_DEFAULTS({
+      agent: 'Tx event arrives',
+      llm: 'AI scores anomaly',
+      sign: 'Hold + step-up signed',
+      verify: 'Regulator audit-ready',
+    }),
+  },
+  {
+    id: 'triage',
+    title: 'Telehealth AI triages a chest-pain case',
+    blurb: 'A virtual-care platform routes a new patient request based on risk signals.',
+    domain: 'healthcare',
+    tenant: 'CareGrid · Triage Agent',
+    steps: STEP_DEFAULTS({
+      agent: 'Patient symptom intake',
+      llm: 'AI weighs urgency tiers',
+      sign: 'Attending physician signs off',
+      verify: 'Patient · payer · regulator',
+    }),
+  },
+  {
+    id: 'resume',
+    title: 'HR AI screens an applicant',
+    blurb: 'A talent platform scores a senior-engineer resume against the role rubric — bias-aware.',
+    domain: 'hr',
+    tenant: 'HirePath · Screening Agent',
+    steps: STEP_DEFAULTS({
+      agent: 'Application received',
+      llm: 'AI scores against role rubric',
+      sign: 'Recruiter signs the decision',
+      verify: 'Candidate · DPA · EEOC inquiry',
+    }),
+  },
+  {
+    id: 'claim',
+    title: 'Insurance AI evaluates a fender-bender claim',
+    blurb: 'A policyholder uploads photos; the AI proposes settlement under deductible terms.',
+    domain: 'insurance',
+    tenant: 'Helix Auto · Claims Agent',
+    steps: STEP_DEFAULTS({
+      agent: 'Claim filed',
+      llm: 'AI weighs settlement bands',
+      sign: 'Adjuster signs off',
+      verify: 'Insured · reinsurer · regulator',
+    }),
+  },
+  {
+    id: 'contract',
+    title: 'Legal AI redlines a vendor contract',
+    blurb: 'Procurement uploads an MSA; the AI flags out-of-policy clauses against the playbook.',
+    domain: 'legal',
+    tenant: 'Northwind Legal · Review Agent',
+    steps: STEP_DEFAULTS({
+      agent: 'Contract drops in inbox',
+      llm: 'AI weighs clause-by-clause risk',
+      sign: 'GC signs the redline set',
+      verify: 'Counterparty · auditor · board',
+    }),
   },
 ];
+
+const DOMAIN_LABEL: Record<Scenario['domain'], string> = {
+  ecommerce: 'E-COMMERCE',
+  finance: 'FINANCE',
+  healthcare: 'HEALTHCARE',
+  hr: 'HR',
+  insurance: 'INSURANCE',
+  legal: 'LEGAL',
+};
+
+const DOMAIN_PILL: Record<Scenario['domain'], string> = {
+  ecommerce: 'll-pill-info',
+  finance: 'll-pill-warm',
+  healthcare: 'll-pill-ok',
+  hr: 'll-pill-info',
+  insurance: 'll-pill-warm',
+  legal: 'll-pill-ok',
+};
 
 export function ScenarioSimulator() {
   const [scenarioIdx, setScenarioIdx] = useState(0);
@@ -117,16 +190,18 @@ export function ScenarioSimulator() {
         <div style={{ maxWidth: 720, marginBottom: 32 }}>
           <div className="ll-eyebrow">Run a simulation</div>
           <h2 className="ll-h1" style={{ marginTop: 14 }}>
-            Watch a decision earn its receipt — step by step.
+            Watch a decision earn its receipt — across 7 industries.
           </h2>
           <p className="ll-lede" style={{ marginTop: 14 }}>
-            Pick a scenario. Press play. Each step shows a different artifact —
-            the ticket, the score bars, the signature, the Merkle tree, the
-            block, the verifiers — so you see the proof being built.
+            Pick a scenario. Press play. Each step shows a different artifact
+            — the ticket, the score bars, the signature, the Merkle tree, the
+            block, the verifiers — so you see the proof being built. Same
+            protocol works for e-commerce, finance, healthcare, HR, insurance,
+            and legal.
           </p>
         </div>
 
-        {/* Scenario picker */}
+        {/* Scenario picker — horizontal scroll on overflow */}
         <div
           style={{
             display: 'grid',
@@ -152,10 +227,27 @@ export function ScenarioSimulator() {
                 }}
                 aria-pressed={active}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                  <span className="ll-caption">{s.tenant}</span>
-                  <span className={`ll-pill ${s.domain === 'ecommerce' ? 'll-pill-info' : 'll-pill-warm'}`}>
-                    {s.domain === 'ecommerce' ? 'E-COMMERCE' : 'FINANCE'}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                    gap: 8,
+                  }}
+                >
+                  <span
+                    className="ll-caption"
+                    style={{
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {s.tenant}
+                  </span>
+                  <span className={`ll-pill ${DOMAIN_PILL[s.domain]}`}>
+                    {DOMAIN_LABEL[s.domain]}
                   </span>
                 </div>
                 <div className="ll-h3" style={{ marginBottom: 6, fontSize: '1rem' }}>
@@ -171,7 +263,6 @@ export function ScenarioSimulator() {
 
         {/* Stage with controls */}
         <div className="ll-sim-stage" style={{ position: 'relative', padding: 28 }}>
-          {/* Top bar: title + controls */}
           <div
             style={{
               position: 'relative',
@@ -198,7 +289,14 @@ export function ScenarioSimulator() {
                 </button>
               ) : null}
               {isDone ? (
-                <button type="button" className="ll-btn ll-btn-brand" onClick={() => { reset(); play(); }}>
+                <button
+                  type="button"
+                  className="ll-btn ll-btn-brand"
+                  onClick={() => {
+                    reset();
+                    play();
+                  }}
+                >
                   ↻ Replay
                 </button>
               ) : null}
@@ -214,7 +312,7 @@ export function ScenarioSimulator() {
                       animation: 'aurora-1 1.2s ease-in-out infinite alternate',
                     }}
                   />
-                  Running step {Math.min(stepIdx + 1, scenario.steps.length)}/{scenario.steps.length}
+                  Step {Math.min(stepIdx + 1, scenario.steps.length)}/{scenario.steps.length}
                 </span>
               ) : null}
               <button type="button" className="ll-btn ll-btn-ghost" onClick={reset}>
@@ -236,10 +334,15 @@ export function ScenarioSimulator() {
           >
             {scenario.steps.map((s, i) => {
               const state =
-                isIdle ? 'queued' :
-                i < stepIdx ? 'done' :
-                i === stepIdx && running ? 'active' :
-                isDone ? 'done' : 'queued';
+                isIdle
+                  ? 'queued'
+                  : i < stepIdx
+                  ? 'done'
+                  : i === stepIdx && running
+                  ? 'active'
+                  : isDone
+                  ? 'done'
+                  : 'queued';
               const bg =
                 state === 'done'
                   ? 'var(--ll-ok)'
@@ -281,7 +384,6 @@ export function ScenarioSimulator() {
             })}
           </div>
 
-          {/* The big STAGE — per-step visual */}
           <div style={{ marginTop: 56, position: 'relative', zIndex: 1 }}>
             <SimulatorStage stepId={currentStepId} scenario={scenario.id} />
           </div>
