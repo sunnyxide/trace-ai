@@ -10,18 +10,13 @@ import {
 import { supabaseAdmin } from '@/lib/supabase';
 import { loadConfig } from '@/lib/config';
 import { Tabs } from './_components/Tabs';
-import { DualCheckSeal } from './_components/DualCheckSeal';
-import { HashPlate } from './_components/HashPlate';
-import { VerificationChain } from './_components/VerificationChain';
-import { RecordHeader } from './_components/RecordHeader';
-import { TryItYourself } from './_components/TryItYourself';
+import { ScenarioSimulator } from './_components/ScenarioSimulator';
+import { StorySection, EXAMPLE_STORIES } from './_components/StorySection';
+import { WhatThisProves } from './_components/WhatThisProves';
+import { EvidenceDetails } from './_components/EvidenceDetails';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-// ---------------------------------------------------------------------------
-// Seeded examples — keep in sync with scripts/seed/load-examples.ts
-// ---------------------------------------------------------------------------
 
 const EXAMPLE_DECISION_IDS: Record<number, string> = {
   1: '550e8400-e29b-41d4-a716-446655440001',
@@ -42,18 +37,16 @@ type ExampleSpec = {
 
 const EXAMPLES: ExampleSpec[] = [
   { index: 1, tenant: 'Bloom Co.', title: 'CS REFUND', tier: 'SMB' },
-  { index: 2, tenant: 'Bloom Co.', title: 'AD CLAIM REVIEW', tier: 'SMB' },
-  { index: 3, tenant: 'Bloom Co.', title: 'INVOICE CLASSIFY', tier: 'SMB' },
+  { index: 2, tenant: 'Bloom Co.', title: 'AD CLAIM', tier: 'SMB' },
+  { index: 3, tenant: 'Bloom Co.', title: 'INVOICE', tier: 'SMB' },
   { index: 4, tenant: 'Bloom Co.', title: 'LABEL COPY', tier: 'SMB' },
   { index: 5, tenant: 'Bloom Co.', title: 'REORDER', tier: 'SMB' },
   { index: 6, tenant: 'KB Bank', title: 'LOAN APPROVE', tier: 'ENT' },
   { index: 7, tenant: 'Shinhan', title: 'FRAUD HOLD', tier: 'ENT' },
 ];
 
-// ---------------------------------------------------------------------------
-// Verifier deps factory (mirrors apps/web/src/app/api/v1/verify/route.ts).
-// Cached at module scope; safe across requests in the Node runtime.
-// ---------------------------------------------------------------------------
+const SCHEMA_UID =
+  '0xadedddd375ab7f7603e25c0f6dda36e95f5699efda7737e75e9e0cf7a470d7c7';
 
 let cachedAnchorer: BaseEASAnchorer | null = null;
 let cachedAttester: string | null = null;
@@ -88,29 +81,12 @@ function buildDeps(): VerifierDeps {
   };
 }
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-const SCHEMA_UID =
-  '0xadedddd375ab7f7603e25c0f6dda36e95f5699efda7737e75e9e0cf7a470d7c7';
-
 function parseExample(value: string | undefined): number | null {
   if (!value) return null;
   const n = Number.parseInt(value, 10);
   if (!Number.isFinite(n)) return null;
   return Math.max(1, Math.min(7, n));
 }
-
-function describeRecord(result: VerifyResult): string | null {
-  const r = result.record;
-  if (!r) return null;
-  return `agent ${r.agent_id}, subject ${r.subject}, decision_class ${r.decision_class}, risk ${r.risk_level}.`;
-}
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
 
 type SearchParams = Promise<{ example?: string; id?: string }>;
 
@@ -120,7 +96,7 @@ export default async function VerifyPage({
   searchParams: SearchParams;
 }) {
   const sp = await searchParams;
-  const exampleN = parseExample(sp.example);
+  const exampleN = parseExample(sp.example) ?? (sp.id ? null : 1); // default to example 1
   const decisionId = exampleN
     ? EXAMPLE_DECISION_IDS[exampleN]
     : sp.id?.toLowerCase() ?? null;
@@ -136,7 +112,6 @@ export default async function VerifyPage({
     }
   }
 
-  // Re-derive canonical_hash for display (verifier doesn't expose it).
   let canonicalHash: string | null = null;
   if (result?.record) {
     try {
@@ -146,271 +121,157 @@ export default async function VerifyPage({
     }
   }
 
+  const story = exampleN ? EXAMPLE_STORIES[exampleN] : null;
+  const example = exampleN ? EXAMPLES[exampleN - 1] : null;
+
   return (
     <>
-      {/* Page header */}
-      <section style={{ padding: '80px 0 48px' }}>
+      {/* ============ HEADER ============ */}
+      <section style={{ padding: '64px 0 36px' }}>
         <div className="ll-shell">
-          <div className="ll-eyebrow">
-            VERIFICATION RECEIPT{' '}
-            <span className="ll-num">
-              № {exampleN ? String(exampleN).padStart(2, '0') : '00'} / 07
-            </span>
+          <div className="ll-eyebrow ll-reveal" style={{ marginBottom: 14 }}>
+            Public verifier
           </div>
-          <h1
-            className="ll-h1"
-            style={{ marginTop: '16px', maxWidth: '820px' }}
-          >
-            Independent verification.
-            <br />
-            <em
-              style={{ color: 'var(--ll-ice)', fontStyle: 'italic' }}
-            >
-              No party trusts a party.
-            </em>
+          <h1 className="ll-display ll-reveal ll-reveal-d1" style={{ fontSize: 'clamp(2.5rem, 5vw, 3.75rem)' }}>
+            See an AI decision{' '}
+            <em>prove itself.</em>
           </h1>
           <p
-            className="ll-mono-body"
-            style={{ marginTop: '20px', maxWidth: '720px' }}
+            className="ll-lede ll-reveal ll-reveal-d2"
+            style={{ marginTop: 22, maxWidth: 720, color: 'var(--ll-ink-2)' }}
           >
-            Paste a Decision ID — or pick one of the seven seeded examples
-            below. We re-compute the canonical hash, fetch the on-chain
-            attestation from Base Sepolia, and check the operator signature.
-            Two independent green checks must pass for the receipt to validate.
+            Pick a real scenario below. Watch what the agent considered, what
+            it chose, and what we&apos;d show a regulator or a judge if
+            anyone challenged it. Every example is anchored on Base Sepolia
+            right now — clickable, checkable, can&apos;t be edited.
           </p>
         </div>
       </section>
 
-      <hr className="ll-rule" />
-
-      {/* Tabs */}
-      <section style={{ padding: '32px 0 0' }}>
+      {/* ============ TABS ============ */}
+      <section style={{ padding: '8px 0 32px' }}>
         <div className="ll-shell">
-          <div
-            className="ll-caption"
-            style={{ marginBottom: '16px' }}
-          >
-            SEEDED EXAMPLES — CLICK TO LOAD
-          </div>
           <Tabs examples={EXAMPLES} activeExample={exampleN} />
         </div>
       </section>
 
-      {/* Loaded example header / placeholder */}
-      {result ? (
-        <ResultBlock
-          result={result}
-          example={exampleN ? EXAMPLES[exampleN - 1] : null}
-          canonicalHash={canonicalHash}
-          schemaUid={SCHEMA_UID}
-        />
+      {/* ============ HEADER CARD ============ */}
+      {result && example && story ? (
+        <>
+          <section style={{ padding: '8px 0 32px' }}>
+            <div className="ll-shell">
+              <div
+                className="ll-card-soft"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'minmax(0, 1fr) auto',
+                  gap: 24,
+                  alignItems: 'center',
+                  borderRadius: 20,
+                }}
+              >
+                <div>
+                  <div className="ll-caption" style={{ marginBottom: 8 }}>
+                    {example.tenant} · scenario №{String(example.index).padStart(2, '0')}
+                  </div>
+                  <h2 className="ll-h2" style={{ marginBottom: 6 }}>
+                    {capitalize(example.title.toLowerCase())} — verified live
+                  </h2>
+                  <p className="ll-small" style={{ color: 'var(--ll-mute)' }}>
+                    {result.batch?.anchoredAt
+                      ? `Anchored on Base Sepolia · ${new Date(
+                          result.batch.anchoredAt,
+                        ).toLocaleString('en-US', {
+                          dateStyle: 'medium',
+                          timeStyle: 'short',
+                        })}`
+                      : 'Pending anchor'}
+                    {result.batch?.txHash
+                      ? ` · tx ${result.batch.txHash.slice(0, 10)}…`
+                      : ''}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                  <span className={result.verified ? 'll-pill ll-pill-ok' : 'll-pill ll-pill-fail'}>
+                    {result.verified ? '✓ all 6 checks pass' : '✕ verification failed'}
+                  </span>
+                  {result.batch?.explorerUrl ? (
+                    <a
+                      href={result.batch.explorerUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ll-btn ll-btn-ghost"
+                    >
+                      Open on easscan ↗
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ============ STORY ============ */}
+          <StorySection exampleN={example.index} story={story} />
+
+          {/* ============ WHAT THIS PROVES ============ */}
+          <WhatThisProves
+            attesterAddress={result.attesterAddress}
+            operatorAddress={result.operatorAddress}
+            anchoredAt={result.batch?.anchoredAt}
+            txHash={result.batch?.txHash}
+          />
+
+          {/* ============ TECHNICAL EVIDENCE (collapsible) ============ */}
+          <EvidenceDetails
+            decisionId={result.decisionId}
+            canonicalHash={canonicalHash}
+            merkleRoot={result.batch?.merkleRoot}
+            easUid={result.batch?.easUid}
+            txHash={result.batch?.txHash}
+            schemaUid={SCHEMA_UID}
+            attesterAddress={result.attesterAddress}
+            operatorAddress={result.operatorAddress}
+            checks={result.checks}
+            explorerUrl={result.batch?.explorerUrl}
+            basescanUrl={result.batch?.basescanUrl}
+          />
+        </>
       ) : (
         <PlaceholderBlock serverError={serverError} hadInput={!!decisionId} />
       )}
 
-      <hr className="ll-rule" />
+      {/* ============ SCENARIO SIMULATOR ============ */}
+      <ScenarioSimulator />
 
-      {/* Try it yourself */}
-      <section style={{ padding: '96px 0' }}>
-        <div className="ll-shell" style={{ maxWidth: '880px' }}>
-          <div className="ll-eyebrow" style={{ marginBottom: '16px' }}>
-            EXHIBIT <span className="ll-num">№ 06 / 07 · TRY-IT-YOURSELF</span>
+      {/* ============ NEXT STEP CTA ============ */}
+      <section style={{ padding: '64px 0 96px' }}>
+        <div className="ll-shell" style={{ maxWidth: 720, textAlign: 'center' }}>
+          <div className="ll-eyebrow" style={{ marginBottom: 14 }}>
+            Next
           </div>
-          <h2 className="ll-h1" style={{ marginBottom: '24px' }}>
-            Verify a record we&apos;ve never seen.
-          </h2>
-          <p className="ll-mono-body" style={{ marginBottom: '32px' }}>
-            Paste any DR-1 record JSON below — or use a Decision ID from your
-            own Ledgerline tenant. The verification runs against our public
-            read endpoint; no record content is persisted.
-          </p>
-          <TryItYourself />
-        </div>
-      </section>
-    </>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Sub-blocks
-// ---------------------------------------------------------------------------
-
-function ResultBlock({
-  result,
-  example,
-  canonicalHash,
-  schemaUid,
-}: {
-  result: VerifyResult;
-  example: ExampleSpec | null;
-  canonicalHash: string | null;
-  schemaUid: string;
-}) {
-  const eyebrow = example
-    ? `DECISION RECORD · DR-1 · № ${String(example.index).padStart(2, '0')}`
-    : 'DECISION RECORD · DR-1';
-
-  const title = example
-    ? `${example.tenant} — ${example.title}`
-    : result.record?.agent_id ?? 'Decision record';
-
-  const description = describeRecord(result);
-
-  const status: { state: 'verified' | 'failed' | 'pending'; label: string } =
-    result.verified
-      ? { state: 'verified', label: 'ANCHORED · BASE SEPOLIA' }
-      : { state: 'failed', label: result.reason ? 'NOT VERIFIED' : 'FAILED' };
-
-  const merkleRoot = result.batch?.merkleRoot;
-  const easUid = result.batch?.easUid;
-
-  return (
-    <>
-      <section style={{ padding: '48px 0 0' }}>
-        <div className="ll-shell">
-          <RecordHeader
-            eyebrow={eyebrow}
-            title={title}
-            description={description}
-            status={status}
-          />
-        </div>
-      </section>
-
-      {/* Dual-check seal */}
-      <section style={{ padding: '48px 0' }}>
-        <div className="ll-shell">
-          <DualCheckSeal
-            checks={result.checks}
-            attesterAddress={result.attesterAddress}
-            operatorAddress={result.operatorAddress}
-            batch={
-              result.batch
-                ? {
-                    easUid: result.batch.easUid,
-                    txHash: result.batch.txHash,
-                    blockNumber: result.batch.blockNumber,
-                    anchoredAt: result.batch.anchoredAt,
-                  }
-                : undefined
-            }
-            authorTimestamp={result.record?.timestamp}
-          />
-
-          <div
-            style={{
-              marginTop: '24px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: '24px',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-            }}
-          >
-            <p
-              className="ll-mono-small"
-              style={{ color: 'var(--ll-ink-low)', maxWidth: '720px' }}
-            >
-              Both seals verified independently. The notary uses a different
-              key than the author by design — neither party can forge a record
-              alone. Mathematically immutable: a tamper would require finding
-              a SHA-256 collision <em>and</em> rewriting a confirmed Base block.
-            </p>
-            {result.batch?.explorerUrl ? (
-              <a
-                href={result.batch.explorerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ll-btn"
-              >
-                Open on easscan ↗
-              </a>
-            ) : null}
-          </div>
-        </div>
-      </section>
-
-      <hr className="ll-rule" />
-
-      {/* Evidence detail panel */}
-      <section style={{ padding: '96px 0' }}>
-        <div
-          className="ll-shell"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '64px',
-          }}
-        >
-          {/* LEFT: hash plates */}
-          <div>
-            <div
-              className="ll-eyebrow"
-              style={{ marginBottom: '16px' }}
-            >
-              EVIDENCE · HASH PLATES
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {result.decisionId ? (
-                <HashPlate
-                  label="DECISION ID"
-                  value={result.decisionId}
-                />
-              ) : null}
-              {canonicalHash ? (
-                <HashPlate
-                  label="CANONICAL HASH (SHA-256, RFC 8785)"
-                  value={canonicalHash}
-                />
-              ) : null}
-              {merkleRoot ? (
-                <HashPlate
-                  label="MERKLE ROOT (KECCAK256, OZ STANDARD)"
-                  value={merkleRoot}
-                />
-              ) : null}
-              {easUid ? (
-                <HashPlate
-                  label="EAS ATTESTATION UID"
-                  value={easUid}
-                />
-              ) : null}
-              <HashPlate label="SCHEMA UID" value={schemaUid} />
-            </div>
-          </div>
-
-          {/* RIGHT: chain of checks */}
-          <div>
-            <div
-              className="ll-eyebrow"
-              style={{ marginBottom: '16px' }}
-            >
-              VERIFICATION CHAIN
-            </div>
-            <VerificationChain checks={result.checks} easUid={easUid} />
-            <div
+          <h2 className="ll-h1">
+            Want to put your own AI agent{' '}
+            <em
               style={{
-                marginTop: '28px',
-                display: 'flex',
-                gap: '12px',
-                flexWrap: 'wrap',
+                fontFamily: 'var(--font-instrument-serif)',
+                fontStyle: 'italic',
+                color: 'var(--ll-brand)',
               }}
             >
-              <Link href="/dashboard" className="ll-btn ll-btn-ghost">
-                View full DR-1 record
-              </Link>
-              {result.batch?.basescanUrl ? (
-                <a
-                  href={result.batch.basescanUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ll-btn ll-btn-ghost"
-                >
-                  Open tx on basescan ↗
-                </a>
-              ) : null}
-            </div>
+              on the record?
+            </em>
+          </h2>
+          <p className="ll-lede" style={{ marginTop: 14, marginBottom: 28 }}>
+            One npm install. One SDK call. Every decision gets a permanent,
+            independently verifiable receipt.
+          </p>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link href="/#try" className="ll-btn">
+              See the quickstart →
+            </Link>
+            <Link href="/#how" className="ll-btn ll-btn-ghost">
+              How it works
+            </Link>
           </div>
         </div>
       </section>
@@ -426,37 +287,31 @@ function PlaceholderBlock({
   hadInput: boolean;
 }) {
   return (
-    <section style={{ padding: '64px 0 96px' }}>
+    <section style={{ padding: '32px 0 64px' }}>
       <div className="ll-shell">
-        <div
-          className="ll-eyebrow"
-          style={{ color: 'var(--ll-pending)', marginBottom: '12px' }}
-        >
-          NO RECEIPT LOADED
+        <div className="ll-card" style={{ padding: 32, background: 'var(--ll-warn-soft)', borderColor: 'color-mix(in oklab, var(--ll-warn) 30%, transparent)' }}>
+          <div
+            className="ll-eyebrow"
+            style={{ color: 'var(--ll-accent-deep)', marginBottom: 8 }}
+          >
+            No receipt loaded
+          </div>
+          <h2 className="ll-h2">
+            {hadInput
+              ? 'We could not verify that record.'
+              : 'Pick a scenario above to see a live decision verified.'}
+          </h2>
+          {serverError ? (
+            <p className="ll-small" style={{ color: 'var(--ll-fail)', marginTop: 12 }}>
+              {serverError}
+            </p>
+          ) : null}
         </div>
-        <h2 className="ll-h2" style={{ marginBottom: '12px' }}>
-          {hadInput
-            ? 'We could not verify that record.'
-            : 'Pick a seeded example above, or paste a Decision ID below.'}
-        </h2>
-        {serverError ? (
-          <p
-            className="ll-mono-small"
-            style={{ color: 'var(--ll-failed)', maxWidth: '720px' }}
-          >
-            verifier error · {serverError}
-          </p>
-        ) : (
-          <p
-            className="ll-mono-small"
-            style={{ color: 'var(--ll-ink-mid)', maxWidth: '720px' }}
-          >
-            The Try-It-Yourself form below accepts any decision_id UUID issued
-            by Ledgerline, or a complete DR-1 JSON record paired with its EAS
-            attestation UID.
-          </p>
-        )}
       </div>
     </section>
   );
+}
+
+function capitalize(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
