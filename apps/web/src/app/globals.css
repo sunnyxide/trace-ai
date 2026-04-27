@@ -447,8 +447,15 @@ a.ll-btn-ghost {
   border-radius: 999px;
   background: var(--ll-brand-soft);
   color: var(--ll-brand);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
-.ll-tab .ll-badge-ent { background: var(--ll-accent-soft); color: var(--ll-accent-deep); }
+.ll-tab .ll-badge-domain-ecommerce  { background: var(--ll-brand-soft);  color: var(--ll-brand); }
+.ll-tab .ll-badge-domain-finance    { background: var(--ll-accent-soft); color: var(--ll-accent-deep); }
+.ll-tab .ll-badge-domain-healthcare { background: var(--ll-ok-soft);     color: var(--ll-ok); }
+.ll-tab .ll-badge-domain-hr         { background: #FFF3D6;               color: #B5780A; }
+.ll-tab .ll-badge-domain-insurance  { background: #FBE6FF;               color: #8E2EB8; }
+.ll-tab .ll-badge-domain-legal      { background: #DDF1F4;               color: #0E6E7C; }
 
 /* ----- Hash plate (technical detail panel) ----- */
 .ll-hash-plate {
@@ -699,6 +706,97 @@ a.ll-btn-ghost {
 .ll-reveal-d2 { animation-delay: 140ms; }
 .ll-reveal-d3 { animation-delay: 220ms; }
 .ll-reveal-d4 { animation-delay: 320ms; }
+
+/* ----- Section-level ambient backgrounds ----- */
+
+/* Soft warm-cool gradient mesh — used on quote / story regions to break the
+ * flat gray of plain page bg. Subtle, doesn't fight the typography. */
+.ll-bg-warm-mesh {
+  position: relative;
+  background:
+    radial-gradient(900px 600px at 90% 0%,  color-mix(in oklab, var(--ll-accent) 8%, transparent), transparent 70%),
+    radial-gradient(800px 500px at 0% 100%, color-mix(in oklab, var(--ll-brand)  9%, transparent), transparent 65%),
+    var(--ll-bg);
+}
+.ll-bg-cool-mesh {
+  position: relative;
+  background:
+    radial-gradient(800px 500px at 10% 0%,  color-mix(in oklab, var(--ll-brand)  10%, transparent), transparent 65%),
+    radial-gradient(700px 500px at 100% 100%, color-mix(in oklab, var(--ll-aurora-3) 12%, transparent), transparent 65%),
+    var(--ll-surface);
+}
+
+/* Animated dotted grid — sits behind text, subtle drift */
+.ll-bg-grid {
+  position: relative;
+}
+.ll-bg-grid::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle, color-mix(in oklab, var(--ll-ink) 6%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: 0 0;
+  mask-image:
+    radial-gradient(ellipse 70% 60% at 50% 50%, black 60%, transparent 100%);
+  -webkit-mask-image:
+    radial-gradient(ellipse 70% 60% at 50% 50%, black 60%, transparent 100%);
+  pointer-events: none;
+  animation: grid-drift 18s linear infinite;
+}
+.ll-bg-grid > * { position: relative; z-index: 1; }
+
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 22px 22px; }
+}
+
+/* ----- Speech-bubble cards (Who can ask) ----- */
+.ll-speech {
+  position: relative;
+  padding: 24px 24px 22px;
+  background: var(--ll-surface);
+  border: 1px solid var(--ll-rule);
+  border-radius: 18px;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  cursor: default;
+}
+.ll-speech:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 18px 36px -18px var(--ll-speech-glow, color-mix(in oklab, var(--ll-brand) 35%, transparent));
+  border-color: var(--ll-speech-fg, var(--ll-rule-2));
+}
+.ll-speech:hover .ll-speech-quote {
+  color: var(--ll-speech-fg, var(--ll-ink));
+  font-weight: 500;
+}
+.ll-speech:hover .ll-speech-role {
+  color: var(--ll-speech-fg, var(--ll-ink));
+}
+.ll-speech-tone-warm  { --ll-speech-fg: var(--ll-accent-deep); --ll-speech-glow: color-mix(in oklab, var(--ll-accent) 40%, transparent); }
+.ll-speech-tone-brand { --ll-speech-fg: var(--ll-brand);       --ll-speech-glow: color-mix(in oklab, var(--ll-brand)  40%, transparent); }
+.ll-speech-tone-ink   { --ll-speech-fg: var(--ll-ink);         --ll-speech-glow: color-mix(in oklab, var(--ll-ink)    20%, transparent); }
+.ll-speech-tone-ok    { --ll-speech-fg: var(--ll-ok);          --ll-speech-glow: color-mix(in oklab, var(--ll-ok)     35%, transparent); }
+.ll-speech-quote {
+  margin: 14px 0 0;
+  font-family: var(--font-instrument-serif);
+  font-style: normal;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  color: var(--ll-ink-2);
+  transition: color 220ms ease, font-weight 220ms ease;
+}
+.ll-speech-role {
+  font-family: var(--font-geist-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ll-mute);
+  transition: color 220ms ease;
+}
 
 /* ----- Marquee trace (auto-running ledger ticker) ----- */
 .ll-marquee-track {

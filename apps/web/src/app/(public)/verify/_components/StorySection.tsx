@@ -14,6 +14,25 @@
  */
 
 import { PersonaAvatar, type PersonaRole } from './PersonaAvatar';
+import { Reveal } from '@/components/motion/Reveal';
+
+// Map persona roles to speech-bubble tone color
+const ROLE_TONE_CLASS: Record<string, string> = {
+  customer: 'll-speech-tone-warm',
+  patient: 'll-speech-tone-warm',
+  vendor: 'll-speech-tone-warm',
+  bank: 'll-speech-tone-brand',
+  payer: 'll-speech-tone-brand',
+  hr: 'll-speech-tone-brand',
+  accountant: 'll-speech-tone-brand',
+  board: 'll-speech-tone-brand',
+  insurer: 'll-speech-tone-brand',
+  auditor: 'll-speech-tone-ink',
+  regulator: 'll-speech-tone-ink',
+  lawyer: 'll-speech-tone-ink',
+  doctor: 'll-speech-tone-ink',
+  investigator: 'll-speech-tone-ok',
+};
 
 export type ExampleStory = {
   setting: string;
@@ -64,76 +83,79 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
     ],
   },
   3: {
-    setting: 'Bloom Co. · accounting agent · cross-border invoice',
-    headline: 'Accounting AI booked a $4,200 supplier invoice with the right tax code.',
+    setting: 'CareGrid · telehealth triage agent · acute case',
+    headline: 'Triage AI routed a chest-pain case from video to in-person ER.',
     detail:
-      'Foundry Materials raw-materials bill. Classified COGS, applied Korea VAT reverse-charge §10-2.',
+      'Patient M, 47. Self-reported BP 152/96. Onset 30 min, dull pressure radiating to left arm. AI weighed three care tiers.',
     considered: [
-      { label: 'Operating expense (generic services) — rejected.' },
-      { label: 'COGS + VAT reverse-charge per KR §10-2.', chosen: true },
+      { label: 'Self-care advisory + 24h follow-up (rejected: cardiac signal too acute).' },
+      { label: 'Telehealth video within 30 min (rejected: video-only insufficient for chest pain).' },
+      { label: 'Refer to in-person ER, arrange transport.', chosen: true },
     ],
-    chose: '₩5.69M COGS + ₩569K reverse-charge VAT. Posted to QuickBooks.',
+    chose: 'ER referral. Attending physician co-signed within 4 minutes; ride dispatched.',
     why:
-      'When the National Tax Service reviews next year, every classification is reproducible — policy refs, alternatives, and LLM call hashes intact.',
+      'A miss here ends careers. The receipt shows exactly which signals the AI weighed, which routes it ruled out, and the second physician who agreed.',
     audience: [
-      { who: 'NTS auditor',           role: 'auditor',     ask: 'Was the categorization defensible?' },
-      { who: 'Outside accounting firm', role: 'accountant', ask: 'How was each invoice classified?' },
-      { who: 'A future SaaS auditor',  role: 'investigator', ask: 'Is the cross-border VAT logic auditable end-to-end?' },
+      { who: 'The patient',     role: 'patient',  ask: 'Why was I sent to the ER instead of a video visit?' },
+      { who: 'The payer',       role: 'payer',    ask: 'Was this routing medically necessary?' },
+      { who: 'Hospital QI team', role: 'doctor',   ask: 'Are our triage decisions defensible across cases?' },
     ],
   },
   4: {
-    setting: 'Bloom Co. · design agent · pre-print label review',
-    headline: 'Design AI flagged a risky claim before the print run.',
+    setting: 'HirePath · resume-screening agent · senior backend role',
+    headline: 'Screening AI forwarded a candidate as a strong L5 match.',
     detail:
-      'New magnesium glycinate label. The AI proposed three alternatives, scored each, paused the run for human review.',
+      '12 years experience, distributed systems + payments. Open-source maintainer. Compensation expectations above L5 band.',
     considered: [
-      { label: '"Calming effect" — rejected: borderline therapeutic claim.' },
-      { label: '"Reduces stress" — rejected: implies medical effect.' },
-      { label: '"Supports relaxation" — referred to founder for review.', chosen: true },
+      { label: 'Auto-reject on salary mismatch (rejected: compensation is negotiable).' },
+      { label: 'Forward as strong L5 match.', chosen: true },
+      { label: 'Forward as L6 stretch interview (lower confidence).' },
     ],
-    chose: 'Print run paused. Founder approved 11 minutes later.',
+    chose: 'Forwarded to recruiter at L5 with notes on compensation gap.',
     why:
-      'The AI did not silently approve risky language — it flagged it and waited for human authority. Due-care defense, automatic.',
+      'If a rejected candidate files an EEOC complaint, the receipt shows the rubric every applicant was scored against — and that the L5 path was applied uniformly.',
     audience: [
-      { who: 'MFDS Labeling Office',          role: 'regulator', ask: 'Did the brand take reasonable steps before printing?' },
-      { who: 'A future product-liability lawyer', role: 'lawyer',    ask: 'Where did the human override the AI’s draft?' },
-      { who: 'The print vendor',                role: 'vendor',    ask: 'Why was the print run held?' },
+      { who: 'A rejected applicant', role: 'customer', ask: 'Was I scored on the same rubric as the people you hired?' },
+      { who: 'Internal HR analytics',  role: 'hr',       ask: 'Are screening scores reproducible across recruiters?' },
+      { who: 'EEOC inquiry (US)',       role: 'lawyer',   ask: 'Does the bias-aware path match what was promised in the job posting?' },
     ],
   },
   5: {
-    setting: 'Bloom Co. · inventory agent · 03:00 reorder',
-    headline: 'Inventory AI placed a reorder before stock ran out.',
+    setting: 'Helix Auto · claims agent · low-severity collision',
+    headline: 'Claims AI proposed a $1,590 settlement on a fender-bender.',
     detail:
-      'Melatonin SKU dropped to 28 days of cover. Supplier lead time is 35 days. PO issued, Slack alerted.',
+      '4 photos, no injuries, other driver acknowledged fault on-scene. AI weighed three settlement bands against the policy schedule.',
     considered: [
-      { label: 'Wait — recent demand drop (rejected: trailing demand was steady).' },
-      { label: 'Reorder now — runway under lead time.', chosen: true },
+      { label: 'Total settlement at policy limit (rejected: damage well below).' },
+      { label: 'Open investigation + adjuster visit (rejected: photos sufficient).' },
+      { label: '$1,840 invoice less $250 deductible.', chosen: true },
     ],
-    chose: 'PO #2026-04-25-001 · 12,000 units · supplier-allowlist contract.',
+    chose: 'Pay $1,590. Adjuster signed off; check issued same business day.',
     why:
-      'If the supplier later disputes pricing or terms, the receipt shows the contract version, the demand signals, and the alternatives the bot considered.',
+      "If the policyholder later disputes the speed or the amount, the receipt shows that the alternative — opening a longer investigation — was deliberately ruled out, with reasons.",
     audience: [
-      { who: 'The supplier',                  role: 'vendor',       ask: 'On what contract terms was the order placed?' },
-      { who: 'A future stockout investigation', role: 'investigator', ask: 'When did inventory cross the threshold?' },
-      { who: 'Supply-chain auditor',          role: 'auditor',      ask: 'Are reorder decisions auditable?' },
+      { who: 'The insured',          role: 'customer',     ask: 'Why was my settlement smaller than my neighbor\'s?' },
+      { who: 'Reinsurer audit',      role: 'insurer',      ask: 'Are settlement bands applied consistently?' },
+      { who: 'State insurance dept', role: 'regulator',    ask: 'Does this AI handle low-severity claims fairly?' },
     ],
   },
   6: {
-    setting: 'KB Bank · personal-loan AI · high-impact decision',
-    headline: 'A loan AI approved ₩30M, with a real underwriter signing off.',
+    setting: 'Northwind Legal · contract review agent · vendor MSA',
+    headline: 'Legal AI redlined a 36-month MSA against the playbook.',
     detail:
-      'Applicant 7F3E · credit score 740 · DTI 28%. Stress-test scenario passed.',
+      'Argonaut Cloud proposed: 5% annual price escalator, mutual indemnification capped at fees paid. AI compared each clause to playbook v2.',
     considered: [
-      { label: 'Reject — DTI margin too thin under +200bps rate stress.' },
-      { label: 'Approve at 5.4% APR for 24 months.', chosen: true },
+      { label: 'Accept as-is (rejected: three out-of-policy clauses found).' },
+      { label: 'Counter with 12-month term (within negotiation latitude).' },
+      { label: 'Redline the 5% escalator → CPI cap.', chosen: true },
     ],
-    chose: 'Approved. Term sheet issued from the loan-system.',
+    chose: 'Redline set issued. General Counsel signed the change list before sending to vendor.',
     why:
-      'The Korea AI Basic Act requires a tamper-proof audit log for every high-impact AI decision. Ledgerline turns the legal requirement into a one-line SDK call.',
+      'When an audit asks why this contract was structured the way it was, the receipt shows every clause flag, the alternative the AI scored lower, and the GC who approved the redline.',
     audience: [
-      { who: 'Financial Supervisory Service', role: 'regulator', ask: 'Show me the audit log.' },
-      { who: 'A rejected applicant',           role: 'customer',  ask: 'Was my application evaluated under the same policy?' },
-      { who: 'Board risk committee',           role: 'board',     ask: 'Can we prove every decision’s reasoning?' },
+      { who: 'The counterparty',  role: 'vendor',       ask: 'Why did you reject our standard escalator?' },
+      { who: 'External auditor',  role: 'auditor',      ask: 'Were contracts reviewed against a consistent rubric?' },
+      { who: 'Audit committee',   role: 'board',        ask: 'How are AI-assisted reviews different from a partner\'s?' },
     ],
   },
   7: {
@@ -280,133 +302,136 @@ export function StorySection({ exampleN, story }: Props) {
       </div>
 
       {/* ===================================================================
-       * Region 2 — Why this matters (full-width pull-quote)
+       * Region 2 — Why this matters (warm mesh bg + balanced quote glyphs)
        * =================================================================*/}
-      <section style={{ padding: '64px 0' }}>
-        <div className="ll-shell" style={{ maxWidth: 980 }}>
-          <div className="ll-eyebrow" style={{ marginBottom: 28, textAlign: 'center' }}>
-            Why this matters
-          </div>
-          <blockquote
-            style={{
-              margin: 0,
-              padding: '0 24px',
-              borderLeft: 'none',
-              fontFamily: 'var(--font-instrument-serif)',
-              fontStyle: 'italic',
-              fontWeight: 400,
-              fontSize: 'clamp(1.5rem, 2.6vw, 2.125rem)',
-              lineHeight: 1.32,
-              letterSpacing: '-0.01em',
-              color: 'var(--ll-ink)',
-              textAlign: 'center',
-              position: 'relative',
-            }}
-          >
-            <span
-              aria-hidden
+      <section className="ll-bg-warm-mesh" style={{ padding: '96px 0' }}>
+        <div className="ll-shell" style={{ maxWidth: 1000 }}>
+          <Reveal>
+            <div
+              className="ll-eyebrow"
+              style={{ marginBottom: 32, textAlign: 'center' }}
+            >
+              Why this matters
+            </div>
+          </Reveal>
+          <Reveal delayMs={120}>
+            <div
               style={{
-                position: 'absolute',
-                top: -28,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                fontFamily: 'var(--font-instrument-serif)',
-                fontSize: '4rem',
-                color: 'var(--ll-brand)',
-                opacity: 0.32,
-                lineHeight: 1,
+                position: 'relative',
+                padding: '0 56px',
+                textAlign: 'center',
               }}
             >
-              “
-            </span>
-            {story.why}
-          </blockquote>
+              {/* Opening quote — top left */}
+              <span
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  top: -30,
+                  left: 8,
+                  fontFamily: 'var(--font-instrument-serif)',
+                  fontSize: '5.5rem',
+                  color: 'var(--ll-brand)',
+                  opacity: 0.28,
+                  lineHeight: 1,
+                  fontWeight: 400,
+                }}
+              >
+                “
+              </span>
+              <p
+                style={{
+                  margin: 0,
+                  fontFamily: 'var(--font-instrument-serif)',
+                  fontStyle: 'italic',
+                  fontWeight: 400,
+                  fontSize: 'clamp(1.5rem, 2.6vw, 2.125rem)',
+                  lineHeight: 1.32,
+                  letterSpacing: '-0.01em',
+                  color: 'var(--ll-ink)',
+                }}
+              >
+                {story.why}
+              </p>
+              {/* Closing quote — bottom right, mirrored */}
+              <span
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  bottom: -52,
+                  right: 8,
+                  fontFamily: 'var(--font-instrument-serif)',
+                  fontSize: '5.5rem',
+                  color: 'var(--ll-accent)',
+                  opacity: 0.32,
+                  lineHeight: 1,
+                  fontWeight: 400,
+                }}
+              >
+                ”
+              </span>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Spacer rule */}
-      <div className="ll-shell" style={{ padding: '24px 32px' }}>
-        <div
-          aria-hidden
-          style={{
-            height: 1,
-            background:
-              'linear-gradient(90deg, transparent, var(--ll-rule) 30%, var(--ll-rule) 70%, transparent)',
-          }}
-        />
-      </div>
-
       {/* ===================================================================
-       * Region 3 — Who can ask (3-card grid with persona avatars)
+       * Region 3 — Who can ask (speech-bubble cards on dotted-grid bg)
        * =================================================================*/}
-      <section style={{ padding: '64px 0 48px' }}>
+      <section className="ll-bg-grid" style={{ padding: '96px 0 80px' }}>
         <div className="ll-shell">
-          <div style={{ maxWidth: 720, marginBottom: 36 }}>
-            <div className="ll-eyebrow" style={{ marginBottom: 10 }}>
-              Who can ask, and what they ask
+          <Reveal>
+            <div style={{ maxWidth: 720, marginBottom: 44 }}>
+              <div className="ll-eyebrow" style={{ marginBottom: 12 }}>
+                Who can ask, and what they ask
+              </div>
+              <p
+                className="ll-body-mute"
+                style={{ marginTop: 0, fontSize: '1rem', maxWidth: 600 }}
+              >
+                The same record satisfies very different questioners. Each
+                gets the same answer — and none of them have to trust the
+                other party&apos;s word for it.
+              </p>
             </div>
-            <p
-              className="ll-body-mute"
-              style={{ marginTop: 0, fontSize: '0.9375rem', maxWidth: 560 }}
-            >
-              The same record satisfies very different questioners. Each of
-              them gets the same answer — and none of them have to trust the
-              other party&apos;s word for it.
-            </p>
-          </div>
+          </Reveal>
 
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 16,
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: 20,
             }}
           >
-            {story.audience.map((item, i) => (
-              <article
-                key={i}
-                className="ll-card ll-card-hover"
-                style={{
-                  padding: 24,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 14,
-                  minHeight: 220,
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                  <PersonaAvatar role={item.role} size={44} />
-                  <div
+            {story.audience.map((item, i) => {
+              const toneClass =
+                ROLE_TONE_CLASS[item.role] ?? 'll-speech-tone-ink';
+              return (
+                <Reveal key={i} delayMs={120 + i * 100}>
+                  <article
+                    className={`ll-speech ${toneClass}`}
                     style={{
-                      fontFamily: 'var(--font-geist-mono)',
-                      fontSize: '0.6875rem',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      fontWeight: 500,
-                      color: 'var(--ll-mute)',
-                      lineHeight: 1.3,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 16,
+                      minHeight: 220,
                     }}
                   >
-                    {item.who}
-                  </div>
-                </div>
-                <blockquote
-                  style={{
-                    margin: 0,
-                    paddingTop: 6,
-                    borderTop: '1px solid var(--ll-rule-faint)',
-                    fontFamily: 'var(--font-instrument-serif)',
-                    fontStyle: 'italic',
-                    fontWeight: 400,
-                    fontSize: '1.0625rem',
-                    lineHeight: 1.42,
-                    color: 'var(--ll-ink-2)',
-                  }}
-                >
-                  “{item.ask}”
-                </blockquote>
-              </article>
-            ))}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 14,
+                      }}
+                    >
+                      <PersonaAvatar role={item.role} size={48} />
+                      <div className="ll-speech-role">{item.who}</div>
+                    </div>
+                    <p className="ll-speech-quote">“{item.ask}”</p>
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>

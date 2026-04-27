@@ -29,21 +29,23 @@ const EXAMPLE_DECISION_IDS: Record<number, string> = {
   7: '550e8400-e29b-41d4-a716-446655440007',
 };
 
+type Domain = 'ecommerce' | 'finance' | 'healthcare' | 'hr' | 'insurance' | 'legal';
+
 type ExampleSpec = {
   index: number;
   tenant: string;
   title: string;
-  domain: 'ecommerce' | 'finance';
+  domain: Domain;
 };
 
 const EXAMPLES: ExampleSpec[] = [
-  { index: 1, tenant: 'Bloom Co.', title: 'CS REFUND',    domain: 'ecommerce' },
-  { index: 2, tenant: 'Bloom Co.', title: 'AD CLAIM',     domain: 'ecommerce' },
-  { index: 3, tenant: 'Bloom Co.', title: 'INVOICE',      domain: 'ecommerce' },
-  { index: 4, tenant: 'Bloom Co.', title: 'LABEL COPY',   domain: 'ecommerce' },
-  { index: 5, tenant: 'Bloom Co.', title: 'REORDER',      domain: 'ecommerce' },
-  { index: 6, tenant: 'KB Bank',   title: 'LOAN APPROVE', domain: 'finance'   },
-  { index: 7, tenant: 'Shinhan',   title: 'FRAUD HOLD',   domain: 'finance'   },
+  { index: 1, tenant: 'Bloom Co.',      title: 'CS REFUND',     domain: 'ecommerce'  },
+  { index: 2, tenant: 'Bloom Co.',      title: 'AD COPY',       domain: 'ecommerce'  },
+  { index: 3, tenant: 'CareGrid',       title: 'TRIAGE',        domain: 'healthcare' },
+  { index: 4, tenant: 'HirePath',       title: 'SCREENING',     domain: 'hr'         },
+  { index: 5, tenant: 'Helix Auto',     title: 'CLAIM',         domain: 'insurance'  },
+  { index: 6, tenant: 'Northwind Legal', title: 'CONTRACT',     domain: 'legal'      },
+  { index: 7, tenant: 'Shinhan',        title: 'FRAUD HOLD',    domain: 'finance'    },
 ];
 
 const SCHEMA_UID =

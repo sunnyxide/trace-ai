@@ -1,16 +1,32 @@
 import Link from 'next/link';
 
+type Domain = 'ecommerce' | 'finance' | 'healthcare' | 'hr' | 'insurance' | 'legal';
+
 type TabSpec = {
   index: number;
   tenant: string;
   title: string;
-  domain: 'ecommerce' | 'finance';
+  domain: Domain;
 };
 
-/**
- * Domain-tagged seeded-example tabs for /verify. Active tab derived from the
- * `activeExample` prop (which the page reads from searchParams).
- */
+const DOMAIN_LABEL: Record<Domain, string> = {
+  ecommerce: 'E-COM',
+  finance: 'FIN',
+  healthcare: 'HEALTH',
+  hr: 'HR',
+  insurance: 'INSURE',
+  legal: 'LEGAL',
+};
+
+const DOMAIN_BADGE_TONE: Record<Domain, string> = {
+  ecommerce:  'll-badge ll-badge-domain-ecommerce',
+  finance:    'll-badge ll-badge-domain-finance',
+  healthcare: 'll-badge ll-badge-domain-healthcare',
+  hr:         'll-badge ll-badge-domain-hr',
+  insurance:  'll-badge ll-badge-domain-insurance',
+  legal:      'll-badge ll-badge-domain-legal',
+};
+
 export function Tabs({
   examples,
   activeExample,
@@ -23,7 +39,6 @@ export function Tabs({
       {examples.map((ex) => {
         const isActive = ex.index === activeExample;
         const num = String(ex.index).padStart(2, '0');
-        const isFinance = ex.domain === 'finance';
         return (
           <Link
             key={ex.index}
@@ -37,8 +52,8 @@ export function Tabs({
             <span>
               No. {num} · {titleCase(ex.title)}
             </span>
-            <span className={isFinance ? 'll-badge ll-badge-ent' : 'll-badge'}>
-              {isFinance ? 'FIN' : 'E-COM'}
+            <span className={DOMAIN_BADGE_TONE[ex.domain]}>
+              {DOMAIN_LABEL[ex.domain]}
             </span>
           </Link>
         );

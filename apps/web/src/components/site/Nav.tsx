@@ -32,6 +32,12 @@ export function Nav({ active = 'home' }: NavProps) {
             Verify
           </Link>
           <Link
+            href="/dashboard"
+            className={active === 'dashboard' ? 'is-active' : undefined}
+          >
+            Dashboard
+          </Link>
+          <Link
             href="https://github.com/"
             target="_blank"
             rel="noopener noreferrer"

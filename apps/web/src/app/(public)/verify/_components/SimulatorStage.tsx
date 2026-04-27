@@ -374,29 +374,67 @@ function StepSign({ scenario }: { scenario: Props['scenario'] }) {
 
         <svg
           width="100%"
-          height="48"
-          viewBox="0 0 540 48"
+          height="80"
+          viewBox="0 0 540 80"
           style={{ marginTop: 16, display: 'block' }}
           aria-hidden
         >
+          {/*
+           * Wavy autograph — multi-curve cursive glyphs ending in a flourish.
+           * Hand-tuned to feel like a real signature on a contract.
+           */}
           <path
-            d="M 12 30 C 80 10, 140 50, 220 22 S 380 14, 460 32"
+            d="
+              M 14 50
+              C 22 20, 50 12, 60 38
+              C 66 56, 50 62, 46 50
+              C 42 36, 60 26, 78 38
+              S 110 60, 130 38
+              C 144 22, 158 26, 166 42
+              C 174 56, 158 64, 152 50
+              C 148 40, 168 32, 188 44
+              S 232 60, 254 36
+              C 270 18, 290 22, 296 42
+              C 300 60, 282 66, 274 52
+              C 268 40, 290 30, 312 42
+              S 360 62, 384 40
+              C 400 24, 420 28, 426 46
+              C 432 62, 414 68, 410 56
+              S 432 36, 458 46
+              C 482 56, 480 56, 500 54
+              "
             stroke="var(--ll-brand)"
-            strokeWidth="2"
+            strokeWidth="2.2"
             fill="none"
             strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="2400"
+            strokeDashoffset="2400"
+            style={{
+              animation: 'sign-trace 2.4s cubic-bezier(.45,.05,.2,1) 150ms both',
+            }}
+          />
+          {/* Signature flourish — long underline with a curl */}
+          <path
+            d="M 16 64 C 90 60, 220 70, 320 62 S 460 56, 510 64 C 522 66, 520 72, 510 70"
+            stroke="var(--ll-brand)"
+            strokeWidth="1.4"
+            fill="none"
+            strokeLinecap="round"
+            strokeOpacity="0.65"
             strokeDasharray="600"
             strokeDashoffset="600"
             style={{
-              animation: 'sign-trace 1.6s cubic-bezier(.4,0,.2,1) 200ms both',
+              animation: 'sign-trace 1.4s cubic-bezier(.45,.05,.2,1) 1.4s both',
             }}
           />
-          <circle cx="460" cy="32" r="6" fill="var(--ll-brand)">
+          {/* Final dot of the pen */}
+          <circle cx="510" cy="70" r="0" fill="var(--ll-brand)">
             <animate
               attributeName="r"
-              values="0;0;6;6;8;6"
-              keyTimes="0;0.6;0.7;0.85;0.92;1"
-              dur="2.2s"
+              values="0;0;3.5;3.5;5;3.5"
+              keyTimes="0;0.85;0.9;0.95;0.97;1"
+              dur="3s"
               fill="freeze"
               begin="0s"
             />
