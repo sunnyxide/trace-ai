@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { SimulatorStage, type StageScenario } from './SimulatorStage';
+import { DOMAIN_COLORS, DOMAIN_LABEL, type Domain } from './domainColors';
 
 type StepId = 'agent' | 'llm' | 'sign' | 'merkle' | 'anchor' | 'verify' | 'done';
 
@@ -9,7 +10,7 @@ type Scenario = {
   id: StageScenario;
   title: string;
   blurb: string;
-  domain: 'ecommerce' | 'finance' | 'healthcare' | 'hr' | 'insurance' | 'legal';
+  domain: Domain;
   tenant: string;
   steps: { id: Exclude<StepId, 'done'>; label: string; durationMs: number }[];
 };
@@ -118,24 +119,6 @@ const SCENARIOS: Scenario[] = [
   },
 ];
 
-const DOMAIN_LABEL: Record<Scenario['domain'], string> = {
-  ecommerce: 'E-COMMERCE',
-  finance: 'FINANCE',
-  healthcare: 'HEALTHCARE',
-  hr: 'HR',
-  insurance: 'INSURANCE',
-  legal: 'LEGAL',
-};
-
-const DOMAIN_PILL: Record<Scenario['domain'], string> = {
-  ecommerce: 'll-pill-info',
-  finance: 'll-pill-warm',
-  healthcare: 'll-pill-ok',
-  hr: 'll-pill-info',
-  insurance: 'll-pill-warm',
-  legal: 'll-pill-ok',
-};
-
 export function ScenarioSimulator() {
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [stepIdx, setStepIdx] = useState<number>(-1);
@@ -212,6 +195,7 @@ export function ScenarioSimulator() {
         >
           {SCENARIOS.map((s, idx) => {
             const active = idx === scenarioIdx;
+            const c = DOMAIN_COLORS[s.domain];
             return (
               <button
                 key={s.id}
@@ -221,8 +205,8 @@ export function ScenarioSimulator() {
                 style={{
                   textAlign: 'left',
                   cursor: 'pointer',
-                  borderColor: active ? 'var(--ll-brand)' : undefined,
-                  background: active ? 'var(--ll-brand-soft)' : undefined,
+                  borderColor: active ? c.fg : undefined,
+                  background: active ? c.bg : undefined,
                   font: 'inherit',
                 }}
                 aria-pressed={active}
@@ -246,7 +230,22 @@ export function ScenarioSimulator() {
                   >
                     {s.tenant}
                   </span>
-                  <span className={`ll-pill ${DOMAIN_PILL[s.domain]}`}>
+                  <span
+                    style={{
+                      background: c.bg,
+                      color: c.fg,
+                      border: `1px solid ${c.ring}`,
+                      fontFamily: 'var(--font-geist-mono)',
+                      fontWeight: 600,
+                      fontSize: '0.6875rem',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      padding: '4px 10px',
+                      borderRadius: 999,
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                    }}
+                  >
                     {DOMAIN_LABEL[s.domain]}
                   </span>
                 </div>
@@ -309,7 +308,8 @@ export function ScenarioSimulator() {
                       height: 6,
                       borderRadius: 999,
                       background: 'currentColor',
-                      animation: 'aurora-1 1.2s ease-in-out infinite alternate',
+                      animation: 'll-running-dot 1.2s ease-in-out infinite',
+                      flexShrink: 0,
                     }}
                   />
                   Step {Math.min(stepIdx + 1, scenario.steps.length)}/{scenario.steps.length}

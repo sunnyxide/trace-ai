@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google';
+import { Geist, Geist_Mono, Instrument_Serif, Caveat } from 'next/font/google';
 import './globals.css';
 
 const geistSans = Geist({
@@ -22,6 +22,13 @@ const instrumentSerif = Instrument_Serif({
   display: 'swap',
 });
 
+const caveat = Caveat({
+  variable: '--font-caveat',
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: 'Ledgerline — AI agent decisions, on the record',
   description:
@@ -37,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

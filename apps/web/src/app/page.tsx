@@ -3,13 +3,17 @@ import { Nav } from '@/components/site/Nav';
 import { Footer } from '@/components/site/Footer';
 import { Aurora } from '@/components/graph/Aurora';
 import { OntologyGraph } from '@/components/graph/OntologyGraph';
+import { PageBackdrop } from '@/components/graph/PageBackdrop';
+import { Reveal } from '@/components/motion/Reveal';
 
 export default function HomePage() {
   return (
-    <div className="ll-public-root">
+    <div className="ll-public-root" style={{ position: 'relative' }}>
+      <PageBackdrop />
       <a href="#main" className="ll-skip">
         Skip to content
       </a>
+      <div style={{ position: 'relative', zIndex: 1 }}>
       <Nav active="home" />
 
       <main id="main">
@@ -216,23 +220,27 @@ export default function HomePage() {
           }}
         >
           <div className="ll-shell">
-            <div style={{ maxWidth: 760, marginBottom: 64, textAlign: 'center', marginInline: 'auto' }}>
-              <div className="ll-eyebrow">How it works</div>
-              <h2 className="ll-h1" style={{ marginTop: 14 }}>
-                Five steps from your AI to a public receipt.{' '}
-                <em
-                  style={{
-                    fontFamily: 'var(--font-instrument-serif)',
-                    fontStyle: 'italic',
-                    color: 'var(--ll-accent-deep)',
-                  }}
-                >
-                  No new tools to learn.
-                </em>
-              </h2>
-            </div>
+            <Reveal>
+              <div style={{ maxWidth: 760, marginBottom: 64, textAlign: 'center', marginInline: 'auto' }}>
+                <div className="ll-eyebrow">How it works</div>
+                <h2 className="ll-h1" style={{ marginTop: 14 }}>
+                  Five steps from your AI to a public receipt.{' '}
+                  <em
+                    style={{
+                      fontFamily: 'var(--font-instrument-serif)',
+                      fontStyle: 'italic',
+                      color: 'var(--ll-accent-deep)',
+                    }}
+                  >
+                    No new tools to learn.
+                  </em>
+                </h2>
+              </div>
+            </Reveal>
 
-            <Timeline />
+            <Reveal delayMs={140}>
+              <Timeline />
+            </Reveal>
           </div>
         </section>
 
@@ -241,21 +249,23 @@ export default function HomePage() {
          * ====================================================================*/}
         <section style={{ padding: '120px 0' }}>
           <div className="ll-shell">
-            <div style={{ maxWidth: 760, marginBottom: 56 }}>
-              <div className="ll-eyebrow">Real-world receipts</div>
-              <h2 className="ll-h1" style={{ marginTop: 14 }}>
-                Pick a scenario.{' '}
-                <em
-                  style={{
-                    fontFamily: 'var(--font-instrument-serif)',
-                    fontStyle: 'italic',
-                    color: 'var(--ll-brand)',
-                  }}
-                >
-                  Watch the decision verify itself.
-                </em>
-              </h2>
-            </div>
+            <Reveal>
+              <div style={{ maxWidth: 760, marginBottom: 56 }}>
+                <div className="ll-eyebrow">Real-world receipts</div>
+                <h2 className="ll-h1" style={{ marginTop: 14 }}>
+                  Pick a scenario.{' '}
+                  <em
+                    style={{
+                      fontFamily: 'var(--font-instrument-serif)',
+                      fontStyle: 'italic',
+                      color: 'var(--ll-brand)',
+                    }}
+                  >
+                    Watch the decision verify itself.
+                  </em>
+                </h2>
+              </div>
+            </Reveal>
 
             <div
               style={{
@@ -264,37 +274,45 @@ export default function HomePage() {
                 gap: 16,
               }}
             >
-              <ScenarioCard
-                href="/verify?example=1"
-                domain="ecommerce"
-                tenant="Bloom Co."
-                title="Refund bot approved a return."
-                problem="Three months later the customer disputes the charge. The bot's reasoning is gone."
-                effect="Now the full audit trail shows up in seconds — including the alternative the bot rejected."
-              />
-              <ScenarioCard
-                href="/verify?example=2"
-                domain="ecommerce"
-                tenant="Bloom Co."
-                title="Marketing AI drafted ad copy."
-                problem="A regulator opens a post-publication audit. Who reviewed what?"
-                effect="Two LLM calls + founder sign-off, all timestamped on the public ledger."
-              />
-              <ScenarioCard
-                href="/verify?example=6"
-                domain="finance"
-                tenant="KB Bank"
-                title="Loan AI approved ₩30M."
-                problem="The new AI law mandates a tamper-proof log for every high-impact decision."
-                effect="One SDK call turns the legal requirement into a build artifact."
-              />
+              <Reveal delayMs={0}>
+                <ScenarioCard
+                  href="/verify?example=1"
+                  domain="ecommerce"
+                  tenant="Bloom Co."
+                  title="Refund bot approved a return."
+                  problem="Three months later the customer disputes the charge. The bot's reasoning is gone."
+                  effect="Now the full audit trail shows up in seconds — including the alternative the bot rejected."
+                />
+              </Reveal>
+              <Reveal delayMs={120}>
+                <ScenarioCard
+                  href="/verify?example=3"
+                  domain="healthcare"
+                  tenant="CareGrid"
+                  title="Triage AI sent a patient to the ER."
+                  problem="A miss here ends careers. Why this routing, not a video visit?"
+                  effect="Every signal weighed, every alternative ruled out — co-signed by the attending."
+                />
+              </Reveal>
+              <Reveal delayMs={240}>
+                <ScenarioCard
+                  href="/verify?example=7"
+                  domain="finance"
+                  tenant="Shinhan"
+                  title="Fraud AI held a card charge."
+                  problem="The cardholder disputes the friction. The bank can't lose its work."
+                  effect="Hold + step-up logic, with rejected alternatives, all on a public ledger."
+                />
+              </Reveal>
             </div>
 
-            <div style={{ marginTop: 28, textAlign: 'center' }}>
-              <Link href="/verify?example=1" className="ll-btn ll-btn-ghost">
-                Browse all 7 scenarios →
-              </Link>
-            </div>
+            <Reveal delayMs={300}>
+              <div style={{ marginTop: 32, textAlign: 'center' }}>
+                <Link href="/verify?example=1" className="ll-btn ll-btn-ghost">
+                  Browse all 7 scenarios →
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -310,25 +328,27 @@ export default function HomePage() {
           }}
         >
           <div className="ll-shell">
-            <div style={{ maxWidth: 760, marginBottom: 56, textAlign: 'center', marginInline: 'auto' }}>
-              <div className="ll-eyebrow">Positioning</div>
-              <h2 className="ll-h1" style={{ marginTop: 14 }}>
-                What we are.{' '}
-                <em
-                  style={{
-                    fontFamily: 'var(--font-instrument-serif)',
-                    fontStyle: 'italic',
-                    color: 'var(--ll-fail)',
-                  }}
-                >
-                  What we are not.
-                </em>
-              </h2>
-              <p className="ll-lede" style={{ marginTop: 14 }}>
-                Plaid for AI agents. Carfax for AI decisions. We sit between
-                operators and verifiers — and never on either side.
-              </p>
-            </div>
+            <Reveal>
+              <div style={{ maxWidth: 760, marginBottom: 56, textAlign: 'center', marginInline: 'auto' }}>
+                <div className="ll-eyebrow">Positioning</div>
+                <h2 className="ll-h1" style={{ marginTop: 14 }}>
+                  What we are.{' '}
+                  <em
+                    style={{
+                      fontFamily: 'var(--font-instrument-serif)',
+                      fontStyle: 'italic',
+                      color: 'var(--ll-fail)',
+                    }}
+                  >
+                    What we are not.
+                  </em>
+                </h2>
+                <p className="ll-lede" style={{ marginTop: 14 }}>
+                  Plaid for AI agents. Carfax for AI decisions. We sit between
+                  operators and verifiers — and never on either side.
+                </p>
+              </div>
+            </Reveal>
 
             <div
               style={{
@@ -337,36 +357,18 @@ export default function HomePage() {
                 gap: 16,
               }}
             >
-              <ClaimCard
-                tone="ok"
-                heading="A neutral notary."
-                body="An independent attester anchors every Merkle root on a public chain. Operators can't rewrite their own logs."
-              />
-              <ClaimCard
-                tone="ok"
-                heading="An integrator."
-                body="OpenLLMetry, Merkle trees, on-chain attestations. Battle-tested public goods, assembled into a new primitive."
-              />
-              <ClaimCard
-                tone="ok"
-                heading="An open protocol."
-                body="DR-1 is MIT-licensed and proposed for ISO/IEC 24970. The standard is the moat — not the implementation."
-              />
-              <ClaimCard
-                tone="fail"
-                heading="Not insurance."
-                body="We don't underwrite risk. We don't pay claims. AI insurers are our customers, not our competitors."
-              />
-              <ClaimCard
-                tone="fail"
-                heading="Not custody."
-                body="We never hold customer funds. Ever. The platform attester wallet pays gas — that's the only money we touch."
-              />
-              <ClaimCard
-                tone="fail"
-                heading="Not a verdict."
-                body="We don't decide who's at fault. We make the facts cryptographically certain. Judges decide what they mean."
-              />
+              {[
+                { tone: 'ok',   heading: 'A neutral notary.',   body: "An independent attester anchors every Merkle root on a public chain. Operators can't rewrite their own logs." },
+                { tone: 'ok',   heading: 'An integrator.',      body: 'OpenLLMetry, Merkle trees, on-chain attestations. Battle-tested public goods, assembled into a new primitive.' },
+                { tone: 'ok',   heading: 'An open protocol.',   body: 'DR-1 is MIT-licensed and proposed for ISO/IEC 24970. The standard is the moat — not the implementation.' },
+                { tone: 'fail', heading: 'Not insurance.',      body: "We don't underwrite risk. We don't pay claims. AI insurers are our customers, not our competitors." },
+                { tone: 'fail', heading: 'Not custody.',        body: "We never hold customer funds. Ever. The platform attester wallet pays gas — that's the only money we touch." },
+                { tone: 'fail', heading: 'Not a verdict.',      body: "We don't decide who's at fault. We make the facts cryptographically certain. Judges decide what they mean." },
+              ].map((c, i) => (
+                <Reveal key={i} delayMs={i * 80}>
+                  <ClaimCard tone={c.tone as 'ok' | 'fail'} heading={c.heading} body={c.body} />
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
@@ -458,6 +460,7 @@ await ledger.submit(record);
       </main>
 
       <Footer />
+      </div>
     </div>
   );
 }
@@ -728,6 +731,26 @@ function ClaimCard({
   );
 }
 
+type ScenarioDomain =
+  | 'ecommerce'
+  | 'finance'
+  | 'healthcare'
+  | 'hr'
+  | 'insurance'
+  | 'legal';
+
+const SCENARIO_DOMAIN_COLOR: Record<
+  ScenarioDomain,
+  { bg: string; fg: string; ring: string; label: string }
+> = {
+  ecommerce:  { bg: 'rgba(91, 91, 255, 0.10)',   fg: 'rgb(58, 58, 224)',  ring: 'rgba(91, 91, 255, 0.35)',  label: 'E-COMMERCE' },
+  finance:    { bg: 'rgba(255, 138, 101, 0.14)', fg: 'rgb(233, 106, 69)', ring: 'rgba(233, 106, 69, 0.40)', label: 'FINANCE' },
+  healthcare: { bg: 'rgba(15, 184, 122, 0.14)',  fg: 'rgb(11, 145, 96)',  ring: 'rgba(15, 184, 122, 0.40)', label: 'HEALTHCARE' },
+  hr:         { bg: 'rgba(245, 158, 11, 0.16)',  fg: 'rgb(181, 120, 10)', ring: 'rgba(245, 158, 11, 0.40)', label: 'HR' },
+  insurance:  { bg: 'rgba(142, 46, 184, 0.12)',  fg: 'rgb(142, 46, 184)', ring: 'rgba(142, 46, 184, 0.38)', label: 'INSURANCE' },
+  legal:      { bg: 'rgba(14, 110, 124, 0.14)',  fg: 'rgb(14, 110, 124)', ring: 'rgba(14, 110, 124, 0.40)', label: 'LEGAL' },
+};
+
 function ScenarioCard({
   href,
   domain,
@@ -737,14 +760,13 @@ function ScenarioCard({
   effect,
 }: {
   href: string;
-  domain: 'ecommerce' | 'finance';
+  domain: ScenarioDomain;
   tenant: string;
   title: string;
   problem: string;
   effect: string;
 }) {
-  const domainLabel = domain === 'ecommerce' ? 'E-COMMERCE' : 'FINANCE';
-  const domainPill = domain === 'ecommerce' ? 'll-pill-info' : 'll-pill-warm';
+  const c = SCENARIO_DOMAIN_COLOR[domain];
   return (
     <Link
       href={href}
@@ -760,7 +782,23 @@ function ScenarioCard({
         }}
       >
         <span className="ll-caption">{tenant}</span>
-        <span className={`ll-pill ${domainPill}`}>{domainLabel}</span>
+        <span
+          style={{
+            background: c.bg,
+            color: c.fg,
+            border: `1px solid ${c.ring}`,
+            fontFamily: 'var(--font-geist-mono)',
+            fontWeight: 600,
+            fontSize: '0.6875rem',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            padding: '4px 10px',
+            borderRadius: 999,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {c.label}
+        </span>
       </div>
       <div
         className="ll-h3"
