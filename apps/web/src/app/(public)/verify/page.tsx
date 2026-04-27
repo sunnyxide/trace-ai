@@ -14,6 +14,7 @@ import { ScenarioSimulator } from './_components/ScenarioSimulator';
 import { StorySection, EXAMPLE_STORIES } from './_components/StorySection';
 import { WhatThisProves } from './_components/WhatThisProves';
 import { EvidenceDetails } from './_components/EvidenceDetails';
+import { OutcomeStrip } from './_components/OutcomeStrip';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -209,6 +210,9 @@ export default async function VerifyPage({
               </div>
             </div>
           </section>
+
+          {/* ============ OUTCOME ============ */}
+          <OutcomeStrip exampleN={example.index} tenant={example.tenant} />
 
           {/* ============ STORY ============ */}
           <StorySection exampleN={example.index} story={story} />
