@@ -44,7 +44,7 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
   },
   2: {
     setting:
-      "Bloom’s marketing agent drafted a Meta ad for a new melatonin SKU. Korean MFDS (식약처) is strict about supplement claims.",
+      'Bloom’s marketing agent drafted a Meta ad for a new melatonin SKU. The Korean MFDS (Ministry of Food and Drug Safety) is strict about supplement claims.',
     whatHappened:
       'GPT-5 produced three ad headlines; Claude reviewed each against the MFDS health-functional-food advertisement guidelines and the internal disallow-list. The founder signed off at 10:09 KST.',
     whatTheBotConsidered: [
@@ -55,10 +55,10 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
     whatItChose:
       'The compliant variant. The chosen copy was created as a draft on the Meta Ads account and routed for human approval.',
     whyItMatters:
-      'If MFDS opens a post-publication audit, Bloom can show the chain: two LLM calls, the rejected high-risk options, the policy references that justified the choice, and the founder signature — all timestamped on Base Sepolia.',
+      'If the regulator opens a post-publication audit, Bloom can show the chain: two LLM calls, the rejected high-risk options, the policy references that justified the choice, and the founder signature — all timestamped on Base Sepolia.',
     audience: [
       {
-        who: '식약처 광고심의팀',
+        who: 'MFDS Advertisement Review',
         ask: 'Did the brand do due diligence before publishing?',
       },
       {
@@ -83,14 +83,14 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
     whatItChose:
       'COGS + reverse-charge VAT. The bot wrote net ₩5,690,000 + reverse-charge VAT ₩569,000 to the ledger.',
     whyItMatters:
-      'When the National Tax Service (국세청) reviews next year, Bloom can produce the policy refs the bot used, the alternative it rejected, and the LLM call hashes — all immutable, all anchored.',
+      'When the National Tax Service reviews next year, Bloom can produce the policy refs the bot used, the alternative it rejected, and the LLM call hashes — all immutable, all anchored.',
     audience: [
       {
-        who: '국세청 부가세 심사관',
+        who: 'National Tax Service auditor',
         ask: 'Was the categorization defensible?',
       },
       {
-        who: '회계법인',
+        who: 'Outside accounting firm',
         ask: 'How was each invoice classified — and by what rule?',
       },
       {
@@ -115,7 +115,7 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
       'The receipt proves the AI didn’t silently approve risky language — it identified the risk, surfaced it, and waited for human authority. Due-care defense, automatic.',
     audience: [
       {
-        who: 'MFDS 표시광고관리과',
+        who: 'MFDS Labeling Office',
         ask: 'Did the brand take reasonable steps before printing?',
       },
       {
@@ -151,14 +151,14 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
         ask: 'When did inventory cross the threshold? Did the agent act?',
       },
       {
-        who: '공급망 인증 감사 (e.g. ISO 22301)',
+        who: 'Supply-chain auditors (ISO 22301)',
         ask: 'Are reorder decisions auditable?',
       },
     ],
   },
   6: {
     setting:
-      "KB Bank’s personal-loan AI evaluates ₩30M unsecured loan applications under the new AI 기본법 high-impact rules.",
+      'KB Bank’s personal-loan AI evaluates ₩30M unsecured loan applications under the new Korea AI Basic Act high-impact rules.',
     whatHappened:
       'The model approved the application from applicant 7F3E (credit score 740, DTI 28%). An underwriter reviewed and signed off 8 minutes later.',
     whatTheBotConsidered: [
@@ -168,10 +168,10 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
     whatItChose:
       'Approve. The decision was logged to KB’s loan-system and a corresponding term sheet was issued.',
     whyItMatters:
-      'AI 기본법 § X requires every high-impact AI decision to have a tamper-evident audit log — automatically generated, no manual export. Ledgerline turns the legal requirement into a one-line SDK call. Compliance is a build artifact, not an annual project.',
+      'The Korea AI Basic Act requires every high-impact AI decision to have a tamper-evident audit log — automatically generated, no manual export. Ledgerline turns the legal requirement into a one-line SDK call. Compliance becomes a build artifact, not an annual project.',
     audience: [
       {
-        who: '금융감독원 검사역',
+        who: 'Financial Supervisory Service inspector',
         ask: 'Show me the audit log for high-impact AI decisions.',
       },
       {
@@ -179,7 +179,7 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
         ask: 'Was my application evaluated under the same policy as approved ones?',
       },
       {
-        who: 'KB’s board risk committee',
+        who: 'The bank’s board risk committee',
         ask: 'Can we prove every decision’s reasoning, not just outputs?',
       },
     ],
@@ -197,10 +197,10 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
     whatItChose:
       'Hold and step-up. If the customer authenticates within 5 minutes, the charge is released; otherwise the bank’s fraud team takes over.',
     whyItMatters:
-      'When the customer disputes the friction or files a complaint with 금융감독원, Shinhan can produce the precise reasoning: which signals fired, which alternatives were rejected, which policy applied — all on Base Sepolia, none of it editable after the fact.',
+      'When the customer disputes the friction or files a regulatory complaint, Shinhan can produce the precise reasoning: which signals fired, which alternatives were rejected, which policy applied — all on Base Sepolia, none of it editable after the fact.',
     audience: [
       {
-        who: '금융감독원 IT 검사관',
+        who: 'Financial regulator IT inspector',
         ask: 'How does the AI handle false positives?',
       },
       {

@@ -4,13 +4,12 @@ type TabSpec = {
   index: number;
   tenant: string;
   title: string;
-  tier: 'SMB' | 'ENT';
+  domain: 'ecommerce' | 'finance';
 };
 
 /**
- * 7 seeded-example tabs for /verify. Active tab derived from the
- * `activeExample` prop (which the page reads from searchParams). Pure
- * link-based navigation — no client state needed.
+ * Domain-tagged seeded-example tabs for /verify. Active tab derived from the
+ * `activeExample` prop (which the page reads from searchParams).
  */
 export function Tabs({
   examples,
@@ -24,6 +23,7 @@ export function Tabs({
       {examples.map((ex) => {
         const isActive = ex.index === activeExample;
         const num = String(ex.index).padStart(2, '0');
+        const isFinance = ex.domain === 'finance';
         return (
           <Link
             key={ex.index}
@@ -35,18 +35,21 @@ export function Tabs({
             scroll={false}
           >
             <span>
-              № {num} · {ex.tenant} — {ex.title}
+              No. {num} · {titleCase(ex.title)}
             </span>
-            <span
-              className={
-                ex.tier === 'ENT' ? 'll-badge ll-badge-ent' : 'll-badge'
-              }
-            >
-              {ex.tier}
+            <span className={isFinance ? 'll-badge ll-badge-ent' : 'll-badge'}>
+              {isFinance ? 'FIN' : 'E-COM'}
             </span>
           </Link>
         );
       })}
     </div>
   );
+}
+
+function titleCase(s: string) {
+  return s
+    .split(' ')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
 }

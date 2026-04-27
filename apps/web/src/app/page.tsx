@@ -13,13 +13,15 @@ export default function HomePage() {
       <Nav active="home" />
 
       <main id="main">
-        {/* ============ HERO ============ */}
+        {/* ======================================================================
+         * HERO — copy left, big graph beneath. Aurora drifts in the background.
+         * ====================================================================*/}
         <section
           style={{
             position: 'relative',
             overflow: 'hidden',
-            paddingTop: 64,
-            paddingBottom: 96,
+            paddingTop: 56,
+            paddingBottom: 24,
           }}
         >
           <Aurora />
@@ -28,128 +30,142 @@ export default function HomePage() {
             style={{
               position: 'relative',
               zIndex: 1,
-              display: 'grid',
-              gridTemplateColumns: 'minmax(0, 1.05fr) minmax(0, 0.95fr)',
-              gap: 48,
-              alignItems: 'center',
+              maxWidth: 920,
+              textAlign: 'center',
             }}
           >
-            <div>
-              <span className="ll-hint ll-reveal" style={{ marginBottom: 24 }}>
-                <span
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: 999,
-                    background: 'var(--ll-ok)',
-                    display: 'inline-block',
-                  }}
-                />
-                Live on Base Sepolia · 7 attestations seeded
-              </span>
+            <span className="ll-hint ll-reveal" style={{ marginBottom: 24 }}>
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: 999,
+                  background: 'var(--ll-ok)',
+                  display: 'inline-block',
+                }}
+              />
+              Live on Base Sepolia · 7 attestations seeded
+            </span>
 
-              <h1 className="ll-display ll-reveal ll-reveal-d1" style={{ marginTop: 18 }}>
-                AI&apos;s every decision,
-                <br />
-                <em>on the record.</em>
-              </h1>
+            <h1
+              className="ll-display ll-reveal ll-reveal-d1"
+              style={{ marginTop: 18 }}
+            >
+              AI&apos;s every decision,
+              <br />
+              <em>on the record.</em>
+            </h1>
 
-              <p
-                className="ll-lede ll-reveal ll-reveal-d2"
-                style={{ marginTop: 28, maxWidth: 540 }}
-              >
-                A neutral, tamper-evident audit ledger for AI agent decisions.
-                Drop in one SDK call — every output gets a cryptographic
-                receipt, anchored on-chain, independently verifiable by your
-                customers, your auditor, your insurer, and your regulator.
-              </p>
+            <p
+              className="ll-lede ll-reveal ll-reveal-d2"
+              style={{ marginTop: 24, maxWidth: 640, marginInline: 'auto' }}
+            >
+              Drop in one SDK call. Every output your AI agent produces gets a
+              cryptographic receipt — independently checkable by your customers,
+              your auditor, your insurer, your regulator.
+            </p>
 
+            <div
+              className="ll-reveal ll-reveal-d3"
+              style={{
+                display: 'flex',
+                gap: 12,
+                flexWrap: 'wrap',
+                marginTop: 32,
+                justifyContent: 'center',
+              }}
+            >
+              <Link href="/verify?example=1" className="ll-btn">
+                See it verify a real decision →
+              </Link>
+              <Link href="#how" className="ll-btn ll-btn-ghost">
+                How it works
+              </Link>
+            </div>
+          </div>
+
+          {/* ============ The big animated graph ============ */}
+          <div
+            className="ll-shell ll-reveal ll-reveal-d4"
+            style={{ marginTop: 56, position: 'relative', zIndex: 1 }}
+          >
+            <div
+              style={{
+                position: 'relative',
+                background: 'var(--ll-surface)',
+                border: '1px solid var(--ll-rule)',
+                borderRadius: 24,
+                padding: 32,
+                boxShadow: '0 30px 80px -30px rgba(20, 18, 60, 0.14)',
+              }}
+            >
               <div
-                className="ll-reveal ll-reveal-d3"
                 style={{
                   display: 'flex',
-                  gap: 12,
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 16,
+                  gap: 16,
                   flexWrap: 'wrap',
-                  marginTop: 36,
                 }}
               >
-                <Link href="/verify?example=1" className="ll-btn">
-                  See it verify a real decision →
-                </Link>
-                <a
-                  href="https://base-sepolia.easscan.org/attestation/view/0x57bfef5602e47310cb6172b7f2c5f306d86d2805919832fa4e295ebc9bd41f3e"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ll-btn ll-btn-ghost"
-                >
-                  Open the live attestation ↗
-                </a>
-              </div>
-
-              <div
-                className="ll-reveal ll-reveal-d4"
-                style={{
-                  marginTop: 56,
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: 32,
-                  maxWidth: 620,
-                }}
-              >
-                <Stat label="On-chain attestations" value="7" />
-                <Stat label="Verification axes" value="6" />
-                <Stat label="Avg. anchor cost" value="< $0.01" />
-              </div>
-            </div>
-
-            {/* Right: ontology graph art */}
-            <div className="ll-reveal ll-reveal-d2" style={{ position: 'relative' }}>
-              <div
-                style={{
-                  background: 'var(--ll-surface)',
-                  border: '1px solid var(--ll-rule)',
-                  borderRadius: 24,
-                  padding: 24,
-                  boxShadow: '0 30px 60px -30px rgba(20, 18, 60, 0.12)',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: 12,
-                  }}
-                >
-                  <span className="ll-caption">Trust topology · live</span>
-                  <span className="ll-pill ll-pill-ok">
+                <div>
+                  <div className="ll-caption">Trust topology · live</div>
+                  <div
+                    className="ll-h3"
+                    style={{ marginTop: 6, fontSize: '1.0625rem' }}
+                  >
+                    Watch a single decision earn its receipt.
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  <span className="ll-pill ll-pill-info">
                     <span
                       style={{
                         width: 6,
                         height: 6,
                         borderRadius: 999,
                         background: 'currentColor',
+                        animation: 'aurora-1 1.4s ease-in-out infinite alternate',
                       }}
                     />
-                    anchored
+                    streaming
                   </span>
+                  <span className="ll-pill ll-pill-ok">anchored</span>
                 </div>
-                <OntologyGraph height={360} />
-                <p
-                  className="ll-small"
-                  style={{ marginTop: 4, color: 'var(--ll-mute)' }}
-                >
-                  Every edge is a signed step. Every node is independently
-                  checkable. No single party can rewrite history.
-                </p>
+              </div>
+              <div style={{ aspectRatio: '11 / 5.4' }}>
+                <OntologyGraph />
               </div>
             </div>
           </div>
+
+          {/* Stats row */}
+          <div
+            className="ll-shell ll-reveal ll-reveal-d4"
+            style={{
+              marginTop: 56,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+              gap: 32,
+              maxWidth: 920,
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            <Stat label="On-chain attestations" value="7" />
+            <Stat label="Verification axes" value="6" />
+            <Stat label="Anchor cost" value="< $0.01" />
+            <Stat label="LLM providers supported" value="∞" />
+          </div>
         </section>
 
-        {/* ============ MARQUEE ============ */}
+        {/* ======================================================================
+         * MARQUEE — partners / supported tooling
+         * ====================================================================*/}
         <section
           style={{
+            marginTop: 96,
             borderTop: '1px solid var(--ll-rule)',
             borderBottom: '1px solid var(--ll-rule)',
             padding: '20px 0',
@@ -170,45 +186,40 @@ export default function HomePage() {
                   color: 'var(--ll-mute)',
                 }}
               >
-                <span>Anthropic Claude</span>
-                <Dot />
-                <span>OpenAI GPT</span>
-                <Dot />
-                <span>Google Gemini</span>
-                <Dot />
-                <span>LangChain</span>
-                <Dot />
-                <span>LlamaIndex</span>
-                <Dot />
-                <span>CrewAI</span>
-                <Dot />
-                <span>Ollama</span>
-                <Dot />
-                <span>Base L2</span>
-                <Dot />
-                <span>Ethereum Attestation Service</span>
-                <Dot />
-                <span>OpenZeppelin StandardMerkleTree</span>
-                <Dot />
-                <span>RFC 8785 JCS</span>
-                <Dot />
-                <span>EU AI Act Art. 12</span>
-                <Dot />
-                <span>한국 AI 기본법</span>
-                <Dot />
+                <span>Anthropic Claude</span><Dot />
+                <span>OpenAI GPT</span><Dot />
+                <span>Google Gemini</span><Dot />
+                <span>LangChain</span><Dot />
+                <span>LlamaIndex</span><Dot />
+                <span>CrewAI</span><Dot />
+                <span>Ollama (local)</span><Dot />
+                <span>Base L2</span><Dot />
+                <span>Ethereum Attestation Service</span><Dot />
+                <span>OpenZeppelin Merkle</span><Dot />
+                <span>OpenLLMetry</span><Dot />
+                <span>EU AI Act Art. 12</span><Dot />
+                <span>Korea AI Basic Act</span><Dot />
               </span>
             ))}
           </div>
         </section>
 
-        {/* ============ HOW IT WORKS ============ */}
-        <section id="how" style={{ padding: '120px 0' }}>
+        {/* ======================================================================
+         * HOW IT WORKS — vertical timeline, plain language, with arrows
+         * ====================================================================*/}
+        <section
+          id="how"
+          style={{
+            padding: '120px 0',
+            background:
+              'linear-gradient(180deg, var(--ll-bg) 0%, var(--ll-surface) 50%, var(--ll-bg) 100%)',
+          }}
+        >
           <div className="ll-shell">
-            <div style={{ maxWidth: 720, marginBottom: 64 }}>
+            <div style={{ maxWidth: 760, marginBottom: 64, textAlign: 'center', marginInline: 'auto' }}>
               <div className="ll-eyebrow">How it works</div>
               <h2 className="ll-h1" style={{ marginTop: 14 }}>
-                Five layers. Three are reused.
-                <br />
+                Five steps from your AI to a public receipt.{' '}
                 <em
                   style={{
                     fontFamily: 'var(--font-instrument-serif)',
@@ -216,82 +227,90 @@ export default function HomePage() {
                     color: 'var(--ll-accent-deep)',
                   }}
                 >
-                  We integrate, we don&apos;t reinvent.
+                  No new tools to learn.
                 </em>
               </h2>
-              <p className="ll-lede" style={{ marginTop: 18 }}>
-                Every AI agent decision flows through a five-step pipeline.
-                Each step is open, auditable, and built on a battle-tested
-                public good. We assemble the trust; you keep shipping.
-              </p>
+            </div>
+
+            <Timeline />
+          </div>
+        </section>
+
+        {/* ======================================================================
+         * SCENARIOS — domain tags (E-COMMERCE / FINANCE), big & visual
+         * ====================================================================*/}
+        <section style={{ padding: '120px 0' }}>
+          <div className="ll-shell">
+            <div style={{ maxWidth: 760, marginBottom: 56 }}>
+              <div className="ll-eyebrow">Real-world receipts</div>
+              <h2 className="ll-h1" style={{ marginTop: 14 }}>
+                Pick a scenario.{' '}
+                <em
+                  style={{
+                    fontFamily: 'var(--font-instrument-serif)',
+                    fontStyle: 'italic',
+                    color: 'var(--ll-brand)',
+                  }}
+                >
+                  Watch the decision verify itself.
+                </em>
+              </h2>
             </div>
 
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                 gap: 16,
               }}
             >
-              <Layer
-                num="1"
-                name="Capture"
-                detail="OpenLLMetry auto-instruments every LLM call & tool invocation."
-                tools="OpenTelemetry GenAI"
-                tone="brand"
+              <ScenarioCard
+                href="/verify?example=1"
+                domain="ecommerce"
+                tenant="Bloom Co."
+                title="Refund bot approved a return."
+                problem="Three months later the customer disputes the charge. The bot's reasoning is gone."
+                effect="Now the full audit trail shows up in seconds — including the alternative the bot rejected."
               />
-              <Layer
-                num="2"
-                name="Structure"
-                detail="DR-1 schema: 12 fields including policy refs, risk level, human-in-the-loop."
-                tools="Zod · RFC 8785 JCS"
-                tone="brand"
+              <ScenarioCard
+                href="/verify?example=2"
+                domain="ecommerce"
+                tenant="Bloom Co."
+                title="Marketing AI drafted ad copy."
+                problem="A regulator opens a post-publication audit. Who reviewed what?"
+                effect="Two LLM calls + founder sign-off, all timestamped on the public ledger."
               />
-              <Layer
-                num="3"
-                name="Batch"
-                detail="Sorted SHA-256 leaves into a keccak256 Merkle tree. 1000:1 anchor compression."
-                tools="OpenZeppelin"
-                tone="ink"
-              />
-              <Layer
-                num="4"
-                name="Anchor"
-                detail="Attestation lands on Base L2 via EAS. OpenTimestamps stub for Phase 2 dual-anchor."
-                tools="EAS · viem"
-                tone="warm"
-              />
-              <Layer
-                num="5"
-                name="Verify"
-                detail="Public dual-check page. easscan.org & Basescan. Printable PDF receipt."
-                tools="@media print · QR"
-                tone="warm"
+              <ScenarioCard
+                href="/verify?example=6"
+                domain="finance"
+                tenant="KB Bank"
+                title="Loan AI approved ₩30M."
+                problem="The new AI law mandates a tamper-proof log for every high-impact decision."
+                effect="One SDK call turns the legal requirement into a build artifact."
               />
             </div>
 
-            <div
-              style={{
-                marginTop: 32,
-                display: 'flex',
-                gap: 12,
-                alignItems: 'center',
-                flexWrap: 'wrap',
-              }}
-            >
-              <span className="ll-caption">Reused public goods · 73%</span>
-              <span className="ll-rule" style={{ flex: 1, minWidth: 80 }} />
-              <span className="ll-caption">New code · 4,080 LOC</span>
-              <span className="ll-rule" style={{ flex: 1, minWidth: 80 }} />
-              <span className="ll-caption">Built by 2 students · 9 days</span>
+            <div style={{ marginTop: 28, textAlign: 'center' }}>
+              <Link href="/verify?example=1" className="ll-btn ll-btn-ghost">
+                Browse all 7 scenarios →
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* ============ WHAT WE ARE / NOT ============ */}
-        <section id="what" style={{ padding: '120px 0', background: 'var(--ll-surface)' }}>
+        {/* ======================================================================
+         * WHAT WE ARE / NOT — split panel
+         * ====================================================================*/}
+        <section
+          id="what"
+          style={{
+            padding: '120px 0',
+            background:
+              'radial-gradient(900px 500px at 80% -10%, var(--ll-brand-soft), transparent 60%), radial-gradient(700px 400px at -10% 110%, var(--ll-accent-soft), transparent 60%), var(--ll-surface)',
+          }}
+        >
           <div className="ll-shell">
-            <div style={{ maxWidth: 760, marginBottom: 56 }}>
+            <div style={{ maxWidth: 760, marginBottom: 56, textAlign: 'center', marginInline: 'auto' }}>
               <div className="ll-eyebrow">Positioning</div>
               <h2 className="ll-h1" style={{ marginTop: 14 }}>
                 What we are.{' '}
@@ -305,7 +324,7 @@ export default function HomePage() {
                   What we are not.
                 </em>
               </h2>
-              <p className="ll-lede" style={{ marginTop: 18 }}>
+              <p className="ll-lede" style={{ marginTop: 14 }}>
                 Plaid for AI agents. Carfax for AI decisions. We sit between
                 operators and verifiers — and never on either side.
               </p>
@@ -315,129 +334,46 @@ export default function HomePage() {
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                gap: 20,
+                gap: 16,
               }}
             >
               <ClaimCard
                 tone="ok"
-                heading="We are a neutral notary."
-                body="An independent attester anchors every decision's Merkle root on a public chain. Operators can't rewrite their own logs."
+                heading="A neutral notary."
+                body="An independent attester anchors every Merkle root on a public chain. Operators can't rewrite their own logs."
               />
               <ClaimCard
                 tone="ok"
-                heading="We are an integrator."
-                body="OpenLLMetry, OpenZeppelin Merkle, EAS, OpenTimestamps. Battle-tested public goods, assembled into a new primitive."
+                heading="An integrator."
+                body="OpenLLMetry, Merkle trees, on-chain attestations. Battle-tested public goods, assembled into a new primitive."
               />
               <ClaimCard
                 tone="ok"
-                heading="We are an open protocol."
+                heading="An open protocol."
                 body="DR-1 is MIT-licensed and proposed for ISO/IEC 24970. The standard is the moat — not the implementation."
               />
               <ClaimCard
                 tone="fail"
-                heading="We are not insurance."
-                body="We don't underwrite risk. We don't pay claims. Armilla and Munich Re are our customers, not our competitors."
+                heading="Not insurance."
+                body="We don't underwrite risk. We don't pay claims. AI insurers are our customers, not our competitors."
               />
               <ClaimCard
                 tone="fail"
-                heading="We are not custody."
+                heading="Not custody."
                 body="We never hold customer funds. Ever. The platform attester wallet pays gas — that's the only money we touch."
               />
               <ClaimCard
                 tone="fail"
-                heading="We are not a verdict."
-                body="We don't decide who's at fault. We make the facts cryptographically certain. Judges and auditors decide what they mean."
+                heading="Not a verdict."
+                body="We don't decide who's at fault. We make the facts cryptographically certain. Judges decide what they mean."
               />
-            </div>
-
-            <div
-              style={{
-                marginTop: 32,
-                padding: '20px 24px',
-                background: 'var(--ll-warn-soft)',
-                border: '1px solid color-mix(in oklab, var(--ll-warn) 30%, transparent)',
-                borderRadius: 14,
-                fontSize: '0.875rem',
-                color: 'var(--ll-ink-2)',
-              }}
-            >
-              <strong style={{ color: 'var(--ll-ink)', fontWeight: 600 }}>
-                Prototype disclosure ·
-              </strong>{' '}
-              In this 9-day prototype, the operator signature is generated
-              with a key held by Ledgerline as a demo stand-in. Production
-              requires the customer to hold this key — the dual-evidence
-              architecture is identical, only the key custody changes.
             </div>
           </div>
         </section>
 
-        {/* ============ SCENARIOS PREVIEW ============ */}
-        <section style={{ padding: '120px 0' }}>
-          <div className="ll-shell">
-            <div style={{ maxWidth: 720, marginBottom: 56 }}>
-              <div className="ll-eyebrow">Real-world receipts</div>
-              <h2 className="ll-h1" style={{ marginTop: 14 }}>
-                Seven decisions.{' '}
-                <em
-                  style={{
-                    fontFamily: 'var(--font-instrument-serif)',
-                    fontStyle: 'italic',
-                    color: 'var(--ll-brand)',
-                  }}
-                >
-                  All cryptographically certain.
-                </em>
-              </h2>
-              <p className="ll-lede" style={{ marginTop: 18 }}>
-                From a solo founder&apos;s refund bot to an enterprise loan
-                approval engine — pick a scenario and watch the verification
-                run in real time.
-              </p>
-            </div>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-                gap: 16,
-              }}
-            >
-              <ScenarioCard
-                href="/verify?example=1"
-                tier="SMB"
-                tenant="Bloom Co."
-                title="A refund bot approved a return."
-                problem="A customer disputed it 3 months later. The CS bot's reasoning had been forgotten."
-                effect="Now: full audit trail in 3 seconds, including the alternative the bot considered and rejected."
-              />
-              <ScenarioCard
-                href="/verify?example=2"
-                tier="SMB"
-                tenant="Bloom Co."
-                title="Marketing AI drafted ad copy."
-                problem="식약처 광고 가이드라인 위반 의심. Who reviewed what — and when?"
-                effect="Two LLM calls + founder signature, all timestamped on-chain."
-              />
-              <ScenarioCard
-                href="/verify?example=6"
-                tier="ENT"
-                tenant="KB Bank"
-                title="A loan AI approved ₩30M."
-                problem="AI 기본법 시행: 모든 고영향 결정에 변조 불가능한 자동 로그 의무."
-                effect="Ledgerline turns the legal requirement into a one-line SDK call."
-              />
-            </div>
-
-            <div style={{ marginTop: 28, textAlign: 'center' }}>
-              <Link href="/verify?example=1" className="ll-btn ll-btn-ghost">
-                Browse all 7 scenarios →
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ============ TRY ============ */}
+        {/* ======================================================================
+         * QUICKSTART
+         * ====================================================================*/}
         <section
           id="try"
           style={{
@@ -450,8 +386,8 @@ export default function HomePage() {
             className="ll-shell"
             style={{
               display: 'grid',
-              gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
-              gap: 48,
+              gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.05fr)',
+              gap: 56,
               alignItems: 'center',
             }}
           >
@@ -469,12 +405,19 @@ export default function HomePage() {
                   That&apos;s the integration.
                 </em>
               </h2>
-              <p className="ll-lede" style={{ marginTop: 18, maxWidth: 480 }}>
-                Drop into any AI agent that uses Anthropic, OpenAI, Gemini,
-                LangChain, LlamaIndex, CrewAI, or a local Ollama. OpenLLMetry
-                handles auto-instrumentation; we handle the audit ledger.
+              <p className="ll-lede" style={{ marginTop: 18, maxWidth: 460 }}>
+                Drop into any AI agent. We piggyback on the standard
+                instrumentation tools you may already use; no new vocabulary
+                to learn.
               </p>
-              <div style={{ marginTop: 32, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+              <div
+                style={{
+                  marginTop: 32,
+                  display: 'flex',
+                  gap: 12,
+                  flexWrap: 'wrap',
+                }}
+              >
                 <Link href="/verify?example=1" className="ll-btn">
                   Try the verifier →
                 </Link>
@@ -520,14 +463,16 @@ await ledger.submit(record);
 }
 
 // ============================================================================
+// Local components
+// ============================================================================
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div>
+    <div style={{ textAlign: 'center' }}>
       <div
         style={{
           fontFamily: 'var(--font-instrument-serif)',
-          fontSize: '2rem',
+          fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
           lineHeight: 1.05,
           color: 'var(--ll-ink)',
           letterSpacing: '-0.01em',
@@ -542,53 +487,204 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Layer({
-  num,
-  name,
-  detail,
-  tools,
-  tone,
-}: {
-  num: string;
-  name: string;
-  detail: string;
-  tools: string;
-  tone: 'brand' | 'warm' | 'ink';
-}) {
-  const dotColor =
-    tone === 'brand'
-      ? 'var(--ll-brand)'
-      : tone === 'warm'
-      ? 'var(--ll-accent)'
-      : 'var(--ll-ink)';
+// Vertical timeline (5 steps with arrow connectors)
+function Timeline() {
+  const steps: {
+    n: string;
+    name: string;
+    plain: string;
+    detail: string;
+    tech: string;
+    tone: 'brand' | 'warm' | 'ink';
+  }[] = [
+    {
+      n: '1',
+      name: 'Listen',
+      plain: 'When your AI agent acts, we listen.',
+      detail:
+        'Every prompt, every response, every tool call gets recorded the moment it happens — without changing a line of your agent code.',
+      tech: 'OpenLLMetry · OpenTelemetry GenAI',
+      tone: 'brand',
+    },
+    {
+      n: '2',
+      name: 'Format',
+      plain: 'We give the decision a passport.',
+      detail:
+        'A standard, language-neutral record auditors recognize — what the AI saw, what it considered, what it picked, and why.',
+      tech: 'DR-1 schema · 12 fields',
+      tone: 'brand',
+    },
+    {
+      n: '3',
+      name: 'Bundle',
+      plain: 'Many decisions, one tamper-proof stamp.',
+      detail:
+        'Hundreds of records get folded into a single fingerprint. Change one byte anywhere — the fingerprint breaks.',
+      tech: 'Merkle batch',
+      tone: 'ink',
+    },
+    {
+      n: '4',
+      name: 'Anchor',
+      plain: 'Sealed with public-blockchain ink.',
+      detail:
+        'The bundle stamp is written to a public, neutral chain. Once it lands, no one can erase it — not even us.',
+      tech: 'Base L2 · EAS',
+      tone: 'warm',
+    },
+    {
+      n: '5',
+      name: 'Prove',
+      plain: 'Anyone can verify it. Forever.',
+      detail:
+        'Customers, regulators, auditors, your insurer — all hit the same public URL. Six independent checks must pass.',
+      tech: 'Public verifier · printable receipt',
+      tone: 'warm',
+    },
+  ];
+
   return (
-    <div className="ll-card ll-card-hover" style={{ minHeight: 200 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-        <span
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: 999,
-            background: dotColor,
-            display: 'inline-block',
-          }}
-          aria-hidden
-        />
-        <span className="ll-caption">Layer {num}</span>
-      </div>
-      <div className="ll-h3" style={{ marginBottom: 8 }}>
-        {name}
-      </div>
-      <p className="ll-body-mute" style={{ margin: 0, fontSize: '0.875rem' }}>
-        {detail}
-      </p>
-      <div
-        className="ll-caption"
-        style={{ marginTop: 16, color: 'var(--ll-mute-2)', letterSpacing: '0.04em' }}
-      >
-        {tools}
-      </div>
-    </div>
+    <ol
+      style={{
+        listStyle: 'none',
+        padding: 0,
+        margin: 0,
+        position: 'relative',
+        maxWidth: 920,
+        marginInline: 'auto',
+      }}
+    >
+      {/* Vertical track behind the dots */}
+      <span
+        aria-hidden
+        style={{
+          position: 'absolute',
+          left: 31,
+          top: 16,
+          bottom: 16,
+          width: 2,
+          background:
+            'linear-gradient(180deg, var(--ll-brand) 0%, var(--ll-ink-2) 50%, var(--ll-accent) 100%)',
+          opacity: 0.18,
+        }}
+      />
+
+      {steps.map((s, i) => {
+        const dotColor =
+          s.tone === 'brand'
+            ? 'var(--ll-brand)'
+            : s.tone === 'warm'
+            ? 'var(--ll-accent)'
+            : 'var(--ll-ink)';
+        const isLast = i === steps.length - 1;
+        return (
+          <li
+            key={s.n}
+            style={{
+              position: 'relative',
+              display: 'grid',
+              gridTemplateColumns: '64px 1fr',
+              gap: 24,
+              paddingBottom: isLast ? 0 : 32,
+              alignItems: 'flex-start',
+            }}
+          >
+            {/* Dot */}
+            <div
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                width: 64,
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                paddingTop: 6,
+              }}
+            >
+              <span
+                style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: 999,
+                  background: 'var(--ll-surface)',
+                  border: `1.5px solid ${dotColor}`,
+                  color: dotColor,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: 'var(--font-instrument-serif)',
+                  fontSize: '1.5rem',
+                  boxShadow: `0 8px 24px -12px color-mix(in oklab, ${dotColor} 30%, transparent)`,
+                }}
+              >
+                {s.n}
+              </span>
+            </div>
+
+            {/* Content */}
+            <div className="ll-card" style={{ padding: 24 }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  gap: 12,
+                  flexWrap: 'wrap',
+                  marginBottom: 8,
+                }}
+              >
+                <span className="ll-caption">Step {s.n}</span>
+                <span style={{ fontWeight: 600, color: 'var(--ll-ink)', fontSize: '0.875rem' }}>
+                  {s.name}
+                </span>
+              </div>
+              <h3 className="ll-h2" style={{ fontSize: '1.375rem', marginBottom: 8 }}>
+                {s.plain}
+              </h3>
+              <p
+                className="ll-body-mute"
+                style={{ margin: 0, fontSize: '0.9375rem', maxWidth: 640 }}
+              >
+                {s.detail}
+              </p>
+              <div
+                className="ll-caption"
+                style={{
+                  marginTop: 14,
+                  color: 'var(--ll-mute-2)',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                {s.tech}
+              </div>
+            </div>
+
+            {/* Arrow connector */}
+            {!isLast ? (
+              <span
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  left: 24,
+                  bottom: -2,
+                  width: 16,
+                  height: 16,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: dotColor,
+                  fontSize: '1.25rem',
+                  fontFamily: 'var(--font-geist-mono)',
+                  lineHeight: 1,
+                }}
+              >
+                ↓
+              </span>
+            ) : null}
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 
@@ -634,24 +730,26 @@ function ClaimCard({
 
 function ScenarioCard({
   href,
-  tier,
+  domain,
   tenant,
   title,
   problem,
   effect,
 }: {
   href: string;
-  tier: 'SMB' | 'ENT';
+  domain: 'ecommerce' | 'finance';
   tenant: string;
   title: string;
   problem: string;
   effect: string;
 }) {
+  const domainLabel = domain === 'ecommerce' ? 'E-COMMERCE' : 'FINANCE';
+  const domainPill = domain === 'ecommerce' ? 'll-pill-info' : 'll-pill-warm';
   return (
     <Link
       href={href}
       className="ll-card ll-card-hover"
-      style={{ display: 'block', textDecoration: 'none' }}
+      style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
     >
       <div
         style={{
@@ -662,25 +760,64 @@ function ScenarioCard({
         }}
       >
         <span className="ll-caption">{tenant}</span>
-        <span className={`ll-pill ${tier === 'SMB' ? 'll-pill-info' : 'll-pill-warm'}`}>
-          {tier}
-        </span>
+        <span className={`ll-pill ${domainPill}`}>{domainLabel}</span>
       </div>
-      <div className="ll-h3" style={{ marginBottom: 12, fontSize: '1.125rem' }}>
+      <div
+        className="ll-h3"
+        style={{
+          marginBottom: 16,
+          fontSize: '1.125rem',
+          color: 'var(--ll-ink)',
+          lineHeight: 1.3,
+        }}
+      >
         {title}
       </div>
-      <div className="ll-small" style={{ marginBottom: 8, color: 'var(--ll-mute)' }}>
-        Problem
-      </div>
-      <p className="ll-body-mute" style={{ margin: '0 0 16px', fontSize: '0.875rem' }}>
+
+      {/* Problem → effect visual flow */}
+      <div
+        style={{
+          padding: '14px 16px',
+          background: 'var(--ll-fail-soft)',
+          border: '1px solid color-mix(in oklab, var(--ll-fail) 18%, transparent)',
+          borderRadius: 10,
+          marginBottom: 8,
+          fontSize: '0.875rem',
+          color: 'var(--ll-ink-2)',
+        }}
+      >
+        <div className="ll-caption" style={{ color: 'var(--ll-fail)', marginBottom: 4 }}>
+          Problem
+        </div>
         {problem}
-      </p>
-      <div className="ll-small" style={{ marginBottom: 8, color: 'var(--ll-mute)' }}>
-        Effect
       </div>
-      <p className="ll-body" style={{ margin: 0, fontSize: '0.875rem' }}>
+      <div
+        aria-hidden
+        style={{
+          textAlign: 'center',
+          color: 'var(--ll-mute)',
+          fontSize: '1rem',
+          padding: '4px 0',
+        }}
+      >
+        ↓
+      </div>
+      <div
+        style={{
+          padding: '14px 16px',
+          background: 'var(--ll-ok-soft)',
+          border: '1px solid color-mix(in oklab, var(--ll-ok) 22%, transparent)',
+          borderRadius: 10,
+          fontSize: '0.875rem',
+          color: 'var(--ll-ink-2)',
+        }}
+      >
+        <div className="ll-caption" style={{ color: 'var(--ll-ok)', marginBottom: 4 }}>
+          Effect
+        </div>
         {effect}
-      </p>
+      </div>
+
       <div
         style={{
           marginTop: 22,

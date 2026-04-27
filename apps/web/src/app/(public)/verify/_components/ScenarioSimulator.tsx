@@ -13,7 +13,7 @@ type Scenario = {
   id: string;
   title: string;
   blurb: string;
-  tier: 'SMB' | 'ENT';
+  domain: 'ecommerce' | 'finance';
   tenant: string;
   steps: Step[];
 };
@@ -23,7 +23,7 @@ const SCENARIOS: Scenario[] = [
     id: 'cs-refund',
     title: 'CS bot processes a refund',
     blurb: 'Bloom Co.’s customer service agent evaluates a 9-day-old order against the refund policy.',
-    tier: 'SMB',
+    domain: 'ecommerce',
     tenant: 'Bloom Co. · CS Agent',
     steps: [
       { icon: 'agent', label: 'Agent receives ticket', detail: 'Gorgias ticket #482910 → bloom-cs-agent-v3', durationMs: 900 },
@@ -38,7 +38,7 @@ const SCENARIOS: Scenario[] = [
     id: 'ad-claim',
     title: 'Marketing AI drafts ad copy',
     blurb: 'Two LLMs and a human reviewer collaborate on a Meta ad — MFDS guidelines must hold.',
-    tier: 'SMB',
+    domain: 'ecommerce',
     tenant: 'Bloom Co. · Marketing Agent',
     steps: [
       { icon: 'agent', label: 'Marketing agent kicks off campaign brief', detail: 'Internal trigger · campaign = q2-melatonin', durationMs: 800 },
@@ -53,7 +53,7 @@ const SCENARIOS: Scenario[] = [
     id: 'fraud-hold',
     title: 'Fraud-detection AI holds a charge',
     blurb: 'Shinhan Bank’s real-time AI sees an unusual Macau transaction and triggers SMS step-up.',
-    tier: 'ENT',
+    domain: 'finance',
     tenant: 'Shinhan · Fraud Agent',
     steps: [
       { icon: 'agent', label: 'Tx event arrives', detail: '₩820K · merchant in Macau · cardholder usually in Korea', durationMs: 700 },
@@ -168,8 +168,8 @@ export function ScenarioSimulator() {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                   <span className="ll-caption">{s.tenant}</span>
-                  <span className={`ll-pill ${s.tier === 'SMB' ? 'll-pill-info' : 'll-pill-warm'}`}>
-                    {s.tier}
+                  <span className={`ll-pill ${s.domain === 'ecommerce' ? 'll-pill-info' : 'll-pill-warm'}`}>
+                    {s.domain === 'ecommerce' ? 'E-COMMERCE' : 'FINANCE'}
                   </span>
                 </div>
                 <div className="ll-h3" style={{ marginBottom: 8, fontSize: '1rem' }}>

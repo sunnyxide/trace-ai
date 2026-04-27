@@ -32,17 +32,17 @@ type ExampleSpec = {
   index: number;
   tenant: string;
   title: string;
-  tier: 'SMB' | 'ENT';
+  domain: 'ecommerce' | 'finance';
 };
 
 const EXAMPLES: ExampleSpec[] = [
-  { index: 1, tenant: 'Bloom Co.', title: 'CS REFUND', tier: 'SMB' },
-  { index: 2, tenant: 'Bloom Co.', title: 'AD CLAIM', tier: 'SMB' },
-  { index: 3, tenant: 'Bloom Co.', title: 'INVOICE', tier: 'SMB' },
-  { index: 4, tenant: 'Bloom Co.', title: 'LABEL COPY', tier: 'SMB' },
-  { index: 5, tenant: 'Bloom Co.', title: 'REORDER', tier: 'SMB' },
-  { index: 6, tenant: 'KB Bank', title: 'LOAN APPROVE', tier: 'ENT' },
-  { index: 7, tenant: 'Shinhan', title: 'FRAUD HOLD', tier: 'ENT' },
+  { index: 1, tenant: 'Bloom Co.', title: 'CS REFUND',    domain: 'ecommerce' },
+  { index: 2, tenant: 'Bloom Co.', title: 'AD CLAIM',     domain: 'ecommerce' },
+  { index: 3, tenant: 'Bloom Co.', title: 'INVOICE',      domain: 'ecommerce' },
+  { index: 4, tenant: 'Bloom Co.', title: 'LABEL COPY',   domain: 'ecommerce' },
+  { index: 5, tenant: 'Bloom Co.', title: 'REORDER',      domain: 'ecommerce' },
+  { index: 6, tenant: 'KB Bank',   title: 'LOAN APPROVE', domain: 'finance'   },
+  { index: 7, tenant: 'Shinhan',   title: 'FRAUD HOLD',   domain: 'finance'   },
 ];
 
 const SCHEMA_UID =
