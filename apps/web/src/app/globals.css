@@ -187,6 +187,58 @@ a.ll-btn-ghost {
 .ll-shell { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
 @media (min-width: 720px) { .ll-shell { padding: 0 56px; } }
 
+/* === responsive graph + grids === */
+/* OntologyGraph hero frame. On wide screens we honor a fixed aspect ratio
+   so the graph occupies a generous landscape band. Below 720px the graph
+   becomes too dense to read at scale, so we lock its drawing surface to a
+   minimum width and let the frame scroll horizontally — preserving label
+   legibility instead of squishing every node into pixels. */
+.ll-graph-frame {
+  width: 100%;
+  aspect-ratio: 11 / 5.4;
+  position: relative;
+}
+.ll-graph-frame-inner {
+  position: absolute;
+  inset: 0;
+}
+@media (max-width: 720px) {
+  .ll-graph-frame {
+    aspect-ratio: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ll-graph-frame-inner {
+    position: relative;
+    inset: auto;
+    min-width: 720px;
+    height: 360px;
+  }
+}
+
+/* Responsive 2-column grids — collapse to 1 column under 880px so cards never
+   crush. Variants control which column is "lead" on wide screens. */
+.ll-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+.ll-grid-2--lead-left  { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+.ll-grid-2--lead-right { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+.ll-grid-2--gap-lg     { gap: 48px; }
+.ll-grid-2--gap-xl     { gap: 56px; }
+.ll-grid-2--align-center { align-items: center; }
+@media (max-width: 880px) {
+  .ll-grid-2,
+  .ll-grid-2--lead-left,
+  .ll-grid-2--lead-right {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
 .ll-rule       { height: 1px; background: var(--ll-rule);       margin: 0; border: 0; }
 .ll-rule-faint { height: 1px; background: var(--ll-rule-faint); margin: 0; border: 0; }
 

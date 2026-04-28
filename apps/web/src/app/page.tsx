@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Nav } from '@/components/site/Nav';
 import { Footer } from '@/components/site/Footer';
+import { SocialProof } from '@/components/site/SocialProof';
 import { Aurora } from '@/components/graph/Aurora';
 import { OntologyGraph } from '@/components/graph/OntologyGraph';
 import { PageBackdrop } from '@/components/graph/PageBackdrop';
@@ -138,8 +139,10 @@ export default function HomePage() {
                   <span className="ll-pill ll-pill-ok">anchored</span>
                 </div>
               </div>
-              <div style={{ aspectRatio: '11 / 5.4' }}>
-                <OntologyGraph />
+              <div className="ll-graph-frame">
+                <div className="ll-graph-frame-inner">
+                  <OntologyGraph />
+                </div>
               </div>
             </div>
           </div>
@@ -163,6 +166,11 @@ export default function HomePage() {
             <Stat label="LLM providers supported" value="∞" />
           </div>
         </section>
+
+        {/* ======================================================================
+         * SOCIAL PROOF — Shoptalk 87% pull-quote + regulatory clock
+         * ====================================================================*/}
+        <SocialProof />
 
         {/* ======================================================================
          * MARQUEE — partners / supported tooling
@@ -384,15 +392,7 @@ export default function HomePage() {
               'linear-gradient(180deg, var(--ll-bg) 0%, var(--ll-surface) 100%)',
           }}
         >
-          <div
-            className="ll-shell"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.05fr)',
-              gap: 56,
-              alignItems: 'center',
-            }}
-          >
+          <div className="ll-shell ll-grid-2 ll-grid-2--lead-right ll-grid-2--gap-xl ll-grid-2--align-center">
             <div>
               <div className="ll-eyebrow">Quickstart</div>
               <h2 className="ll-h1" style={{ marginTop: 14 }}>

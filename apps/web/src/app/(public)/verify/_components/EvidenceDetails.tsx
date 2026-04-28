@@ -72,14 +72,7 @@ export function EvidenceDetails(props: Props) {
         </button>
 
         {open ? (
-          <div
-            style={{
-              marginTop: 16,
-              display: 'grid',
-              gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
-              gap: 24,
-            }}
-          >
+          <div className="ll-grid-2" style={{ marginTop: 16 }}>
             <div>
               <div className="ll-eyebrow" style={{ marginBottom: 14 }}>
                 Hash plates

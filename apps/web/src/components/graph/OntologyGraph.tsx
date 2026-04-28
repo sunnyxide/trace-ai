@@ -270,7 +270,7 @@ export function OntologyGraph({ className }: Props) {
         AGENT
       </text>
       <text x="540" y="42" fontFamily="var(--font-geist-mono, monospace)" fontSize="10" fill="var(--ll-mute)" letterSpacing="0.18em" textAnchor="middle">
-        LEDGERLINE
+        TRACE.AI
       </text>
       <text x="920" y="42" fontFamily="var(--font-geist-mono, monospace)" fontSize="10" fill="var(--ll-mute)" letterSpacing="0.18em" textAnchor="middle">
         PUBLIC LEDGER
