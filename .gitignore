@@ -48,3 +48,12 @@ pids
 .cache/
 .temp/
 .tmp/
+
+# QA / dev artifacts (screenshots, playwright output, scratch images)
+.playwright-mcp/
+/qa-*.png
+/*.jpeg
+/armilla-logo.png
+/credo_ai_logo.jpeg
+/credoai_logo.png
+/langsmith-color.png
