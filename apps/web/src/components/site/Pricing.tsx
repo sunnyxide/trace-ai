@@ -14,6 +14,7 @@
  */
 import Link from 'next/link';
 import { Reveal } from '@/components/motion/Reveal';
+import { HandCheck } from '@/components/site/HandIcon';
 
 type Tier = {
   id: 'starter' | 'growth' | 'enterprise';
@@ -330,15 +331,15 @@ function TierCard({ tier }: { tier: Tier }) {
             <span
               aria-hidden
               style={{
-                marginTop: 2,
+                marginTop: 3,
                 color: isFeatured ? 'var(--ll-brand)' : 'var(--ll-ok)',
-                fontFamily: 'var(--font-geist-mono)',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-                lineHeight: 1.2,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                lineHeight: 1,
               }}
             >
-              ✓
+              <HandCheck size={15} strokeWidth={2} />
             </span>
             <span>{f}</span>
           </li>

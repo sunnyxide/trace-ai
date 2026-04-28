@@ -58,8 +58,8 @@ const COMPETITORS: Competitor[] = [
     name: 'trace.ai',
     category: 'Evidence infrastructure',
     blurb: 'Cryptographic, public, neutral.',
-    x: 84,
-    y: 84,
+    x: 76,
+    y: 68,
   },
 ];
 
@@ -225,11 +225,11 @@ function Quadrant() {
           }}
         />
 
-        {/* Cell labels */}
-        <CellLabel x={6} y={6} text="Inside the company" />
-        <CellLabel x={94} y={6} text="The desirable corner" tone="brand" align="right" />
-        <CellLabel x={6} y={94} text="Auditor takes your word" />
-        <CellLabel x={94} y={94} text="Anyone, with math" align="right" />
+        {/* Cell labels — tucked into corners, away from marker positions */}
+        <CellLabel x={4} y={6} text="Inside the company" />
+        <CellLabel x={96} y={6} text="The desirable corner" tone="brand" align="right" />
+        <CellLabel x={4} y={94} text="Auditor takes your word" />
+        <CellLabel x={96} y={94} text="Anyone, with math" align="right" />
 
         {/* Markers */}
         {COMPETITORS.map((c) => (
@@ -246,14 +246,8 @@ function Quadrant() {
         kind="x-right"
         text="EXTERNAL · the public's record"
       />
-      <AxisLabel
-        kind="y-bottom"
-        text="DESCRIPTIVE · words, policies, dashboards"
-      />
-      <AxisLabel
-        kind="y-top"
-        text="CRYPTOGRAPHIC · math an outsider can run"
-      />
+      <AxisLabel kind="y-bottom" text="DESCRIPTIVE — WORDS" />
+      <AxisLabel kind="y-top" text="CRYPTOGRAPHIC — MATH" />
     </div>
   );
 }
@@ -328,27 +322,31 @@ function AxisLabel({
   kind: 'x-left' | 'x-right' | 'y-top' | 'y-bottom';
   text: string;
 }) {
-  const base = {
-    position: 'absolute' as const,
+  const base: React.CSSProperties = {
+    position: 'absolute',
     fontFamily: 'var(--font-geist-mono)',
     fontSize: '0.625rem',
     letterSpacing: '0.18em',
     color: 'var(--ll-mute)',
-    textTransform: 'uppercase' as const,
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
   };
   if (kind === 'x-left')
     return <span style={{ ...base, left: 88, bottom: 32 }}>{text}</span>;
   if (kind === 'x-right')
     return <span style={{ ...base, right: 88, bottom: 32 }}>{text}</span>;
+
+  // Vertical labels — anchored at 30% / 70% of card height so they sit
+  // in their respective halves and never collide.
   if (kind === 'y-bottom')
     return (
       <span
         style={{
           ...base,
-          left: 24,
-          bottom: 80,
+          left: 28,
+          top: '70%',
           writingMode: 'vertical-rl',
-          transform: 'rotate(180deg)',
+          transform: 'translateY(-50%) rotate(180deg)',
         }}
       >
         {text}
@@ -358,10 +356,10 @@ function AxisLabel({
     <span
       style={{
         ...base,
-        left: 24,
-        top: 56,
+        left: 28,
+        top: '30%',
         writingMode: 'vertical-rl',
-        transform: 'rotate(180deg)',
+        transform: 'translateY(-50%) rotate(180deg)',
       }}
     >
       {text}
@@ -381,24 +379,11 @@ function Marker({ c }: { c: Competitor }) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 6,
+        gap: 8,
         zIndex: isUs ? 2 : 1,
       }}
     >
-      {/* Dot */}
-      <span
-        aria-hidden
-        style={{
-          width: isUs ? 22 : 12,
-          height: isUs ? 22 : 12,
-          borderRadius: 999,
-          background: isUs ? 'var(--ll-brand)' : 'var(--ll-ink)',
-          border: isUs ? '3px solid var(--ll-surface)' : 'none',
-          boxShadow: isUs
-            ? '0 0 0 4px color-mix(in oklab, var(--ll-brand) 30%, transparent)'
-            : 'none',
-        }}
-      />
+      <CompetitorMark id={c.id} isUs={isUs} />
       {/* Card */}
       <div
         style={{
@@ -441,6 +426,145 @@ function Marker({ c }: { c: Competitor }) {
   );
 }
 
+/**
+ * Per-competitor monogram chip. Geometric, abstract, brand-coded —
+ * never a literal logo replica. Each shape encodes the category:
+ *   · LangSmith — code brackets `< >` for dev observability
+ *   · Credo AI — shield+check for governance/policy
+ *   · Armilla — concentric ring (the bracelet/`armilla`) for risk transfer
+ *   · trace.ai — three-chevron forward trail (matches our logomark)
+ */
+function CompetitorMark({
+  id,
+  isUs,
+}: {
+  id: Competitor['id'];
+  isUs: boolean;
+}) {
+  const dim = isUs ? 38 : 32;
+  const ring = isUs
+    ? '0 0 0 4px color-mix(in oklab, var(--ll-brand) 28%, transparent)'
+    : '0 4px 12px -6px rgba(20, 18, 60, 0.18)';
+
+  const wrap: React.CSSProperties = {
+    width: dim,
+    height: dim,
+    borderRadius: 9,
+    boxShadow: ring,
+    overflow: 'hidden',
+    flex: '0 0 auto',
+  };
+
+  if (id === 'langsmith') {
+    return (
+      <span aria-hidden style={wrap}>
+        <svg width={dim} height={dim} viewBox="0 0 36 36">
+          <rect width="36" height="36" rx="9" fill="#E69434" />
+          <g
+            stroke="#FFFFFF"
+            strokeWidth="2.6"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M 14 11 L 9 18 L 14 25" />
+            <path d="M 22 11 L 27 18 L 22 25" />
+          </g>
+        </svg>
+      </span>
+    );
+  }
+
+  if (id === 'credo') {
+    return (
+      <span aria-hidden style={wrap}>
+        <svg width={dim} height={dim} viewBox="0 0 36 36">
+          <rect width="36" height="36" rx="9" fill="#6C57E0" />
+          <path
+            d="M 18 7 L 27 11 L 27 19 C 27 24 18 29 18 29 C 18 29 9 24 9 19 L 9 11 Z"
+            fill="rgba(255,255,255,0.18)"
+            stroke="#FFFFFF"
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M 14 18 L 17 21 L 22 16"
+            stroke="#FFFFFF"
+            strokeWidth="2.1"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
+    );
+  }
+
+  if (id === 'armilla') {
+    return (
+      <span aria-hidden style={wrap}>
+        <svg width={dim} height={dim} viewBox="0 0 36 36">
+          <rect width="36" height="36" rx="9" fill="#1F3A5F" />
+          <circle
+            cx="18"
+            cy="18"
+            r="9"
+            stroke="#FFFFFF"
+            strokeWidth="2"
+            fill="none"
+            opacity="0.55"
+          />
+          <circle
+            cx="18"
+            cy="18"
+            r="5.5"
+            stroke="#FFFFFF"
+            strokeWidth="2"
+            fill="none"
+          />
+          <circle cx="18" cy="18" r="2.2" fill="#FFFFFF" />
+        </svg>
+      </span>
+    );
+  }
+
+  // trace — gradient tile with the chevron trail
+  return (
+    <span aria-hidden style={wrap}>
+      <svg width={dim} height={dim} viewBox="0 0 36 36">
+        <defs>
+          <linearGradient id="comp-trace-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#5B5BFF" />
+            <stop offset="100%" stopColor="#FF8A65" />
+          </linearGradient>
+        </defs>
+        <rect width="36" height="36" rx="9" fill="url(#comp-trace-grad)" />
+        <g
+          stroke="#FFFFFF"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path
+            d="M 6.5 14 L 9 18 L 6.5 22"
+            strokeWidth="2"
+            opacity="0.45"
+          />
+          <path
+            d="M 13 11 L 18.5 18 L 13 25"
+            strokeWidth="2.4"
+            opacity="0.78"
+          />
+          <path
+            d="M 21.5 8 L 30 18 L 21.5 28"
+            strokeWidth="2.8"
+          />
+        </g>
+      </svg>
+    </span>
+  );
+}
+
 // ---------------------------------------------------------------------------
 
 function FeatureTable() {
@@ -470,21 +594,29 @@ function FeatureTable() {
                 ...thStyle,
                 textAlign: 'left',
                 paddingLeft: 24,
-                width: '40%',
+                width: '38%',
+                borderRight: '1px solid var(--ll-rule)',
               }}
             >
               Capability
             </th>
-            <th scope="col" style={thStyle}>LangSmith</th>
-            <th scope="col" style={thStyle}>Credo&nbsp;AI</th>
-            <th scope="col" style={thStyle}>Armilla</th>
+            <th scope="col" style={{ ...thStyle, borderRight: '1px solid var(--ll-rule)' }}>
+              LangSmith
+            </th>
+            <th scope="col" style={{ ...thStyle, borderRight: '1px solid var(--ll-rule)' }}>
+              Credo&nbsp;AI
+            </th>
+            <th scope="col" style={{ ...thStyle, borderRight: '1px solid var(--ll-rule)' }}>
+              Armilla
+            </th>
             <th
               scope="col"
               style={{
                 ...thStyle,
                 color: 'var(--ll-brand)',
                 background:
-                  'color-mix(in oklab, var(--ll-brand) 6%, transparent)',
+                  'color-mix(in oklab, var(--ll-brand) 8%, transparent)',
+                borderLeft: '1px solid var(--ll-rule)',
               }}
             >
               trace.ai
@@ -496,7 +628,7 @@ function FeatureTable() {
             <tr
               key={row.feature}
               style={{
-                background: i % 2 === 0 ? 'var(--ll-surface)' : 'var(--ll-bg)',
+                background: i % 2 === 0 ? 'var(--ll-surface)' : 'var(--ll-bg-soft)',
               }}
             >
               <th
@@ -504,6 +636,7 @@ function FeatureTable() {
                 style={{
                   ...rowHeadStyle,
                   paddingLeft: 24,
+                  borderRight: '1px solid var(--ll-rule)',
                 }}
               >
                 {row.feature}
@@ -541,6 +674,13 @@ const rowHeadStyle: React.CSSProperties = {
   borderBottom: '1px solid var(--ll-rule)',
 };
 
+const cellBaseStyle: React.CSSProperties = {
+  padding: '14px 12px',
+  textAlign: 'center',
+  borderBottom: '1px solid var(--ll-rule)',
+  borderRight: '1px solid var(--ll-rule)',
+};
+
 function Cell({
   value,
   highlight,
@@ -558,12 +698,16 @@ function Cell({
   return (
     <td
       style={{
-        padding: '14px 12px',
-        textAlign: 'center',
-        borderBottom: '1px solid var(--ll-rule)',
-        background: highlight
-          ? 'color-mix(in oklab, var(--ll-brand) 4%, transparent)'
-          : 'transparent',
+        ...cellBaseStyle,
+        // trace.ai column: subtle wash + thin matching border (not the bold 2px brand line)
+        ...(highlight
+          ? {
+              background:
+                'color-mix(in oklab, var(--ll-brand) 5%, transparent)',
+              borderRight: 'none',
+              borderLeft: '1px solid var(--ll-rule)',
+            }
+          : {}),
       }}
     >
       <span

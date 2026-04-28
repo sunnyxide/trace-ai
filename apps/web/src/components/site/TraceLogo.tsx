@@ -1,17 +1,20 @@
 /**
  * trace.ai logomark.
  *
- * Concept: a single trace line travelling from the agent's decision (top-left
- * indigo dot) to a verified anchor (bottom-right coral disc with checkmark).
- * The path itself IS the trace — the checkmark seals it.
+ * Concept: a three-chevron forward trail. Read it two ways at once:
+ *   · As `>>>` — a terminal prompt / log line, the surface our SDK speaks.
+ *   · As a sequence of footsteps — each step recorded, the trail visible.
  *
- * Renders cleanly from 16px favicon scale to 256px hero.
+ * The first two chevrons fade backward in opacity (the past, already
+ * anchored). The lead chevron carries the brand gradient (the next
+ * receipt, about to be cut). Order, sequence, irreversibility — the
+ * product story compressed into 24×24.
  */
 
 type Props = {
   size?: number;
   className?: string;
-  /** Whether to include the gradient fill or use a flat color (for tiny sizes). */
+  /** Use a flat single color (currentColor) instead of the gradient. */
   flat?: boolean;
   title?: string;
 };
@@ -23,6 +26,7 @@ export function TraceLogo({
   title = 'trace.ai',
 }: Props) {
   const gradId = `trace-grad-${flat ? 'flat' : 'g'}`;
+  const stroke = flat ? 'currentColor' : `url(#${gradId})`;
 
   return (
     <svg
@@ -32,38 +36,30 @@ export function TraceLogo({
       className={className}
       role="img"
       aria-label={title}
+      fill="none"
     >
-      <defs>
-        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"  stopColor={flat ? 'currentColor' : '#5B5BFF'} />
-          <stop offset="100%" stopColor={flat ? 'currentColor' : '#FF8A65'} />
-        </linearGradient>
-      </defs>
+      {!flat && (
+        <defs>
+          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#5B5BFF" />
+            <stop offset="100%" stopColor="#FF8A65" />
+          </linearGradient>
+        </defs>
+      )}
 
-      {/* Origin dot — the agent's decision */}
-      <circle cx="6" cy="6" r="2.6" fill={`url(#${gradId})`} />
-
-      {/* The trace itself — curved path from origin to anchor */}
-      <path
-        d="M 6 6 C 10 9, 11 14, 18 17"
-        stroke={`url(#${gradId})`}
-        strokeWidth="2.2"
+      <g
+        stroke={stroke}
         fill="none"
-        strokeLinecap="round"
-      />
-
-      {/* Anchor disc — verified seal */}
-      <circle cx="18" cy="17" r="4.4" fill={`url(#${gradId})`} />
-
-      {/* Checkmark inside the anchor */}
-      <path
-        d="M 16 17 L 17.4 18.4 L 20 15.8"
-        stroke="#FFFFFF"
-        strokeWidth="1.4"
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="none"
-      />
+      >
+        {/* Earliest step — faintest, smallest */}
+        <path d="M 3.4 9.6 L 5.4 12 L 3.4 14.4" strokeWidth="1.5" opacity="0.32" />
+        {/* Middle step */}
+        <path d="M 8.4 7.6 L 12.3 12 L 8.4 16.4" strokeWidth="2" opacity="0.62" />
+        {/* Lead step — current cursor / next receipt */}
+        <path d="M 14.4 5 L 21.4 12 L 14.4 19" strokeWidth="2.6" />
+      </g>
     </svg>
   );
 }

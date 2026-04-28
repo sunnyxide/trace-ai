@@ -1,11 +1,8 @@
 /**
  * OntologyGraph — large, narrative SVG diagram of the trust topology.
  *
- * Goals (per user feedback):
- *  - Bigger and more visually dominant on the hero
- *  - Clear what each node IS — readable labels + glyphs, not abstract dots
- *  - Dynamic motion that telegraphs flow: data packets travel along edges
- *  - Visible "this is happening right now" feel without any JS
+ * Each node carries a semantic glyph that telegraphs what the node IS,
+ * not a cryptic Unicode character.
  */
 
 type Props = {
@@ -15,6 +12,17 @@ type Props = {
 const W = 1100;
 const H = 540;
 
+type IconKey =
+  | 'agent'
+  | 'llm'
+  | 'tools'
+  | 'decide'
+  | 'sdk'
+  | 'hash'
+  | 'merkle'
+  | 'base'
+  | 'verify';
+
 type Node = {
   id: string;
   x: number;
@@ -22,19 +30,19 @@ type Node = {
   label: string;
   sub: string;
   tone: 'brand' | 'warm' | 'ink';
-  glyph: string;
+  icon: IconKey;
 };
 
 const NODES: Node[] = [
-  { id: 'agent',   x:  130, y: 140, label: 'AI Agent',         sub: 'Claude · GPT · Gemini', tone: 'brand', glyph: '◧' },
-  { id: 'llm',     x:  330, y:  90, label: 'LLM Call',         sub: 'prompt → response',     tone: 'brand', glyph: '⌬' },
-  { id: 'tools',   x:  330, y: 200, label: 'Tool Calls',       sub: 'shopify · stripe · …',  tone: 'brand', glyph: '⎈' },
-  { id: 'decide',  x:  540, y: 145, label: 'Decision',         sub: 'approve · reject · refer', tone: 'ink',  glyph: '◆' },
-  { id: 'sdk',     x:  540, y: 320, label: 'trace.ai SDK',   sub: 'one line of code',      tone: 'ink',   glyph: '▲' },
-  { id: 'hash',    x:  720, y: 240, label: 'Canonical Hash',   sub: 'SHA-256 fingerprint',   tone: 'ink',   glyph: '#' },
-  { id: 'merkle',  x:  720, y: 410, label: 'Merkle Batch',     sub: 'many decisions, one root', tone: 'ink', glyph: '⟁' },
-  { id: 'base',    x:  920, y: 320, label: 'Base L2',          sub: 'public blockchain',     tone: 'warm',  glyph: '⌖' },
-  { id: 'verify',  x:  920, y: 130, label: 'Public Verifier',  sub: 'anyone, anywhere',      tone: 'warm',  glyph: '✓' },
+  { id: 'agent',   x:  130, y: 140, label: 'AI Agent',         sub: 'Claude · GPT · Gemini',     tone: 'brand', icon: 'agent'  },
+  { id: 'llm',     x:  330, y:  90, label: 'LLM Call',         sub: 'prompt → response',         tone: 'brand', icon: 'llm'    },
+  { id: 'tools',   x:  330, y: 200, label: 'Tool Calls',       sub: 'shopify · stripe · …',      tone: 'brand', icon: 'tools'  },
+  { id: 'decide',  x:  540, y: 145, label: 'Decision',         sub: 'approve · reject · refer',  tone: 'ink',   icon: 'decide' },
+  { id: 'sdk',     x:  540, y: 320, label: 'trace.ai SDK',     sub: 'one line of code',          tone: 'ink',   icon: 'sdk'    },
+  { id: 'hash',    x:  720, y: 240, label: 'Canonical Hash',   sub: 'SHA-256 fingerprint',       tone: 'ink',   icon: 'hash'   },
+  { id: 'merkle',  x:  720, y: 410, label: 'Merkle Batch',     sub: 'many decisions, one root',  tone: 'ink',   icon: 'merkle' },
+  { id: 'base',    x:  920, y: 320, label: 'Base L2',          sub: 'public blockchain',         tone: 'warm',  icon: 'base'   },
+  { id: 'verify',  x:  920, y: 130, label: 'Public Verifier',  sub: 'anyone, anywhere',          tone: 'warm',  icon: 'verify' },
 ];
 
 // Edge format: [from, to, durationSec, delaySec, dotTone]
@@ -83,6 +91,111 @@ function curve(a: Node, b: Node): string {
   const cx2 = a.x + dx * 0.5;
   const cy2 = b.y - dy * 0.05;
   return `M ${a.x} ${a.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${b.x} ${b.y}`;
+}
+
+/**
+ * NodeIcon — semantic 16x16 line icon per node type, drawn relative to (cx, cy).
+ * All paths use the parent's `stroke`/`fill` so tone color flows through.
+ */
+function NodeIcon({ icon, cx, cy }: { icon: IconKey; cx: number; cy: number }) {
+  const sw = 1.4;
+  const props = {
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: sw,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
+  switch (icon) {
+    case 'agent':
+      // Friendly robot head — head box, two eyes, antenna
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <rect x="1.5" y="3" width="11" height="9" rx="2" />
+          <path d="M7 1 L7 3" />
+          <circle cx="7" cy="1" r="0.7" fill="currentColor" stroke="none" />
+          <circle cx="5" cy="7.5" r="0.9" fill="currentColor" stroke="none" />
+          <circle cx="9" cy="7.5" r="0.9" fill="currentColor" stroke="none" />
+        </g>
+      );
+    case 'llm':
+      // Speech bubble — what the LLM said
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <path d="M 1.8 3 L 12.2 3 Q 13.2 3 13.2 4 L 13.2 9 Q 13.2 10 12.2 10 L 6 10 L 4 12.5 L 4 10 L 1.8 10 Q 0.8 10 0.8 9 L 0.8 4 Q 0.8 3 1.8 3 Z" />
+          <path d="M 4 6.5 L 6 6.5 M 7.5 6.5 L 10 6.5" />
+        </g>
+      );
+    case 'tools':
+      // Wrench — tool call
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <path d="M 11 1.5 A 3.2 3.2 0 1 0 12.5 5 L 8.5 9 L 5 12.5 A 1.4 1.4 0 1 1 3 10.5 L 6.5 7 L 10 3 A 3.2 3.2 0 0 0 11 1.5 Z" />
+        </g>
+      );
+    case 'decide':
+      // Branching paths — the decision point
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <circle cx="7" cy="2.5" r="1.3" />
+          <circle cx="2.5" cy="11.5" r="1.3" />
+          <circle cx="11.5" cy="11.5" r="1.3" />
+          <path d="M 7 4 L 7 6.5 M 7 6.5 L 2.5 10 M 7 6.5 L 11.5 10" />
+        </g>
+      );
+    case 'sdk':
+      // </> code brackets
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <path d="M 5 4 L 1.5 7 L 5 10" />
+          <path d="M 9 4 L 12.5 7 L 9 10" />
+          <path d="M 8.4 3 L 5.6 11" strokeOpacity="0.7" />
+        </g>
+      );
+    case 'hash':
+      // # hash glyph
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <path d="M 5 2 L 4 12" />
+          <path d="M 10 2 L 9 12" />
+          <path d="M 2 5.5 L 13 5.5" />
+          <path d="M 1.5 9 L 12.5 9" />
+        </g>
+      );
+    case 'merkle':
+      // Binary tree — Merkle batch
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <circle cx="7" cy="2.5" r="1" fill="currentColor" stroke="none" />
+          <circle cx="3.5" cy="7" r="1" fill="currentColor" stroke="none" />
+          <circle cx="10.5" cy="7" r="1" fill="currentColor" stroke="none" />
+          <circle cx="1.8" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+          <circle cx="5.2" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+          <circle cx="8.8" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+          <circle cx="12.2" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+          <path d="M 7 3.5 L 3.5 6 M 7 3.5 L 10.5 6" />
+          <path d="M 3.5 8 L 1.8 10.5 M 3.5 8 L 5.2 10.5" />
+          <path d="M 10.5 8 L 8.8 10.5 M 10.5 8 L 12.2 10.5" />
+        </g>
+      );
+    case 'base':
+      // Anchor — "anchored on chain"
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props}>
+          <circle cx="7" cy="2.8" r="1.2" />
+          <path d="M 7 4 L 7 12" />
+          <path d="M 4.5 6 L 9.5 6" />
+          <path d="M 2 9 Q 2 12 7 12 Q 12 12 12 9" />
+        </g>
+      );
+    case 'verify':
+      // Check mark — verified
+      return (
+        <g transform={`translate(${cx - 7}, ${cy - 7})`} {...props} strokeWidth={1.7}>
+          <path d="M 2.5 7.5 L 6 11 L 12 3.5" />
+        </g>
+      );
+  }
 }
 
 export function OntologyGraph({ className }: Props) {
@@ -194,7 +307,7 @@ export function OntologyGraph({ className }: Props) {
               stroke={TONE_STROKE[n.tone]}
               strokeWidth="1"
             />
-            {/* Glyph */}
+            {/* Icon disc */}
             <circle
               cx={x + 22}
               cy={n.y}
@@ -203,17 +316,9 @@ export function OntologyGraph({ className }: Props) {
               stroke={TONE_FILL[n.tone]}
               strokeOpacity="0.4"
             />
-            <text
-              x={x + 22}
-              y={n.y + 4}
-              textAnchor="middle"
-              fontSize="13"
-              fontFamily="var(--font-geist-mono, monospace)"
-              fill={TONE_FILL[n.tone]}
-              fontWeight="600"
-            >
-              {n.glyph}
-            </text>
+            <g color={TONE_FILL[n.tone]}>
+              <NodeIcon icon={n.icon} cx={x + 22} cy={n.y} />
+            </g>
             {/* Label */}
             <text
               x={x + 44}

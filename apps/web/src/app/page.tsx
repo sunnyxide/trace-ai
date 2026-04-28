@@ -5,10 +5,12 @@ import { SocialProof } from '@/components/site/SocialProof';
 import { WhyNotDb } from '@/components/site/WhyNotDb';
 import { Pricing } from '@/components/site/Pricing';
 import { Competition } from '@/components/site/Competition';
+import { Roadmap } from '@/components/site/Roadmap';
 import { Aurora } from '@/components/graph/Aurora';
 import { OntologyGraph } from '@/components/graph/OntologyGraph';
 import { PageBackdrop } from '@/components/graph/PageBackdrop';
 import { Reveal } from '@/components/motion/Reveal';
+import { HandPlus, HandMinus, HandArrowDown } from '@/components/site/HandIcon';
 
 export default function HomePage() {
   return (
@@ -400,6 +402,11 @@ export default function HomePage() {
         <Competition />
 
         {/* ======================================================================
+         * ROADMAP — three phases: MGA → Platform → Standard
+         * ====================================================================*/}
+        <Roadmap />
+
+        {/* ======================================================================
          * QUICKSTART
          * ====================================================================*/}
         <section
@@ -694,12 +701,10 @@ function Timeline() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: dotColor,
-                  fontSize: '1.25rem',
-                  fontFamily: 'var(--font-geist-mono)',
                   lineHeight: 1,
                 }}
               >
-                ↓
+                <HandArrowDown size={18} strokeWidth={1.8} />
               </span>
             ) : null}
           </li>
@@ -719,6 +724,7 @@ function ClaimCard({
   body: string;
 }) {
   const isOk = tone === 'ok';
+  const Mark = isOk ? HandPlus : HandMinus;
   return (
     <div className="ll-card ll-card-hover">
       <div
@@ -726,7 +732,7 @@ function ClaimCard({
           display: 'inline-flex',
           alignItems: 'center',
           gap: 8,
-          padding: '4px 10px',
+          padding: '4px 12px 4px 8px',
           borderRadius: 999,
           background: isOk ? 'var(--ll-ok-soft)' : 'var(--ll-fail-soft)',
           color: isOk ? 'var(--ll-ok)' : 'var(--ll-fail)',
@@ -737,7 +743,8 @@ function ClaimCard({
           fontWeight: 500,
         }}
       >
-        {isOk ? '+ we are' : '— we are not'}
+        <Mark size={14} strokeWidth={2.2} />
+        {isOk ? 'we are' : 'we are not'}
       </div>
       <h3 className="ll-h2" style={{ marginTop: 16, fontSize: '1.25rem' }}>
         {heading}
@@ -761,12 +768,12 @@ const SCENARIO_DOMAIN_COLOR: Record<
   ScenarioDomain,
   { bg: string; fg: string; ring: string; label: string }
 > = {
-  ecommerce:  { bg: 'rgba(91, 91, 255, 0.10)',   fg: 'rgb(58, 58, 224)',  ring: 'rgba(91, 91, 255, 0.35)',  label: 'E-COMMERCE' },
-  finance:    { bg: 'rgba(255, 138, 101, 0.14)', fg: 'rgb(233, 106, 69)', ring: 'rgba(233, 106, 69, 0.40)', label: 'FINANCE' },
-  healthcare: { bg: 'rgba(15, 184, 122, 0.14)',  fg: 'rgb(11, 145, 96)',  ring: 'rgba(15, 184, 122, 0.40)', label: 'HEALTHCARE' },
-  hr:         { bg: 'rgba(245, 158, 11, 0.16)',  fg: 'rgb(181, 120, 10)', ring: 'rgba(245, 158, 11, 0.40)', label: 'HR' },
-  insurance:  { bg: 'rgba(142, 46, 184, 0.12)',  fg: 'rgb(142, 46, 184)', ring: 'rgba(142, 46, 184, 0.38)', label: 'INSURANCE' },
-  legal:      { bg: 'rgba(14, 110, 124, 0.14)',  fg: 'rgb(14, 110, 124)', ring: 'rgba(14, 110, 124, 0.40)', label: 'LEGAL' },
+  ecommerce:  { bg: 'rgba(149, 84, 38, 0.12)',   fg: 'rgb(149, 84, 38)',  ring: 'rgba(149, 84, 38, 0.40)',  label: 'E-COMMERCE' },
+  finance:    { bg: 'rgba(58, 80, 130, 0.12)',   fg: 'rgb(48, 70, 116)',  ring: 'rgba(58, 80, 130, 0.40)',  label: 'FINANCE' },
+  healthcare: { bg: 'rgba(192, 78, 122, 0.12)',  fg: 'rgb(176, 64, 108)', ring: 'rgba(192, 78, 122, 0.40)', label: 'HEALTHCARE' },
+  hr:         { bg: 'rgba(245, 158, 11, 0.16)',  fg: 'rgb(181, 120, 10)', ring: 'rgba(245, 158, 11, 0.40)',  label: 'HR' },
+  insurance:  { bg: 'rgba(142, 46, 184, 0.12)',  fg: 'rgb(142, 46, 184)', ring: 'rgba(142, 46, 184, 0.38)',  label: 'INSURANCE' },
+  legal:      { bg: 'rgba(14, 110, 124, 0.14)',  fg: 'rgb(14, 110, 124)', ring: 'rgba(14, 110, 124, 0.40)',  label: 'LEGAL' },
 };
 
 function ScenarioCard({
@@ -852,11 +859,12 @@ function ScenarioCard({
         style={{
           textAlign: 'center',
           color: 'var(--ll-mute)',
-          fontSize: '1rem',
           padding: '4px 0',
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        ↓
+        <HandArrowDown size={18} strokeWidth={1.6} />
       </div>
       <div
         style={{

@@ -11,6 +11,7 @@
  * a faded internal log, right is a stamped, anchored record.
  */
 import { Reveal } from '@/components/motion/Reveal';
+import { HandCheck, HandCross } from '@/components/site/HandIcon';
 
 type Row = {
   property: string;
@@ -157,7 +158,7 @@ function ComparisonPanel({
   const isTrace = tone === 'trace';
   const accent = isTrace ? 'var(--ll-brand)' : 'var(--ll-fail)';
   const accentSoft = isTrace ? 'var(--ll-brand-soft)' : 'var(--ll-fail-soft)';
-  const glyph = isTrace ? '✓' : '✕';
+  const Glyph = isTrace ? HandCheck : HandCross;
 
   return (
     <article
@@ -232,13 +233,10 @@ function ComparisonPanel({
             background: 'var(--ll-surface)',
             border: `1.5px solid ${accent}`,
             color: accent,
-            fontFamily: 'var(--font-geist-mono)',
-            fontSize: '1rem',
-            fontWeight: 700,
             flex: '0 0 auto',
           }}
         >
-          {glyph}
+          <Glyph size={18} strokeWidth={2.2} />
         </span>
       </header>
 
@@ -269,15 +267,15 @@ function ComparisonPanel({
             <span
               aria-hidden
               style={{
-                marginTop: 2,
+                marginTop: 3,
                 color: accent,
-                fontFamily: 'var(--font-geist-mono)',
-                fontSize: '0.9375rem',
-                fontWeight: 700,
-                lineHeight: 1.2,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                lineHeight: 1,
               }}
             >
-              {glyph}
+              <Glyph size={16} strokeWidth={2} />
             </span>
             <div>
               <div

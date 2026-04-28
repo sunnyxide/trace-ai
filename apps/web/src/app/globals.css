@@ -247,6 +247,13 @@ a.ll-btn-ghost {
   }
 }
 
+/* Roadmap — three phase cards in a row, stack on narrow viewports */
+.ll-roadmap-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 960px) {
+  .ll-roadmap-grid { grid-template-columns: minmax(0, 1fr) !important; gap: 24px !important; }
+  .ll-roadmap-rail { display: none !important; }
+}
+
 .ll-rule       { height: 1px; background: var(--ll-rule);       margin: 0; border: 0; }
 .ll-rule-faint { height: 1px; background: var(--ll-rule-faint); margin: 0; border: 0; }
 

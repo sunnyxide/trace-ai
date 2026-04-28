@@ -12,9 +12,9 @@ export type Domain =
   | 'legal';
 
 export const DOMAIN_COLORS: Record<Domain, { bg: string; fg: string; ring: string }> = {
-  ecommerce:  { bg: 'rgba(91, 91, 255, 0.10)',   fg: 'rgb(58, 58, 224)',  ring: 'rgba(91, 91, 255, 0.35)' },
-  finance:    { bg: 'rgba(255, 138, 101, 0.14)', fg: 'rgb(233, 106, 69)', ring: 'rgba(233, 106, 69, 0.40)' },
-  healthcare: { bg: 'rgba(15, 184, 122, 0.14)',  fg: 'rgb(11, 145, 96)',  ring: 'rgba(15, 184, 122, 0.40)' },
+  ecommerce:  { bg: 'rgba(149, 84, 38, 0.12)',   fg: 'rgb(149, 84, 38)',  ring: 'rgba(149, 84, 38, 0.40)' },
+  finance:    { bg: 'rgba(58, 80, 130, 0.12)',   fg: 'rgb(48, 70, 116)',  ring: 'rgba(58, 80, 130, 0.40)' },
+  healthcare: { bg: 'rgba(192, 78, 122, 0.12)',  fg: 'rgb(176, 64, 108)', ring: 'rgba(192, 78, 122, 0.40)' },
   hr:         { bg: 'rgba(245, 158, 11, 0.16)',  fg: 'rgb(181, 120, 10)', ring: 'rgba(245, 158, 11, 0.40)' },
   insurance:  { bg: 'rgba(142, 46, 184, 0.12)',  fg: 'rgb(142, 46, 184)', ring: 'rgba(142, 46, 184, 0.38)' },
   legal:      { bg: 'rgba(14, 110, 124, 0.14)',  fg: 'rgb(14, 110, 124)', ring: 'rgba(14, 110, 124, 0.40)' },

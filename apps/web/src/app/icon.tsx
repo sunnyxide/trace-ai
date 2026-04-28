@@ -4,9 +4,11 @@ export const size = { width: 64, height: 64 };
 export const contentType = 'image/png';
 
 /**
- * trace.ai favicon — gradient square with a stroked checkmark drawn as an
- * SVG path. We avoid the ✓ glyph because Satori tries to fetch a dynamic
- * font for it during static generation; an inline <svg> always renders.
+ * trace.ai favicon — gradient tile with a three-chevron forward trail
+ * (matches the in-product logomark).
+ *
+ * Inline SVG paths only — Satori cannot fetch dynamic fonts during
+ * static generation, so any glyph-based mark would silently 400.
  */
 export default function Icon() {
   return new ImageResponse(
@@ -23,19 +25,33 @@ export default function Icon() {
         }}
       >
         <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
+          width="46"
+          height="46"
+          viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path
-            d="M10 21 L17 28 L31 13"
+          <g
             stroke="#FFFFFF"
-            strokeWidth="5"
+            fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-          />
+          >
+            <path
+              d="M 3.4 9.6 L 5.4 12 L 3.4 14.4"
+              strokeWidth="1.6"
+              opacity="0.45"
+            />
+            <path
+              d="M 8.4 7.6 L 12.3 12 L 8.4 16.4"
+              strokeWidth="2.1"
+              opacity="0.75"
+            />
+            <path
+              d="M 14.4 5 L 21.4 12 L 14.4 19"
+              strokeWidth="2.8"
+            />
+          </g>
         </svg>
       </div>
     ),
