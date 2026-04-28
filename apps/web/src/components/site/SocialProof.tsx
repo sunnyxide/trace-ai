@@ -84,8 +84,8 @@ export function SocialProof() {
               style={{
                 marginTop: 22,
                 display: 'flex',
-                alignItems: 'baseline',
-                gap: 18,
+                alignItems: 'center',
+                gap: 32,
                 flexWrap: 'wrap',
                 position: 'relative',
               }}
@@ -98,6 +98,7 @@ export function SocialProof() {
                   letterSpacing: '-0.02em',
                   color: 'var(--ll-brand)',
                   fontWeight: 400,
+                  flex: '0 0 auto',
                 }}
               >
                 87%
@@ -105,9 +106,10 @@ export function SocialProof() {
               <span
                 className="ll-body-mute"
                 style={{
-                  fontSize: '0.875rem',
-                  maxWidth: 220,
-                  lineHeight: 1.45,
+                  fontSize: '0.9375rem',
+                  maxWidth: 240,
+                  lineHeight: 1.55,
+                  flex: '1 1 220px',
                 }}
               >
                 of enterprise CEOs we interviewed name AI&nbsp;output
