@@ -30,7 +30,7 @@ const NODES: Node[] = [
   { id: 'llm',     x:  330, y:  90, label: 'LLM Call',         sub: 'prompt → response',     tone: 'brand', glyph: '⌬' },
   { id: 'tools',   x:  330, y: 200, label: 'Tool Calls',       sub: 'shopify · stripe · …',  tone: 'brand', glyph: '⎈' },
   { id: 'decide',  x:  540, y: 145, label: 'Decision',         sub: 'approve · reject · refer', tone: 'ink',  glyph: '◆' },
-  { id: 'sdk',     x:  540, y: 320, label: 'Ledgerline SDK',   sub: 'one line of code',      tone: 'ink',   glyph: '▲' },
+  { id: 'sdk',     x:  540, y: 320, label: 'trace.ai SDK',   sub: 'one line of code',      tone: 'ink',   glyph: '▲' },
   { id: 'hash',    x:  720, y: 240, label: 'Canonical Hash',   sub: 'SHA-256 fingerprint',   tone: 'ink',   glyph: '#' },
   { id: 'merkle',  x:  720, y: 410, label: 'Merkle Batch',     sub: 'many decisions, one root', tone: 'ink', glyph: '⟁' },
   { id: 'base',    x:  920, y: 320, label: 'Base L2',          sub: 'public blockchain',     tone: 'warm',  glyph: '⌖' },
@@ -97,7 +97,7 @@ export function OntologyGraph({ className }: Props) {
       height="100%"
       className={className}
       role="img"
-      aria-label="Trust topology of an AI agent decision moving through Ledgerline to a public blockchain and finally to an independent verifier"
+      aria-label="Trust topology of an AI agent decision moving through trace.ai to a public blockchain and finally to an independent verifier"
       preserveAspectRatio="xMidYMid meet"
     >
       <defs>

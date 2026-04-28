@@ -37,9 +37,9 @@ export function WhatThisProves({ attesterAddress, operatorAddress, anchoredAt, t
       headline: 'A neutral third party witnessed it.',
       body:
         attesterAddress && operatorAddress
-          ? `Ledgerline anchored the root with ${attesterAddress.slice(0, 10)}…; the operator signed the payload with ${operatorAddress.slice(0, 10)}…. ` +
+          ? `trace.ai anchored the root with ${attesterAddress.slice(0, 10)}…; the operator signed the payload with ${operatorAddress.slice(0, 10)}…. ` +
             'Neither party can produce this evidence alone.'
-          : 'Ledgerline anchored the root from a separate wallet than the operator who signed the payload. ' +
+          : 'trace.ai anchored the root from a separate wallet than the operator who signed the payload. ' +
             'Neither party can produce this evidence alone.',
     },
   ];

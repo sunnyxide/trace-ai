@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TraceLogo } from './TraceLogo';
 
 export function Footer() {
   return (
@@ -13,15 +14,15 @@ export function Footer() {
               marginBottom: 12,
             }}
           >
-            <span className="ll-nav-brand-mark" aria-hidden />
+            <TraceLogo size={26} />
             <span style={{ fontWeight: 600, color: 'var(--ll-ink)' }}>
-              Ledgerline
+              trace<span style={{ color: 'var(--ll-mute-2)' }}>.ai</span>
             </span>
           </div>
           <p className="ll-small" style={{ maxWidth: 480 }}>
-            Tamper-evident audit ledger for AI agent decisions. Prototype
-            on Base Sepolia. Built for the AI / Blockchain SW중심대학
-            창업 경진대회 — 2026 sprint.
+            Tamper-evident audit ledger for AI agent decisions. Prototype on
+            Base Sepolia. Built for the AI / Blockchain SW중심대학 창업
+            경진대회 — 2026 sprint.
           </p>
         </div>
         <div

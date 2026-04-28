@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TraceLogo } from './TraceLogo';
 
 type NavProps = {
   active?: 'home' | 'how' | 'what' | 'verify' | 'dashboard';
@@ -8,9 +9,11 @@ export function Nav({ active = 'home' }: NavProps) {
   return (
     <header className="ll-shell">
       <nav className="ll-nav" aria-label="Primary">
-        <Link href="/" className="ll-nav-brand" aria-label="Ledgerline home">
-          <span className="ll-nav-brand-mark" aria-hidden />
-          Ledgerline
+        <Link href="/" className="ll-nav-brand" aria-label="trace.ai home">
+          <TraceLogo size={28} />
+          <span>
+            trace<span style={{ color: 'var(--ll-mute-2)' }}>.ai</span>
+          </span>
         </Link>
         <div className="ll-nav-links">
           <Link

@@ -30,7 +30,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: 'Ledgerline — AI agent decisions, on the record',
+  title: 'trace.ai — AI agent decisions, on the record',
   description:
     'Tamper-evident audit ledger for AI agent decisions. Every output gets a SHA-256 canonical hash, a Merkle proof, and an EAS attestation on Base L2 — independently verifiable by regulators, insurers, and courts.',
   metadataBase: new URL('http://localhost:3000'),

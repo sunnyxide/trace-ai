@@ -23,7 +23,7 @@ const CHECK_LABELS: { key: keyof Props['checks']; label: string; helper: string 
   { key: 'canonicalHash',  label: 'Recomputed canonical hash matches stored', helper: 'Bytes have not drifted in storage.' },
   { key: 'merkleProof',    label: 'Merkle proof verifies against on-chain root', helper: 'This leaf was in the batch we anchored.' },
   { key: 'onChainRoot',    label: 'EAS attestation found at the expected UID', helper: 'A real on-chain transaction confirms the root.' },
-  { key: 'notary',         label: 'Attester address matches platform wallet', helper: 'Ledgerline (the notary) anchored it, not someone else.' },
+  { key: 'notary',         label: 'Attester address matches platform wallet', helper: 'trace.ai (the notary) anchored it, not someone else.' },
   { key: 'author',         label: 'Operator signature recovers to declared key', helper: 'The author cannot deny they wrote it.' },
 ];
 
@@ -175,7 +175,7 @@ export function EvidenceDetails(props: Props) {
                   <span style={{ color: 'var(--ll-ink)', fontWeight: 500 }}>Notary</span>{' '}
                   {props.attesterAddress ? (
                     <code style={{ color: 'var(--ll-mute)' }}>{props.attesterAddress}</code>
-                  ) : 'Ledgerline'}{' '}
+                  ) : 'trace.ai'}{' '}
                   · anchored the Merkle root.
                   <br />
                   <span style={{ color: 'var(--ll-ink)', fontWeight: 500 }}>Author</span>{' '}

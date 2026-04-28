@@ -56,7 +56,7 @@ export const EXAMPLE_STORIES: Record<number, ExampleStory> = {
     ],
     chose: 'Approved. Shopify refund issued; customer notified.',
     why:
-      "Three months later, the customer disputes the charge. Bloom must prove the refund followed a real policy — not a hallucination. Ledgerline's record holds.",
+      "Three months later, the customer disputes the charge. Bloom must prove the refund followed a real policy — not a hallucination. trace.ai's record holds.",
     audience: [
       { who: 'The customer',     role: 'customer', ask: 'Was the refund really approved? When?' },
       { who: 'Stripe / the bank', role: 'bank',     ask: 'Was it processed under the merchant policy?' },

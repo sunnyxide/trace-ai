@@ -304,7 +304,7 @@ function StepLlm({ scenario }: { scenario: Props['scenario'] }) {
         })}
       </div>
       <Caption>
-        Ledgerline records the rejected options too — not just what shipped.
+        trace.ai records the rejected options too — not just what shipped.
       </Caption>
 
       <style>{`
@@ -875,7 +875,7 @@ function StepVerify() {
           letterSpacing: 0,
         }}
       >
-        ledgerline.app/verify?id=550e8400-…0001
+        trace.ai/verify?id=550e8400-…0001
       </div>
       <Caption>
         Every party hits the same URL. None of them can cheat the answer.

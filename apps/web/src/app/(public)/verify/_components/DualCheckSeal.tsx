@@ -98,7 +98,7 @@ export function DualCheckSeal({
         <NotaryIcon state={notaryOk} />
         <div className="ll-seal-label">SEAL № 1 · NOTARY</div>
         <div className="ll-seal-name">
-          Ledgerline anchored on Base Sepolia
+          trace.ai anchored on Base Sepolia
         </div>
         <div className="ll-seal-detail">
           {batch?.blockNumber !== undefined ? (
@@ -203,7 +203,7 @@ export function DualCheckSeal({
                     color: 'var(--ll-pending)',
                   }}
                 >
-                  Prototype: this key may be held by Ledgerline as a demo
+                  Prototype: this key may be held by trace.ai as a demo
                   stand-in. Production requires the customer to hold this key.
                 </div>
               )}
