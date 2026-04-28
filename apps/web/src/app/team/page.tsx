@@ -56,12 +56,12 @@ const TEAM: Founder[] = [
     name: 'Sunwoo Joo · 주선우',
     role: 'Co-founder, CTO',
     bio:
-      'Former Orbit Korea CTO, KCPC 2024 Div.1 champion, and a galaxy-simulation researcher published with a Yonsei professor. He builds infrastructure that survives a court order — append-only systems, cryptographic provenance, the boring parts that have to be perfect.',
+      'Spent his school years inside research labs — KAIST R&E, DGIST Pre-URP — and brought home a silver medal from Korea’s IESO national team. Former CTO of Orbit Korea; now turning that research-lab patience on the boring-but-perfect parts trace.ai sits on.',
     priors: [
-      { label: 'Orbit Korea',  sub: 'CTO' },
-      { label: 'KCPC 2024',    sub: 'Div.1 #1' },
-      { label: 'Yonsei',       sub: 'sim research' },
-      { label: 'Madon',        sub: 'co-founder' },
+      { label: 'KAIST',       sub: 'R&E researcher' },
+      { label: 'DGIST',       sub: 'Pre-URP' },
+      { label: 'IESO',        sub: 'silver medal' },
+      { label: 'Orbit Korea', sub: 'CTO' },
     ],
     links: [],
     tone: 'ink',
@@ -71,11 +71,11 @@ const TEAM: Founder[] = [
     name: 'Hyunmin Lee · 이현민',
     role: 'Co-founder, Product',
     bio:
-      'KAIST R&E and DGIST Pre-URP researcher, silver medalist on Korea’s IESO national team. He turns a hypothesis into a working build before lunch — beat TELEClass on hierarchical text classification and has two zero-to-one products already on his ledger.',
+      'KCPC 2024 Div.1 champion who’s already co-founded Madon (an Education-Ministry-backed program), led two zero-to-one product launches, and beat TELEClass on hierarchical text classification. Co-published galaxy-simulation research with a Yonsei professor — wins national prizes the way he ships product.',
     priors: [
-      { label: 'KAIST',     sub: 'R&E researcher' },
-      { label: 'DGIST',     sub: 'Pre-URP' },
-      { label: 'IESO',      sub: 'silver medal' },
+      { label: 'KCPC 2024', sub: 'Div.1 #1' },
+      { label: 'Madon',     sub: 'co-founder' },
+      { label: 'Yonsei',    sub: 'sim research' },
       { label: 'TELEClass', sub: 'beat SOTA' },
     ],
     links: [],
