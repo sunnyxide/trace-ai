@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { TraceLogo } from './TraceLogo';
 
 type NavProps = {
-  active?: 'home' | 'how' | 'what' | 'verify' | 'dashboard';
+  active?: 'home' | 'how' | 'what' | 'verify' | 'dashboard' | 'team';
 };
 
 export function Nav({ active = 'home' }: NavProps) {
@@ -39,6 +39,12 @@ export function Nav({ active = 'home' }: NavProps) {
             className={active === 'dashboard' ? 'is-active' : undefined}
           >
             Dashboard
+          </Link>
+          <Link
+            href="/team"
+            className={active === 'team' ? 'is-active' : undefined}
+          >
+            Team
           </Link>
           <Link
             href="https://github.com/"
