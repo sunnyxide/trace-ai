@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Nav } from '@/components/site/Nav';
 import { Footer } from '@/components/site/Footer';
 import { SocialProof } from '@/components/site/SocialProof';
+import { WhyNotDb } from '@/components/site/WhyNotDb';
 import { Aurora } from '@/components/graph/Aurora';
 import { OntologyGraph } from '@/components/graph/OntologyGraph';
 import { PageBackdrop } from '@/components/graph/PageBackdrop';
@@ -171,6 +172,11 @@ export default function HomePage() {
          * SOCIAL PROOF — Shoptalk 87% pull-quote + regulatory clock
          * ====================================================================*/}
         <SocialProof />
+
+        {/* ======================================================================
+         * WHY NOT A DATABASE — side-by-side comparison panel
+         * ====================================================================*/}
+        <WhyNotDb />
 
         {/* ======================================================================
          * MARQUEE — partners / supported tooling

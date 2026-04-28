@@ -96,12 +96,11 @@ export function SocialProof() {
                   fontSize: 'clamp(4.5rem, 9vw, 7rem)',
                   lineHeight: 0.95,
                   letterSpacing: '-0.02em',
-                  color: 'var(--ll-ink)',
+                  color: 'var(--ll-brand)',
                   fontWeight: 400,
                 }}
               >
-                87
-                <span style={{ color: 'var(--ll-brand)' }}>%</span>
+                87%
               </span>
               <span
                 className="ll-body-mute"
@@ -182,7 +181,7 @@ export function SocialProof() {
             <RegCard
               tone="ok"
               jurisdiction="Republic of Korea"
-              law="AI Basic Act (인공지능 기본법)"
+              law="AI Basic Act"
               status={
                 koreaDaysLive >= 0
                   ? `In force · day +${koreaDaysLive}`
