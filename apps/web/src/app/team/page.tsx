@@ -38,43 +38,49 @@ type Founder = {
 // ---------------------------------------------------------------------------
 const TEAM: Founder[] = [
   {
-    name: 'Sunny',
+    name: 'Minsoo Kim · 김민수',
     role: 'Co-founder, CEO',
     bio:
-      'Builds at the intersection of AI agents and the public-trust infrastructure they need to operate. Previously shipped consumer products used by millions; now obsessed with making the receipt the default.',
+      'Took BeReal into Korea and Asia, scaled OrcaStudio to ~70% YoY growth, and founded Orbit Korea — the youngest and first Korean to reach Meet The Drapers’ global Top 4. He goes to market the way he ships product: face-first.',
     priors: [
-      { label: 'Orbt', sub: 'founder' },
-      { label: 'AI agents', sub: '5+ yrs' },
-    ],
-    links: [{ label: 'Email', href: 'mailto:sunny@tryorbt.com' }],
-    tone: 'brand',
-    initials: 'S',
-  },
-  {
-    name: 'Co-founder Two',
-    role: 'Co-founder, CTO',
-    bio:
-      'Cryptography, distributed systems, and the kind of patience required to make Merkle trees boring. Worked on production blockchain infrastructure before AI was the headline.',
-    priors: [
-      { label: 'Crypto infra', sub: 'protocol' },
-      { label: 'Open source', sub: 'maintainer' },
+      { label: 'BeReal',       sub: 'Korea / Asia' },
+      { label: 'OrcaStudio',   sub: 'Growth' },
+      { label: 'Orbit Korea',  sub: 'CEO' },
+      { label: 'Drapers',      sub: 'Global Top 4' },
     ],
     links: [],
-    tone: 'warm',
-    initials: 'C2',
+    tone: 'brand',
+    initials: 'MK',
   },
   {
-    name: 'Co-founder Three',
-    role: 'Co-founder, Head of Trust',
+    name: 'Sunwoo Joo · 주선우',
+    role: 'Co-founder, CTO',
     bio:
-      'Spent a decade in regulated industries arguing about what counts as evidence. Translates between auditors, regulators, and engineers — turns audit asks into protocol fields.',
+      'Former Orbit Korea CTO, KCPC 2024 Div.1 champion, and a galaxy-simulation researcher published with a Yonsei professor. He builds infrastructure that survives a court order — append-only systems, cryptographic provenance, the boring parts that have to be perfect.',
     priors: [
-      { label: 'Big 4 audit', sub: 'practice' },
-      { label: 'Policy', sub: 'AI Act'  },
+      { label: 'Orbit Korea',  sub: 'CTO' },
+      { label: 'KCPC 2024',    sub: 'Div.1 #1' },
+      { label: 'Yonsei',       sub: 'sim research' },
+      { label: 'Madon',        sub: 'co-founder' },
     ],
     links: [],
     tone: 'ink',
-    initials: 'C3',
+    initials: 'SJ',
+  },
+  {
+    name: 'Hyunmin Lee · 이현민',
+    role: 'Co-founder, Product',
+    bio:
+      'KAIST R&E and DGIST Pre-URP researcher, silver medalist on Korea’s IESO national team. He turns a hypothesis into a working build before lunch — beat TELEClass on hierarchical text classification and has two zero-to-one products already on his ledger.',
+    priors: [
+      { label: 'KAIST',     sub: 'R&E researcher' },
+      { label: 'DGIST',     sub: 'Pre-URP' },
+      { label: 'IESO',      sub: 'silver medal' },
+      { label: 'TELEClass', sub: 'beat SOTA' },
+    ],
+    links: [],
+    tone: 'warm',
+    initials: 'HL',
   },
 ];
 

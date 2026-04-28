@@ -947,10 +947,56 @@ function Frame({
   subtitle: string;
   children: ReactNode;
 }) {
+  // Split "Step N · descriptive" so the step number gets badge weight and
+  // the descriptor reads as a real heading. The simulator screen is supposed
+  // to be the most visible thing on the page — `ll-caption` made it whisper.
+  const match = title.match(/^(Step\s+\d+)\s*[·•]\s*(.+)$/i);
+  const badge = match?.[1];
+  const heading = match?.[2] ?? title;
+
   return (
     <div>
-      <div className="ll-caption" style={{ marginBottom: 6 }}>
-        {title}
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: 12,
+          marginBottom: 8,
+        }}
+      >
+        {badge ? (
+          <span
+            style={{
+              fontFamily: 'var(--font-geist-mono)',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              padding: '5px 11px',
+              background: 'var(--ll-brand)',
+              color: '#FFFFFF',
+              borderRadius: 999,
+              flexShrink: 0,
+              lineHeight: 1.2,
+            }}
+          >
+            {badge}
+          </span>
+        ) : null}
+        <h3
+          style={{
+            margin: 0,
+            fontFamily: 'var(--font-geist-sans)',
+            fontSize: '1.5rem',
+            fontWeight: 600,
+            color: 'var(--ll-ink)',
+            letterSpacing: '-0.01em',
+            lineHeight: 1.2,
+          }}
+        >
+          {heading}
+        </h3>
       </div>
       <p
         style={{
