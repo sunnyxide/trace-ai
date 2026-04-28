@@ -4,6 +4,7 @@ import { Footer } from '@/components/site/Footer';
 import { SocialProof } from '@/components/site/SocialProof';
 import { WhyNotDb } from '@/components/site/WhyNotDb';
 import { Pricing } from '@/components/site/Pricing';
+import { Competition } from '@/components/site/Competition';
 import { Aurora } from '@/components/graph/Aurora';
 import { OntologyGraph } from '@/components/graph/OntologyGraph';
 import { PageBackdrop } from '@/components/graph/PageBackdrop';
@@ -392,6 +393,11 @@ export default function HomePage() {
          * PRICING — three tiers + two-sided market explainer
          * ====================================================================*/}
         <Pricing />
+
+        {/* ======================================================================
+         * COMPETITION — quadrant chart + feature matrix
+         * ====================================================================*/}
+        <Competition />
 
         {/* ======================================================================
          * QUICKSTART

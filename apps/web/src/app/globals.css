@@ -188,6 +188,14 @@ a.ll-btn-ghost {
 @media (min-width: 720px) { .ll-shell { padding: 0 56px; } }
 
 /* === responsive graph + grids === */
+/* Competition quadrant chart — only shown when there's enough width to
+   place four labeled markers without overlap. Below 880px the table
+   carries the same information without needing the spatial layout. */
+.ll-quadrant-wrap { display: block; }
+@media (max-width: 880px) {
+  .ll-quadrant-wrap { display: none; }
+}
+
 /* OntologyGraph hero frame. On wide screens we honor a fixed aspect ratio
    so the graph occupies a generous landscape band. Below 720px the graph
    becomes too dense to read at scale, so we lock its drawing surface to a
