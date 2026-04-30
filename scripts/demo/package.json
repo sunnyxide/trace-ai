@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "e2e": "tsx end-to-end.ts",
+    "wrap": "tsx wrap-demo.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

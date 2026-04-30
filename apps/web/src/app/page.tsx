@@ -457,36 +457,23 @@ export default function HomePage() {
             <pre className="ll-code">
 {`// pnpm add @ledgerline/sdk @anthropic-ai/sdk
 import Anthropic from '@anthropic-ai/sdk';
-import { LedgerlineClient, DecisionRecordBuilder }
-  from '@ledgerline/sdk';
+import { traceClaude } from '@ledgerline/sdk';
 
-const ledger = new LedgerlineClient(); // LEDGERLINE_API_KEY
-const claude = new Anthropic();
+// One wrap. Every messages.create now ships a receipt.
+const claude = traceClaude(new Anthropic(), {
+  agentId: 'cs-agent-v3',
+});
 
 const response = await claude.messages.create({
   model: 'claude-opus-4-7',
   messages: [{ role: 'user', content: prompt }],
+  trace: { decisionClass: 'approve',
+           rationale: 'within refund window' },
 });
-const text = response.content[0].type === 'text'
-  ? response.content[0].text : '';
 
-const record = new DecisionRecordBuilder({
-  agentId: 'cs-agent-v3',
-  decisionClass: 'approve',
-})
-  .setUserPrompt(prompt)
-  .addLlmCall({
-    provider: 'anthropic',
-    model: 'claude-opus-4-7',
-    prompt, response: text,
-  })
-  .select({ output: text })
-  .withRationale({ summary: 'within refund window' })
-  .build();
-
-const { decision_id, verifierUrl } = await ledger.submit(record);
-// → anchored on Base Sepolia in < 60s
-// → verifierUrl = /verify?id=<decision_id>`}
+// → standard Anthropic response
+// → receipt anchored on Base Sepolia in < 60s
+// → verifier URL logged: /verify?id=<decision_id>`}
             </pre>
           </div>
         </section>

@@ -24,4 +24,12 @@ export {
   type AddressHex,
 } from './sign';
 
+export {
+  traceClaude,
+  generateOperatorKey,
+  type TraceClaudeOptions,
+  type TraceCallOptions,
+  type ReceiptInfo,
+} from './wrap';
+
 export type { DR1 } from '@ledgerline/schema';

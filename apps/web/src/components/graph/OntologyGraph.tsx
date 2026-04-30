@@ -34,15 +34,15 @@ type Node = {
 };
 
 const NODES: Node[] = [
-  { id: 'agent',   x:  130, y: 140, label: 'AI Agent',         sub: 'Claude · GPT · Gemini',     tone: 'brand', icon: 'agent'  },
-  { id: 'llm',     x:  330, y:  90, label: 'LLM Call',         sub: 'prompt → response',         tone: 'brand', icon: 'llm'    },
-  { id: 'tools',   x:  330, y: 200, label: 'Tool Calls',       sub: 'shopify · stripe · …',      tone: 'brand', icon: 'tools'  },
-  { id: 'decide',  x:  540, y: 145, label: 'Decision',         sub: 'approve · reject · refer',  tone: 'ink',   icon: 'decide' },
-  { id: 'sdk',     x:  540, y: 320, label: 'trace.ai SDK',     sub: 'one line of code',          tone: 'ink',   icon: 'sdk'    },
-  { id: 'hash',    x:  720, y: 240, label: 'Canonical Hash',   sub: 'SHA-256 fingerprint',       tone: 'ink',   icon: 'hash'   },
-  { id: 'merkle',  x:  720, y: 410, label: 'Merkle Batch',     sub: 'many decisions, one root',  tone: 'ink',   icon: 'merkle' },
-  { id: 'base',    x:  920, y: 320, label: 'Base L2',          sub: 'public blockchain',         tone: 'warm',  icon: 'base'   },
-  { id: 'verify',  x:  920, y: 130, label: 'Public Verifier',  sub: 'anyone, anywhere',          tone: 'warm',  icon: 'verify' },
+  { id: 'agent',   x:  130, y: 140, label: 'AI Agent',         sub: 'Claude · GPT · …',     tone: 'brand', icon: 'agent'  },
+  { id: 'llm',     x:  330, y:  90, label: 'LLM Call',         sub: 'prompt → response',    tone: 'brand', icon: 'llm'    },
+  { id: 'tools',   x:  330, y: 200, label: 'Tool Calls',       sub: 'shopify · stripe',     tone: 'brand', icon: 'tools'  },
+  { id: 'decide',  x:  540, y: 145, label: 'Decision',         sub: 'approve · reject',     tone: 'ink',   icon: 'decide' },
+  { id: 'sdk',     x:  540, y: 320, label: 'trace.ai SDK',     sub: 'one line of code',     tone: 'ink',   icon: 'sdk'    },
+  { id: 'hash',    x:  720, y: 240, label: 'Canonical Hash',   sub: 'SHA-256 hash',         tone: 'ink',   icon: 'hash'   },
+  { id: 'merkle',  x:  720, y: 410, label: 'Merkle Batch',     sub: '→ one merkle root',    tone: 'ink',   icon: 'merkle' },
+  { id: 'base',    x:  920, y: 320, label: 'Base L2',          sub: 'public blockchain',    tone: 'warm',  icon: 'base'   },
+  { id: 'verify',  x:  920, y: 130, label: 'Public Verifier',  sub: 'anyone, anywhere',     tone: 'warm',  icon: 'verify' },
 ];
 
 // Edge format: [from, to, durationSec, delaySec, dotTone]
@@ -279,9 +279,10 @@ export function OntologyGraph({ className }: Props) {
         </circle>
       ))}
 
-      {/* Nodes — pill-shaped cards so labels are first-class */}
+      {/* Nodes — pill-shaped cards so labels are first-class. Width is wide
+          enough to fit the longest sub at 10px geist-mono without clipping. */}
       {NODES.map((n) => {
-        const w = 156;
+        const w = 172;
         const h = 56;
         const x = n.x - w / 2;
         const y = n.y - h / 2;

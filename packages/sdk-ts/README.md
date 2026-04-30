@@ -21,43 +21,72 @@ yarn add     @ledgerline/sdk
 > or build from source. The npm publish is gated on the public API freeze
 > (target: 2026 Q3).
 
-## Quickstart
+## Quickstart — three lines
 
 ```ts
 import Anthropic from '@anthropic-ai/sdk';
-import { LedgerlineClient, DecisionRecordBuilder } from '@ledgerline/sdk';
+import { traceClaude } from '@ledgerline/sdk';
 
-const ledger = new LedgerlineClient(); // reads LEDGERLINE_API_KEY from env
-const claude = new Anthropic();
+// 1. Wrap your Anthropic client.
+const claude = traceClaude(new Anthropic(), { agentId: 'cs-agent-v3' });
 
-const userPrompt =
-  'Customer requests a refund for order #4271. Within the 30-day window. Approve?';
-
+// 2. Use it like normal — every call now ships a receipt.
 const response = await claude.messages.create({
   model: 'claude-opus-4-7',
-  messages: [{ role: 'user', content: userPrompt }],
+  messages: [{ role: 'user', content: 'Approve refund for order #4271?' }],
+  trace: {
+    decisionClass: 'approve',
+    rationale: 'within refund window',
+  },
 });
-const llmText = response.content[0].type === 'text' ? response.content[0].text : '';
 
-const record = new DecisionRecordBuilder({
+// `response` is the standard Anthropic response.
+// Receipt fires in the background — verifier URL goes to console
+// (or pass `onReceipt` to capture it programmatically).
+```
+
+### Need both response AND receipt awaited?
+
+```ts
+const claude = traceClaude(new Anthropic(), {
   agentId: 'cs-agent-v3',
-  decisionClass: 'approve',
-})
-  .setUserPrompt(userPrompt)
-  .addLlmCall({
-    provider: 'anthropic',
-    model: 'claude-opus-4-7',
-    prompt: userPrompt,
-    response: llmText,
-  })
-  .select({ output: llmText })
-  .withRationale({ summary: 'within refund window' })
+  onReceipt: (info) => {
+    if (info.ok) console.log('verifier:', info.verifierUrl);
+  },
+});
+```
+
+### Manual / fine-grained control
+
+If you want to construct a record without an LLM call (e.g. a pure rule-based
+decision), use the lower-level builder + client directly:
+
+```ts
+import { LedgerlineClient, DecisionRecordBuilder } from '@ledgerline/sdk';
+
+const ledger = new LedgerlineClient();
+const record = new DecisionRecordBuilder({ agentId: 'rules-engine', decisionClass: 'reject' })
+  .setUserPrompt('refund request, day 47')
+  .addLlmCall({ provider: 'other', model: 'rules-engine-v2', prompt: '...', response: '...' })
+  .select({ output: 'reject' })
+  .withRationale({ summary: 'outside 30-day refund window' })
   .build();
 
 const { decision_id, verifierUrl } = await ledger.submit(record);
-console.log(`Anchoring ${decision_id} → ${verifierUrl}`);
-// Anchored on Base Sepolia within 60 seconds.
 ```
+
+## First-time setup (one-time)
+
+```bash
+# 1. Generate your operator key (used to sign records on the testnet).
+node -e "console.log(require('@ledgerline/sdk').generateOperatorKey())"
+
+# 2. Add to .env
+LEDGERLINE_API_KEY=lgl_live_...        # ask us for one (self-serve coming soon)
+LEDGERLINE_OPERATOR_PK=0x...           # the key from step 1
+```
+
+That's it. The SDK reads both from env automatically.
 
 ## Configuration
 
