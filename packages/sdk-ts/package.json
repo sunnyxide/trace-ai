@@ -1,19 +1,37 @@
 {
-  "name": "@ledgerline/sdk-ts",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@ledgerline/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for trace.ai — submit DR-1 decision receipts and verify on-chain anchored attestations.",
+  "license": "MIT",
   "main": "src/index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "echo no-lint-yet"
   },
   "dependencies": {
-    "@opentelemetry/api": "^1.9.0",
-    "@opentelemetry/sdk-trace-node": "^1.27.0"
+    "@ledgerline/schema": "workspace:*",
+    "viem": "^2.21.0"
   },
   "devDependencies": {
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
-  }
+  },
+  "keywords": [
+    "trace.ai",
+    "ledgerline",
+    "ai-receipts",
+    "ai-governance",
+    "audit",
+    "eas",
+    "ethereum-attestation"
+  ]
 }

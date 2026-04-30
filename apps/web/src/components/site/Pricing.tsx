@@ -61,7 +61,7 @@ const TIERS: Tier[] = [
       '99.9% uptime SLA',
       'Priority email support',
     ],
-    cta: { label: 'Talk to founders →', href: 'mailto:hello@trace.ai' },
+    cta: { label: 'Talk to founders →', href: 'mailto:sunny@tryorbt.com?subject=trace.ai%20%E2%80%94%20talk%20to%20founders' },
     featured: true,
   },
   {
@@ -81,7 +81,7 @@ const TIERS: Tier[] = [
       'Insurance partner integration',
       '24/7 incident response',
     ],
-    cta: { label: 'Schedule a call →', href: 'mailto:enterprise@trace.ai' },
+    cta: { label: 'Schedule a call →', href: 'mailto:sunny@tryorbt.com?subject=trace.ai%20%E2%80%94%20enterprise%20call' },
   },
 ];
 

@@ -455,30 +455,38 @@ export default function HomePage() {
             </div>
 
             <pre className="ll-code">
-{`import Anthropic from '@anthropic-ai/sdk';
+{`// pnpm add @ledgerline/sdk @anthropic-ai/sdk
+import Anthropic from '@anthropic-ai/sdk';
 import { LedgerlineClient, DecisionRecordBuilder }
   from '@ledgerline/sdk';
 
-const ledger = new LedgerlineClient();
+const ledger = new LedgerlineClient(); // LEDGERLINE_API_KEY
 const claude = new Anthropic();
 
 const response = await claude.messages.create({
   model: 'claude-opus-4-7',
   messages: [{ role: 'user', content: prompt }],
 });
+const text = response.content[0].type === 'text'
+  ? response.content[0].text : '';
 
 const record = new DecisionRecordBuilder({
-  agentId: 'bloom-cs-agent-v3',
+  agentId: 'cs-agent-v3',
   decisionClass: 'approve',
 })
-  .addLlmCall({ provider: 'anthropic', ... })
-  .select({ output: response.content[0].text })
+  .setUserPrompt(prompt)
+  .addLlmCall({
+    provider: 'anthropic',
+    model: 'claude-opus-4-7',
+    prompt, response: text,
+  })
+  .select({ output: text })
   .withRationale({ summary: 'within refund window' })
   .build();
 
-await ledger.submit(record);
+const { decision_id, verifierUrl } = await ledger.submit(record);
 // → anchored on Base Sepolia in < 60s
-// → verified at /verify?id=<decision_id>`}
+// → verifierUrl = /verify?id=<decision_id>`}
             </pre>
           </div>
         </section>

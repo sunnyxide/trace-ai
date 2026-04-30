@@ -1,0 +1,19 @@
+{
+  "name": "@ledgerline/demo-scripts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "e2e": "tsx end-to-end.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ledgerline/sdk": "workspace:*",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsx": "^4.21.0",
+    "typescript": "^5.6.0"
+  }
+}

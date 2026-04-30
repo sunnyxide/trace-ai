@@ -197,7 +197,7 @@ function PhaseCard({ phase }: { phase: Phase }) {
     <article
       style={{
         position: 'relative',
-        padding: '52px 28px 32px',
+        padding: '88px 28px 32px',
         border: cardBorder,
         borderRadius: 18,
         background: cardBg,
@@ -235,12 +235,12 @@ function PhaseCard({ phase }: { phase: Phase }) {
         }}
       />
 
-      {/* Status badge — pinned to top-right corner so it never competes
-          with the giant phase numeral for the same baseline. */}
+      {/* Status badge — pinned to top-right corner, BELOW the rail so the
+          centered station dot never sits on top of the badge text. */}
       <div
         style={{
           position: 'absolute',
-          top: 18,
+          top: 56,
           right: 18,
           zIndex: 1,
         }}
@@ -254,7 +254,7 @@ function PhaseCard({ phase }: { phase: Phase }) {
           display: 'flex',
           alignItems: 'baseline',
           gap: 14,
-          marginTop: 18,
+          marginTop: 0,
           flexWrap: 'wrap',
         }}
       >
