@@ -85,11 +85,11 @@ export default function HomePage() {
                 justifyContent: 'center',
               }}
             >
-              <Link href="/verify?example=1" className="ll-btn">
-                See it verify a real decision →
+              <Link href="/signup" className="ll-btn">
+                Get an API key — free →
               </Link>
-              <Link href="#how" className="ll-btn ll-btn-ghost">
-                How it works
+              <Link href="/verify?example=1" className="ll-btn ll-btn-ghost">
+                See a real receipt
               </Link>
             </div>
           </div>

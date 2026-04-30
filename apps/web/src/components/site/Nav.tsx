@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { TraceLogo } from './TraceLogo';
 
 type NavProps = {
-  active?: 'home' | 'how' | 'what' | 'verify' | 'dashboard' | 'team';
+  active?: 'home' | 'how' | 'what' | 'verify' | 'dashboard' | 'team' | 'signup';
 };
 
 export function Nav({ active = 'home' }: NavProps) {
@@ -47,6 +47,14 @@ export function Nav({ active = 'home' }: NavProps) {
             className={active === 'team' ? 'is-active' : undefined}
           >
             Team
+          </Link>
+          <Link
+            href="/signup"
+            data-cta
+            className={active === 'signup' ? 'is-active' : undefined}
+            aria-label="Get an API key"
+          >
+            Get API key →
           </Link>
           <Link
             href="https://github.com/"

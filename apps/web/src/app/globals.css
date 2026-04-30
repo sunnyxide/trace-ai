@@ -464,14 +464,32 @@ a.ll-btn-ghost {
 .ll-nav-links a:hover { color: var(--ll-ink); background: var(--ll-bg-soft); }
 .ll-nav-links a.is-active { color: var(--ll-ink); background: var(--ll-bg-soft); }
 
+/* Primary call-to-action link in the nav (the "Get API key" pill). */
+.ll-nav-links a[data-cta] {
+  background: var(--ll-brand);
+  color: #FFFFFF;
+  font-weight: 600;
+  margin-left: 4px;
+}
+.ll-nav-links a[data-cta]:hover {
+  background: color-mix(in oklab, var(--ll-brand) 88%, black);
+  color: #FFFFFF;
+}
+.ll-nav-links a[data-cta].is-active {
+  background: color-mix(in oklab, var(--ll-brand) 88%, black);
+  color: #FFFFFF;
+}
+
 /* Mobile nav: hide secondary links, tighten padding so the brand and
-   primary CTAs fit on a single row without forcing a horizontal scroll. */
+   primary CTAs fit on a single row without forcing a horizontal scroll.
+   The CTA pill stays visible — it's the most important nav link on mobile. */
 @media (max-width: 720px) {
   .ll-nav { padding: 16px 0; gap: 12px; }
   .ll-nav-brand { font-size: 0.875rem; }
   .ll-nav-links { gap: 0; }
   .ll-nav-links a { padding: 6px 10px; font-size: 0.8125rem; }
   .ll-nav-links a[data-secondary] { display: none; }
+  .ll-nav-links a[data-cta] { padding: 6px 12px; }
 }
 
 /* ----- Footer ----- */
