@@ -136,7 +136,7 @@ export default function HomePage() {
                         height: 6,
                         borderRadius: 999,
                         background: 'currentColor',
-                        animation: 'aurora-1 1.4s ease-in-out infinite alternate',
+                        animation: 'll-live-pulse 1.6s ease-in-out infinite',
                       }}
                     />
                     streaming

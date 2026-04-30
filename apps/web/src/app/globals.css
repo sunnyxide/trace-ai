@@ -723,6 +723,12 @@ a.ll-btn-ghost {
   50%  { transform: translate3d(-30px, 40px, 0) scale(1.04); }
   100% { transform: translate3d(-50px, 10px, 0) scale(1.08); }
 }
+/* Small in-place pulse for live indicator dots — must NOT translate, or
+   the dot escapes its parent pill into surrounding whitespace. */
+@keyframes ll-live-pulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.4); opacity: 0.6; }
+}
 @keyframes aurora-3 {
   0%   { transform: translate3d(0,0,0) scale(1); }
   50%  { transform: translate3d(30px, -20px, 0) scale(0.96); }
