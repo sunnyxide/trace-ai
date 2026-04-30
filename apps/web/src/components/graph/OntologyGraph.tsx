@@ -233,7 +233,9 @@ export function OntologyGraph({ className }: Props) {
       <circle cx="540" cy="145" r="180" fill="url(#onto-glow-brand)" />
       <circle cx="920" cy="220" r="180" fill="url(#onto-glow-warm)" />
 
-      {/* Edges */}
+      {/* Edges — slightly heavier stroke so the path the data packet travels
+          on is clearly visible. Without this the packet looks like a floating
+          orphan dot near the empty header zone. */}
       {EDGES.map((e, i) => {
         const a = byId[e.from];
         const b = byId[e.to];
@@ -243,21 +245,24 @@ export function OntologyGraph({ className }: Props) {
             id={`edge-${i}`}
             d={curve(a, b)}
             fill="none"
-            stroke={TONE_STROKE[a.tone]}
-            strokeWidth="1.25"
-            strokeDasharray="4 6"
-            opacity="0.65"
+            stroke={TONE_FILL[a.tone]}
+            strokeWidth="1.5"
+            strokeDasharray="5 6"
+            opacity="0.5"
           />
         );
       })}
 
-      {/* Animated data packets travelling along each edge */}
+      {/* Animated data packets travelling along each edge. The packet only
+          renders while it's clearly *on* its edge (opacity ramps up after a
+          larger lead-in and fades out before the end), so we never see a
+          stray dot dangling in the empty space above the nodes. */}
       {EDGES.map((e, i) => (
         <circle
           key={`packet-${i}`}
-          r="4"
+          r="3.5"
           fill={TONE_FILL[e.dot]}
-          opacity="0.95"
+          opacity="0"
         >
           <animateMotion
             dur={`${e.dur}s`}
@@ -270,8 +275,8 @@ export function OntologyGraph({ className }: Props) {
           </animateMotion>
           <animate
             attributeName="opacity"
-            values="0;1;1;0"
-            keyTimes="0;0.15;0.85;1"
+            values="0;0.9;0.9;0"
+            keyTimes="0;0.25;0.75;1"
             dur={`${e.dur}s`}
             begin={`${e.delay}s`}
             repeatCount="indefinite"

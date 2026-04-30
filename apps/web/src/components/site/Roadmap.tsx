@@ -394,7 +394,7 @@ function StatusBadge({ status }: { status: PhaseStatus }) {
   const isLive = status === 'live';
   const isNext = status === 'next';
 
-  const label = isLive ? 'Live · in progress' : isNext ? 'Next' : 'Horizon';
+  const label = isLive ? 'Live' : isNext ? 'Next' : 'Horizon';
   const color = isLive
     ? 'var(--ll-brand)'
     : isNext
