@@ -197,7 +197,7 @@ function PhaseCard({ phase }: { phase: Phase }) {
     <article
       style={{
         position: 'relative',
-        padding: '88px 28px 32px',
+        padding: '64px 28px 32px',
         border: cardBorder,
         borderRadius: 18,
         background: cardBg,
@@ -235,35 +235,24 @@ function PhaseCard({ phase }: { phase: Phase }) {
         }}
       />
 
-      {/* Status badge — pinned to top-right corner, BELOW the rail so the
-          centered station dot never sits on top of the badge text. */}
+      {/* Top-left corner: phase number + year, compact label */}
       <div
         style={{
           position: 'absolute',
-          top: 56,
-          right: 18,
-          zIndex: 1,
-        }}
-      >
-        <StatusBadge status={phase.status} />
-      </div>
-
-      {/* Phase number + year — stacked on a single column, left-aligned */}
-      <div
-        style={{
+          top: 14,
+          left: 18,
           display: 'flex',
           alignItems: 'baseline',
-          gap: 14,
-          marginTop: 0,
-          flexWrap: 'wrap',
+          gap: 8,
+          zIndex: 1,
         }}
       >
         <span
           style={{
             fontFamily: 'var(--font-instrument-serif)',
-            fontSize: '2.75rem',
-            lineHeight: 0.9,
-            letterSpacing: '-0.02em',
+            fontSize: '1.25rem',
+            lineHeight: 1,
+            letterSpacing: '-0.01em',
             color: isLive ? 'var(--ll-brand)' : 'var(--ll-ink-2)',
             fontWeight: 400,
           }}
@@ -273,8 +262,8 @@ function PhaseCard({ phase }: { phase: Phase }) {
         <span
           className="ll-mono"
           style={{
-            fontSize: '0.6875rem',
-            letterSpacing: '0.18em',
+            fontSize: '0.625rem',
+            letterSpacing: '0.16em',
             color: 'var(--ll-mute)',
             textTransform: 'uppercase',
             fontWeight: 600,
@@ -284,12 +273,24 @@ function PhaseCard({ phase }: { phase: Phase }) {
         </span>
       </div>
 
+      {/* Top-right corner: status badge, tight */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 14,
+          right: 14,
+          zIndex: 1,
+        }}
+      >
+        <StatusBadge status={phase.status} />
+      </div>
+
       <h3
         className="ll-h2"
         style={{
-          fontSize: '1.5rem',
+          fontSize: '1.75rem',
           margin: 0,
-          marginTop: 4,
+          marginTop: 8,
           color: 'var(--ll-ink)',
         }}
       >

@@ -243,10 +243,10 @@ export function OntologyGraph({ className }: Props) {
             id={`edge-${i}`}
             d={curve(a, b)}
             fill="none"
-            stroke={TONE_STROKE[a.tone]}
-            strokeWidth="1.25"
-            strokeDasharray="4 6"
-            opacity="0.65"
+            stroke={TONE_FILL[a.tone]}
+            strokeWidth="1.5"
+            strokeDasharray="5 6"
+            opacity="0.55"
           />
         );
       })}
