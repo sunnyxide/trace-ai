@@ -91,8 +91,9 @@
     font-family: var(--font-geist-sans, ui-sans-serif, system-ui);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 }
 
 /* ============================================================================
@@ -450,7 +451,7 @@ a.ll-btn-ghost {
   background: var(--ll-surface);
   opacity: 0.18;
 }
-.ll-nav-links { display: flex; gap: 4px; align-items: center; }
+.ll-nav-links { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 .ll-nav-links a {
   padding: 8px 14px;
   font-size: 0.875rem;
@@ -458,9 +459,20 @@ a.ll-btn-ghost {
   text-decoration: none;
   border-radius: 999px;
   transition: color 160ms ease, background 160ms ease;
+  white-space: nowrap;
 }
 .ll-nav-links a:hover { color: var(--ll-ink); background: var(--ll-bg-soft); }
 .ll-nav-links a.is-active { color: var(--ll-ink); background: var(--ll-bg-soft); }
+
+/* Mobile nav: hide secondary links, tighten padding so the brand and
+   primary CTAs fit on a single row without forcing a horizontal scroll. */
+@media (max-width: 720px) {
+  .ll-nav { padding: 16px 0; gap: 12px; }
+  .ll-nav-brand { font-size: 0.875rem; }
+  .ll-nav-links { gap: 0; }
+  .ll-nav-links a { padding: 6px 10px; font-size: 0.8125rem; }
+  .ll-nav-links a[data-secondary] { display: none; }
+}
 
 /* ----- Footer ----- */
 .ll-footer {

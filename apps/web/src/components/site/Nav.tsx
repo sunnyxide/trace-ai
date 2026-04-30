@@ -18,12 +18,14 @@ export function Nav({ active = 'home' }: NavProps) {
         <div className="ll-nav-links">
           <Link
             href="/#how"
+            data-secondary
             className={active === 'how' ? 'is-active' : undefined}
           >
             How it works
           </Link>
           <Link
             href="/#what"
+            data-secondary
             className={active === 'what' ? 'is-active' : undefined}
           >
             What we are
@@ -48,6 +50,7 @@ export function Nav({ active = 'home' }: NavProps) {
           </Link>
           <Link
             href="https://github.com/"
+            data-secondary
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
