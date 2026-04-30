@@ -12,14 +12,17 @@ decision receipts and verify on-chain anchored attestations on Base.
 ## Install
 
 ```bash
-npm  install @ledgerline/sdk
-pnpm add     @ledgerline/sdk
-yarn add     @ledgerline/sdk
+pnpm add @ledgerline/sdk @anthropic-ai/sdk
+# or: npm install @ledgerline/sdk @anthropic-ai/sdk
+# or: yarn add @ledgerline/sdk @anthropic-ai/sdk
 ```
 
-> Note: while the package is in private beta, install via the GitHub workspace
-> or build from source. The npm publish is gated on the public API freeze
-> (target: 2026 Q3).
+Then [grab a free API key in 60 seconds](https://trace-ai-inky.vercel.app/signup)
+and add it to your environment:
+
+```bash
+LEDGERLINE_API_KEY=lgl_live_...
+```
 
 ## Quickstart — three lines
 
@@ -75,18 +78,35 @@ const record = new DecisionRecordBuilder({ agentId: 'rules-engine', decisionClas
 const { decision_id, verifierUrl } = await ledger.submit(record);
 ```
 
-## First-time setup (one-time)
+## First-time setup (one-time, ~60 seconds)
 
 ```bash
-# 1. Generate your operator key (used to sign records on the testnet).
-node -e "console.log(require('@ledgerline/sdk').generateOperatorKey())"
+# 1. Self-serve an API key — one form field, one HTTP request, done.
+#    https://trace-ai-inky.vercel.app/signup
 
-# 2. Add to .env
-LEDGERLINE_API_KEY=lgl_live_...        # ask us for one (self-serve coming soon)
-LEDGERLINE_OPERATOR_PK=0x...           # the key from step 1
+# 2. Drop it in .env
+LEDGERLINE_API_KEY=lgl_live_...
 ```
 
-That's it. The SDK reads both from env automatically.
+That's it. The SDK reads it from env automatically.
+
+### Optional: stronger non-repudiation with operator signatures
+
+By default the platform anchors records on your behalf. If you want each
+record cryptographically signed by *you* (so a third party can prove the
+record came from your key, not just our server), set an operator key:
+
+```bash
+# Generate a fresh secp256k1 key (32-byte hex, 0x-prefixed).
+node -e "console.log(require('@ledgerline/sdk').generateOperatorKey())"
+```
+
+```bash
+# Add to .env alongside your API key.
+LEDGERLINE_OPERATOR_PK=0x...
+```
+
+The SDK will sign every record with this key automatically.
 
 ## Configuration
 
@@ -96,7 +116,7 @@ Either pass options to the constructor or set environment variables.
 |---------------|----------------------------|----------|--------------------------------------|
 | `apiKey`      | `LEDGERLINE_API_KEY`       | yes      | —                                    |
 | `baseUrl`     | `LEDGERLINE_BASE_URL`      | no       | `https://trace-ai-inky.vercel.app`   |
-| `operatorPk`  | `LEDGERLINE_OPERATOR_PK`   | demo     | — (signing skipped if missing)       |
+| `operatorPk`  | `LEDGERLINE_OPERATOR_PK`   | no       | — (signing skipped if missing)       |
 | `fetch`       | —                          | no       | `globalThis.fetch`                   |
 
 When the server runs in **demo mode** (default for the public testnet

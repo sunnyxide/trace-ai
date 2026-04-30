@@ -1,16 +1,24 @@
 {
   "name": "@ledgerline/schema",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "DR-1 (Decision Record v1) schema, canonical JSON, and hashing utilities for trace.ai. RFC 8785 canonicalization + SHA-256 / keccak256 helpers.",
+  "license": "MIT",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts"
   },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "lint": "echo no-lint-yet"
+    "lint": "echo no-lint-yet",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@noble/hashes": "^2.2.0",
@@ -18,8 +26,37 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
-    "tsup": "^8.3.0",
+    "tsup": "^8.5.1",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      }
+    }
+  },
+  "keywords": [
+    "trace.ai",
+    "ledgerline",
+    "dr-1",
+    "decision-record",
+    "schema",
+    "canonical-json",
+    "rfc-8785",
+    "ai-receipts"
+  ],
+  "homepage": "https://trace-ai-inky.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunnyxide/trace-ai.git",
+    "directory": "packages/schema"
   }
 }

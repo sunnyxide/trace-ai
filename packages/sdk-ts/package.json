@@ -1,29 +1,46 @@
 {
   "name": "@ledgerline/sdk",
   "version": "0.1.0",
-  "description": "TypeScript SDK for trace.ai — submit DR-1 decision receipts and verify on-chain anchored attestations.",
+  "description": "TypeScript SDK for trace.ai — submit DR-1 decision receipts and verify on-chain anchored attestations on Base.",
   "license": "MIT",
-  "main": "src/index.ts",
   "type": "module",
+  "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts"
   },
   "files": [
+    "dist",
     "src",
     "README.md"
   ],
   "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "lint": "echo no-lint-yet"
+    "lint": "echo no-lint-yet",
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@ledgerline/schema": "workspace:*",
     "viem": "^2.21.0"
   },
   "devDependencies": {
+    "tsup": "^8.3.0",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      }
+    }
   },
   "keywords": [
     "trace.ai",
@@ -32,6 +49,16 @@
     "ai-governance",
     "audit",
     "eas",
-    "ethereum-attestation"
-  ]
+    "ethereum-attestation",
+    "base",
+    "anthropic",
+    "openai",
+    "llm"
+  ],
+  "homepage": "https://trace-ai-inky.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunnyxide/trace-ai.git",
+    "directory": "packages/sdk-ts"
+  }
 }
