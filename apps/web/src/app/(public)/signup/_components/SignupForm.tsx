@@ -85,7 +85,7 @@ export function SignupForm() {
         maxLength={80}
         autoComplete="organization"
         autoFocus
-        placeholder="e.g. Bloom Co. · acme-customer-support · my-side-project"
+        placeholder="e.g. Acme AI · my-project"
         value={name}
         onChange={(e) => setName(e.target.value)}
         disabled={isSubmitting}
@@ -121,7 +121,7 @@ export function SignupForm() {
         id="signup-email"
         type="email"
         autoComplete="email"
-        placeholder="you@example.com — only used if we need to reach you"
+        placeholder="you@example.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={isSubmitting}
@@ -180,8 +180,7 @@ export function SignupForm() {
           fontSize: '0.75rem',
         }}
       >
-        Free for testnet. The key shown next can submit DR-1 records to
-        Base Sepolia. Production mainnet pricing arrives with Phase 2.
+        Key is shown once — save it. Receipts anchor on Base Sepolia in &lt;60s.
       </p>
     </form>
   );

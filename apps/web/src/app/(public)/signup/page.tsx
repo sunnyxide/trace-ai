@@ -1,24 +1,60 @@
-/**
- * /signup — self-serve API key issuance.
- *
- * The form is a small client component that POSTs to /api/v1/signup and
- * shows the freshly minted key once. Wrapping it in a server component
- * keeps the route Server-First so the SEO + Aurora chrome render fast;
- * only the form below is hydrated on the client.
- */
 import { SignupForm } from './_components/SignupForm';
+import { InstallStep } from './_components/InstallStep';
 
 export const metadata = {
   title: 'Get an API Key · trace.ai',
   description:
-    'Self-serve a trace.ai API key. Paste it into LEDGERLINE_API_KEY and the SDK is ready to ship receipts to Base Sepolia.',
+    'Self-serve a trace.ai API key in 60 seconds. Install the SDK, get a key, ship decision receipts to Base Sepolia.',
 };
+
+function StepLabel({ n, label }: { n: number; label: string }) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        marginBottom: 12,
+      }}
+    >
+      <span
+        style={{
+          width: 24,
+          height: 24,
+          borderRadius: 999,
+          background: 'var(--ll-brand)',
+          color: '#fff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '0.6875rem',
+          fontWeight: 700,
+          flexShrink: 0,
+        }}
+      >
+        {n}
+      </span>
+      <span
+        className="ll-mono"
+        style={{
+          fontSize: '0.6875rem',
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+          fontWeight: 600,
+          color: 'var(--ll-mute)',
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
 
 export default function SignupPage() {
   return (
     <section style={{ padding: '80px 0 120px' }}>
-      <div className="ll-shell" style={{ maxWidth: 720 }}>
-        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+      <div className="ll-shell" style={{ maxWidth: 680 }}>
+        <div style={{ textAlign: 'center', marginBottom: 52 }}>
           <span className="ll-hint" style={{ marginBottom: 18 }}>
             <span
               style={{
@@ -29,7 +65,7 @@ export default function SignupPage() {
                 display: 'inline-block',
               }}
             />
-            Self-serve · 60 seconds · free for testnet
+            Free for testnet · no credit card
           </span>
 
           <h1
@@ -39,7 +75,7 @@ export default function SignupPage() {
               marginTop: 14,
             }}
           >
-            Get your{' '}
+            Up and running{' '}
             <em
               style={{
                 fontFamily: 'var(--font-instrument-serif)',
@@ -47,48 +83,50 @@ export default function SignupPage() {
                 color: 'var(--ll-brand)',
               }}
             >
-              API key.
+              in 60 seconds.
             </em>
           </h1>
-
-          <p
-            className="ll-lede"
-            style={{ marginTop: 18, maxWidth: 540, marginInline: 'auto' }}
-          >
-            One field. We hand back a key, you paste it into{' '}
-            <code className="ll-mono" style={{ fontSize: '0.9em' }}>
-              LEDGERLINE_API_KEY
-            </code>
-            , and the SDK is ready. Receipts anchor on Base Sepolia in under
-            60 seconds — no credit card, no operator key required.
-          </p>
         </div>
 
-        <SignupForm />
+        {/* Step 1: Install */}
+        <div style={{ marginBottom: 32 }}>
+          <StepLabel n={1} label="Install" />
+          <InstallStep />
+        </div>
 
-        <div
-          style={{
-            marginTop: 48,
-            padding: 28,
-            border: '1px dashed var(--ll-rule-2)',
-            borderRadius: 16,
-            background: 'var(--ll-bg-soft)',
-          }}
-        >
-          <div className="ll-eyebrow" style={{ marginBottom: 10 }}>
-            What you do next (3 lines)
-          </div>
-          <pre
-            className="ll-code"
-            style={{ margin: 0, fontSize: '0.8125rem' }}
+        {/* Step 2: Get key */}
+        <div style={{ marginBottom: 32 }}>
+          <StepLabel n={2} label="Get your API key" />
+          <SignupForm />
+        </div>
+
+        {/* Step 3: Use */}
+        <div>
+          <StepLabel n={3} label="Use" />
+          <div
+            style={{
+              padding: '18px 20px',
+              background: 'var(--ll-surface)',
+              border: '1px solid var(--ll-rule-2)',
+              borderRadius: 12,
+            }}
           >
-{`pnpm add @vibingminers/sdk @anthropic-ai/sdk
-echo "LEDGERLINE_API_KEY=lgl_live_..." >> .env
-
+            <pre
+              className="ll-code"
+              style={{ margin: 0, fontSize: '0.8125rem', lineHeight: 1.65 }}
+            >
+{`import Anthropic from '@anthropic-ai/sdk';
 import { traceClaude } from '@vibingminers/sdk';
-const claude = traceClaude(new Anthropic(), { agentId: 'cs-v1' });
-await claude.messages.create({ ..., trace: { decisionClass: 'approve' } });`}
-          </pre>
+
+const claude = traceClaude(new Anthropic(), { agentId: 'your-slug' });
+await claude.messages.create({
+  model: 'claude-opus-4-7',
+  messages: [{ role: 'user', content: prompt }],
+  trace: { decisionClass: 'approve', rationale: 'within refund window' },
+});
+// → every call ships a tamper-proof receipt to Base Sepolia`}
+            </pre>
+          </div>
         </div>
       </div>
     </section>
