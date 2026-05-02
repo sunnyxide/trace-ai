@@ -86,7 +86,7 @@ export default function HomePage() {
               }}
             >
               <Link href="/signup" className="ll-btn">
-                Get an API key — free →
+                Get a free API key →
               </Link>
               <Link href="/verify?example=1" className="ll-btn ll-btn-ghost">
                 See a real receipt

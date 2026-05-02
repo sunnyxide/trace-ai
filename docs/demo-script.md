@@ -1,4 +1,4 @@
-# Ledgerline — 90-Second Demo Video Shooting Script
+# trace.ai — 90-Second Demo Video Shooting Script
 
 **Audience:** Dev A (camera/screen operator) on Day 8 production.
 **Output artifacts:** `docs/demo.mp4`, `docs/demo.gif`, `docs/demo-thumb.jpg`, optional `docs/demo.webp`.
@@ -36,9 +36,10 @@ Confirm every line below before pressing **Record**. If any item fails, fix it; 
 - [ ] Wallpaper plain dark (`#0B1024` or solid black). No personal photos.
 
 ### 1.3 Tabs (open in this exact left-to-right order)
-1. **Tab 1** — Localhost demo or Vercel landing page (the hero/dashboard live target).
-2. **Tab 2** — `https://base-sepolia.easscan.org/attestation/view/0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6` (pre-loaded; **scroll target = the "Decoded Data" panel**).
-3. **Tab 3 (optional)** — Terminal window, full-screen left half, tailing the ingest log: `pnpm --filter @ledgerline/web dev | grep --line-buffered '\[ingest\]\|\[anchor\]'`.
+1. **Tab 1** — Production landing page (`trace.ai`).
+2. **Tab 2** — `/signup` page — **must be on the new 3-step layout** (Step 1 Install, Step 2 Get key, Step 3 Use). Confirm the numbered circles and copy button are visible.
+3. **Tab 3** — `https://base-sepolia.easscan.org/attestation/view/0x0ff689ec5ae98910d80477f48a61e739d835c369b14012a6f33c7ad2207419f6` (pre-loaded; **scroll target = the "Decoded Data" panel**).
+4. **Tab 4 (optional)** — Terminal window, full-screen left half, tailing the ingest log: `pnpm --filter web dev | grep --line-buffered '\[ingest\]\|\[anchor\]'`.
 
 ### 1.4 Code-editor look
 - [ ] VSCode theme: **Default Dark+**. Font: **Cascadia Code 14 pt**. Sidebar collapsed.
@@ -64,12 +65,13 @@ Every scene below has an exact start/end timestamp, the on-screen action, the ca
 
 | Time | Scene | Action | On-screen text | Notes |
 |------|-------|--------|----------------|-------|
-| **0:00–0:08** | Hook | Black background fades in. Centered hero text in **Inter Bold 72 pt** appears with a 600 ms ease-out. Subtitle in **Inter Regular 28 pt** below. No motion beyond the text fade. | **"AI just decided. Can you prove it?"** <br> *(AI가 방금 결정했다. 증명할 수 있는가?)* | Static shot. If the title jitters or the kerning looks off, redo. Aspect 16:9. Background `#0B1024`. |
-| **0:08–0:25** | Problem | Cut to a stylized agent UI on the left half of frame: a chat bubble showing `"Loan request from 신청자 #7F3E — DENIED."` Right half: a worried-customer pictogram (use the shadcn `Frown` icon at 96 px in `#CADCFC` over a `#1E2761` panel). Hold 5 s, then a captioned card slides up. | **"The decision exists. The evidence does not."** <br> *(결정은 있다. 증거는 없다.)* <br><br> Sub-caption (16 pt, fades in at 0:18): "AI/블록체인 SW중심대학 — Ledgerline" | Do **not** show real model names or real bank brands. Use only `신청자 #7F3E` for the applicant ID. If the chat bubble looks too YouTube-y, switch to a plain monospace transcript. |
-| **0:25–0:45** | The hand-off | Cut to VSCode (Default Dark+, Cascadia Code 14pt). Camera focuses on a single line: <br> `import { LedgerlineClient } from '@vibingminers/sdk';` <br> Yellow box highlights the line for 1.5 s. Cut to the terminal showing a streaming **DR-1 record JSON**. Highlight three fields with a soft yellow underline as they print: `decision_id`, `decision_class: "reject"`, `operator_signature.public_key`. | Title card (top-right, 24 pt): **"One import. Every decision recorded."** <br> *(한 줄의 import. 모든 결정이 기록된다.)* <br><br> Lower caption at 0:38: "DR-1 schema — 7 fields, PROV-O aligned" <br> *(DR-1 표준 스키마 — 7개 필드, PROV-O 호환)* | Use the **fixture** payload, not a live LLM response (LLM latency is unpredictable on shoot day). Trim long hashes to `0xab…cd` for legibility. If the terminal text is too small, jump font to 16 pt before the take. |
-| **0:45–1:05** | The proof | Cut back to terminal. A new line scrolls in: <br> `Anchored: 0x0ff689ec…19f6` <br> Followed by: <br> `→ https://base-sepolia.easscan.org/attestation/view/0x0ff6…` <br> 1 s later, cut to **Tab 2 (easscan.org)** which is already loaded. Smooth scroll down to the "Decoded Data" panel showing `root`, `leafCount`, `schemaVersion`, `tenantId`. Highlight `Tx 0x1ba4…66c5` and `Block 40,677,426` with a yellow box. | Title card (top, 24 pt): **"Anchored on Base Sepolia. Independently verifiable."** <br> *(Base Sepolia에 앵커링. 누구나 검증 가능.)* <br><br> Stamp (bottom-right corner, 14 pt): `Block 40,677,426 · Tx 0x1ba4…66c5` | This is the **money shot**. If easscan is slow, cut to the pre-captured `docs/screenshots/easscan-attestation.png` — the camera should not catch a spinner. Pre-load the panel before the take so DOM is stable. |
-| **1:05–1:25** | Verify | Cut to Vercel `/verify?example=1`. The page shows two evidence rows side-by-side: <br> ① **Ledgerline anchored at block 40,677,426** ✓ <br> ② **Customer `0xabc…` signed at 2026-04-23 14:08 UTC** ✓ <br> Both rows fade their checkmarks in sequentially (300 ms apart). Camera slowly zooms 2 % into the panel over 4 seconds. | Title card (top, 24 pt): **"Notary + Author. Two signatures, one record."** <br> *(노터리 + 작성자. 두 개의 서명, 하나의 기록.)* <br><br> Footer (bottom, 12 pt): "We provide the evidence. We do not provide the verdict." <br> *(우리는 증거를 제공한다. 판단은 제공하지 않는다.)* | The two-row layout maps directly to D4 (hybrid signature) — **do not crop it out**. If only one row is visible, the demo loses its core thesis. Customer address shown is `0xabc…` (truncated) — never reveal the full demo private-key-derived address. |
-| **1:25–1:30** | Tagline | Hard cut to black. Logo wordmark fades in (Inter Bold 60 pt, white on `#0B1024`). URL fades in 800 ms after. Hold 1.8 s. Final fade to black over the last 0.4 s. | **"AI's every decision, on the record."** <br> *(AI의 모든 결정을, 기록 위에.)* <br><br> URL: `ledgerline.app` | No emoji. No music swell. The fade-out matches the BGM tail. If the logo SVG is missing, fall back to the wordmark text. |
+| **0:00–0:07** | Hook | Black background fades in. Centered hero text in **Inter Bold 72 pt** appears with a 600 ms ease-out. Subtitle in **Inter Regular 28 pt** below. No motion beyond the text fade. | **"AI just decided. Can you prove it?"** <br> *(AI가 방금 결정했다. 증명할 수 있는가?)* | Static shot. If the title jitters or the kerning looks off, redo. Aspect 16:9. Background `#0B1024`. |
+| **0:07–0:20** | Problem | Cut to a stylized agent UI on the left half of frame: a chat bubble showing `"Loan request from 신청자 #7F3E — DENIED."` Right half: a worried-customer pictogram. Hold 4 s, then a captioned card slides up. | **"The decision exists. The evidence does not."** <br> *(결정은 있다. 증거는 없다.)* <br><br> Sub-caption (16 pt, fades in at 0:14): "AI/블록체인 SW중심대학 — trace.ai" | Do **not** show real model names or real bank brands. Use only `신청자 #7F3E` for the applicant ID. |
+| **0:20–0:35** | Quickstart | Cut to **Tab 2 — the `/signup` page** showing the new numbered 3-step layout. <br><br> 0:20–0:25: Wide shot — three numbered steps visible at once ("Up and running in 60 seconds"). <br> 0:25–0:30: Zoom in on **Step 1** — `pnpm add @vibingminers/sdk @anthropic-ai/sdk` with the copy button, cursor hovers and clicks it. "COPIED" feedback shows. <br> 0:30–0:35: Pan down to **Step 3** code preview: `traceClaude(new Anthropic(), { agentId: 'cs-v1' })`. | Title card (top, 24 pt): **"Three steps. Sixty seconds."** <br> *(3단계. 60초.)* <br><br> Highlight box around the copy button at 0:27. | The copy-button click must be visible. Use QuickTime "Show Mouse Clicks in Recording" so the tap ripple appears. Do **not** show the API key form being filled — the point is how minimal the friction is, not the sign-up process itself. |
+| **0:35–0:50** | The hand-off | Cut to VSCode (Default Dark+, Cascadia Code 14pt). Camera focuses on a single wrap: <br> `const claude = traceClaude(new Anthropic(), {` <br> `  agentId: 'cs-agent-v3',` <br> `});` <br> Yellow box highlights for 1.5 s. Cut to the terminal showing a streaming **DR-1 record JSON**. Highlight three fields with a soft yellow underline: `decision_id`, `decision_class: "reject"`, `operator_signature.public_key`. | Title card (top-right, 24 pt): **"One wrap. Every decision recorded."** <br> *(한 번의 래핑. 모든 결정이 기록된다.)* <br><br> Lower caption at 0:44: "DR-1 schema — 7 fields, PROV-O aligned" <br> *(DR-1 표준 스키마 — 7개 필드, PROV-O 호환)* | Use the **fixture** payload, not a live LLM response. Trim long hashes to `0xab…cd` for legibility. Import shown is `from '@vibingminers/sdk'` — confirm this matches the deployed package name. |
+| **0:50–1:07** | The proof | Cut back to terminal. A new line scrolls in: <br> `Anchored: 0x0ff689ec…19f6` <br> Followed by: <br> `→ https://base-sepolia.easscan.org/attestation/view/0x0ff6…` <br> 1 s later, cut to **Tab 3 (easscan.org)**. Smooth scroll down to the "Decoded Data" panel showing `root`, `leafCount`, `schemaVersion`, `tenantId`. Highlight `Tx 0x1ba4…66c5` and `Block 40,677,426` with a yellow box. | Title card (top, 24 pt): **"Anchored on Base Sepolia. Independently verifiable."** <br> *(Base Sepolia에 앵커링. 누구나 검증 가능.)* <br><br> Stamp (bottom-right corner, 14 pt): `Block 40,677,426 · Tx 0x1ba4…66c5` | This is the **money shot**. If easscan is slow, cut to the pre-captured `docs/screenshots/easscan-attestation.png`. Pre-load the panel before the take so DOM is stable. |
+| **1:07–1:23** | Verify | Cut to `/verify?example=1`. The page shows two evidence rows: <br> ① **trace.ai anchored at block 40,677,426** ✓ <br> ② **Customer `0xabc…` signed at 2026-04-23 14:08 UTC** ✓ <br> Both rows fade checkmarks in sequentially (300 ms apart). Camera slowly zooms 2 % into the panel over 4 seconds. | Title card (top, 24 pt): **"Notary + Author. Two signatures, one record."** <br> *(노터리 + 작성자. 두 개의 서명, 하나의 기록.)* <br><br> Footer (bottom, 12 pt): "We provide the evidence. We do not provide the verdict." <br> *(우리는 증거를 제공한다. 판단은 제공하지 않는다.)* | The two-row layout maps directly to D4 (hybrid signature) — **do not crop it out**. |
+| **1:23–1:30** | Tagline | Hard cut to black. Logo wordmark fades in (Inter Bold 60 pt, white on `#0B1024`). URL fades in 800 ms after. Hold 1.8 s. Final fade to black over the last 0.4 s. | **"AI's every decision, on the record."** <br> *(AI의 모든 결정을, 기록 위에.)* <br><br> URL: `trace.ai` | No emoji. No music swell. The fade-out matches the BGM tail. |
 
 ### 2.1 Caption typography (consistent across all scenes)
 - Headlines: **Inter Bold**, 32–72 pt, color `#FFFFFF` on dark.
@@ -248,20 +250,22 @@ Print this page and place it on the desk next to the recording machine. Twelve p
 
 | # | Scene | Duration | What's on screen | Special note |
 |---|-------|----------|------------------|--------------|
-| 1 | Hook — title card | 0:00–0:08 (8 s) | Black bg, "AI just decided. Can you prove it?" | Static. No motion beyond fade-in. |
-| 2 | Problem — denial UI | 0:08–0:18 (10 s) | Agent chat bubble: `신청자 #7F3E — DENIED` | Use `Frown` icon at 96 px right-side. |
-| 3 | Problem — sub caption | 0:18–0:25 (7 s) | "The decision exists. The evidence does not." | Sub-line: AI/블록체인 SW중심대학 — Ledgerline. |
-| 4 | Hand-off — import line | 0:25–0:32 (7 s) | VSCode, single line `import { LedgerlineClient }` | Yellow box highlights the line at 0:27. |
-| 5 | Hand-off — DR-1 JSON streams | 0:32–0:45 (13 s) | Terminal, fixture payload, soft yellow underline three fields | Trim long hashes to `0xab…cd`. |
-| 6 | Proof — "Anchored:" line | 0:45–0:52 (7 s) | Terminal: `Anchored: 0x0ff689ec…19f6 → easscan link` | The link must be clickable in source frame, but we do not click it on camera. |
-| 7 | Proof — easscan tab cut | 0:52–1:05 (13 s) | easscan.org "Decoded Data" panel | Highlight `Tx 0x1ba4…66c5` and `Block 40,677,426`. |
-| 8 | Verify — page hero | 1:05–1:11 (6 s) | `/verify?example=1` page header | Confirm both ✓ rows are present before recording. |
-| 9 | Verify — Ledgerline row | 1:11–1:16 (5 s) | ① Ledgerline anchored at block 40,677,426 ✓ | Checkmark fades in 300 ms in. |
-| 10 | Verify — Customer row | 1:16–1:21 (5 s) | ② Customer `0xabc…` signed at 2026-04-23 14:08 UTC ✓ | Camera zooms 2 % into panel over scene. |
-| 11 | Verify — thesis footer | 1:21–1:25 (4 s) | "We provide the evidence. We do not provide the verdict." | 12 pt footer text. |
-| 12 | Tagline — close | 1:25–1:30 (5 s) | Logo + URL `ledgerline.app` | Final fade-to-black on last 0.4 s. |
+| 1 | Hook — title card | 0:00–0:07 (7 s) | Black bg, "AI just decided. Can you prove it?" | Static. No motion beyond fade-in. |
+| 2 | Problem — denial UI | 0:07–0:14 (7 s) | Agent chat bubble: `신청자 #7F3E — DENIED` | Use `Frown` icon at 96 px right-side. |
+| 3 | Problem — sub caption | 0:14–0:20 (6 s) | "The decision exists. The evidence does not." | Sub-line: AI/블록체인 SW중심대학 — trace.ai. |
+| 4 | Quickstart — wide shot | 0:20–0:25 (5 s) | `/signup` page, all 3 steps visible. Title: "Three steps. Sixty seconds." | Confirm numbered circles ①②③ are all in frame. |
+| 5 | Quickstart — copy button | 0:25–0:30 (5 s) | Step 1 box: `pnpm add @vibingminers/sdk …` + copy button clicked | Mouse-click ripple must be visible. "COPIED" feedback shows. |
+| 6 | Quickstart — code preview | 0:30–0:35 (5 s) | Step 3 code: `traceClaude(new Anthropic(), { agentId: … })` | Pan down from Step 1 box to Step 3 smoothly. |
+| 7 | Hand-off — wrap code | 0:35–0:43 (8 s) | VSCode, `traceClaude(new Anthropic(), { agentId: 'cs-agent-v3' })` | Yellow box highlights at 0:37. Import from `@vibingminers/sdk`. |
+| 8 | Hand-off — DR-1 JSON streams | 0:43–0:50 (7 s) | Terminal, fixture payload, yellow underline three fields | Trim long hashes to `0xab…cd`. |
+| 9 | Proof — "Anchored:" line | 0:50–0:57 (7 s) | Terminal: `Anchored: 0x0ff689ec…19f6 → easscan link` | Link visible but not clicked on camera. |
+| 10 | Proof — easscan tab | 0:57–1:07 (10 s) | easscan.org "Decoded Data" panel | Highlight `Tx 0x1ba4…66c5` and `Block 40,677,426`. |
+| 11 | Verify — page hero | 1:07–1:13 (6 s) | `/verify?example=1`, both ✓ rows | Confirm both rows before recording. |
+| 12 | Verify — rows fade in | 1:13–1:20 (7 s) | ① trace.ai anchored ✓ → ② Customer `0xabc…` ✓ | 300 ms stagger between checkmarks. 2 % zoom. |
+| 13 | Verify — thesis footer | 1:20–1:23 (3 s) | "We provide the evidence. We do not provide the verdict." | 12 pt footer text. |
+| 14 | Tagline — close | 1:23–1:30 (7 s) | Logo + URL `trace.ai` | Final fade-to-black on last 0.4 s. |
 
-**Reshoot reserve:** Shots 5, 7, and 10 are the most fragile (live data, network, sequenced animation). Plan for a second take of each. If take 2 also fails, fall back to the screenshot from `docs/screenshots/`.
+**Reshoot reserve:** Shots 5, 10, and 12 are the most fragile (interactive UI, live network, sequenced animation). Plan for a second take of each.
 
 ---
 
@@ -271,31 +275,34 @@ Print this page and place it on the desk next to the recording machine. Twelve p
 0:00  AI just decided. Can you prove it?
       (AI가 방금 결정했다. 증명할 수 있는가?)
 
-0:08  The decision exists. The evidence does not.
+0:07  The decision exists. The evidence does not.
       (결정은 있다. 증거는 없다.)
 
-0:18  AI/블록체인 SW중심대학 — Ledgerline
+0:14  AI/블록체인 SW중심대학 — trace.ai
 
-0:25  One import. Every decision recorded.
-      (한 줄의 import. 모든 결정이 기록된다.)
+0:20  Three steps. Sixty seconds.
+      (3단계. 60초.)
 
-0:38  DR-1 schema — 7 fields, PROV-O aligned
+0:35  One wrap. Every decision recorded.
+      (한 번의 래핑. 모든 결정이 기록된다.)
+
+0:44  DR-1 schema — 7 fields, PROV-O aligned
       (DR-1 표준 스키마 — 7개 필드, PROV-O 호환)
 
-0:45  Anchored on Base Sepolia. Independently verifiable.
+0:50  Anchored on Base Sepolia. Independently verifiable.
       (Base Sepolia에 앵커링. 누구나 검증 가능.)
 
       Block 40,677,426 · Tx 0x1ba4…66c5
 
-1:05  Notary + Author. Two signatures, one record.
+1:07  Notary + Author. Two signatures, one record.
       (노터리 + 작성자. 두 개의 서명, 하나의 기록.)
 
-1:21  We provide the evidence. We do not provide the verdict.
+1:20  We provide the evidence. We do not provide the verdict.
       (우리는 증거를 제공한다. 판단은 제공하지 않는다.)
 
-1:25  AI's every decision, on the record.
+1:23  AI's every decision, on the record.
       (AI의 모든 결정을, 기록 위에.)
-      ledgerline.app
+      trace.ai
 ```
 
 ## Appendix B — Final QA checklist before commit
