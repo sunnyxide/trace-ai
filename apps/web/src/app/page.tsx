@@ -455,9 +455,9 @@ export default function HomePage() {
             </div>
 
             <pre className="ll-code">
-{`// pnpm add @ledgerline/sdk @anthropic-ai/sdk
+{`// pnpm add @vibingminers/sdk @anthropic-ai/sdk
 import Anthropic from '@anthropic-ai/sdk';
-import { traceClaude } from '@ledgerline/sdk';
+import { traceClaude } from '@vibingminers/sdk';
 
 // One wrap. Every messages.create now ships a receipt.
 const claude = traceClaude(new Anthropic(), {

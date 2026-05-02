@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ledgerline/sdk": "workspace:*",
+    "@vibingminers/sdk": "workspace:*",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {

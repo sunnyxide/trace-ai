@@ -32,4 +32,6 @@ export {
   type ReceiptInfo,
 } from './wrap';
 
-export type { DR1 } from '@ledgerline/schema';
+export { traceOpenAI, type TraceOpenAIOptions } from './wrap-openai';
+
+export type { DR1 } from '@vibingminers/schema';

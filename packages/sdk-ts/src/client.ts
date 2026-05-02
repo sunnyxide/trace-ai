@@ -1,4 +1,4 @@
-import type { DR1 } from '@ledgerline/schema';
+import type { DR1 } from '@vibingminers/schema';
 import { signRecord, type PrivateKeyHex } from './sign';
 
 export type ClientOptions = {

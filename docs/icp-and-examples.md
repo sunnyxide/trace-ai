@@ -586,7 +586,7 @@ Demo 날 실제로 보여줄 시퀀스. 사전 준비 + 라이브 입증 + Q&A�
 
 0:25–0:45  솔루션:
            단 한 줄 SDK 추가:
-              import { LedgerlineClient } from '@ledgerline/sdk';
+              import { LedgerlineClient } from '@vibingminers/sdk';
               await ledger.submit(record);
            → DR-1 record 가 자동 생성, canonical hash 계산, 우리 서버에 전송
 
@@ -631,7 +631,7 @@ Demo 날 실제로 보여줄 시퀀스. 사전 준비 + 라이브 입증 + Q&A�
 
 ```typescript
 import Anthropic from '@anthropic-ai/sdk';
-import { LedgerlineClient, DecisionRecordBuilder } from '@ledgerline/sdk';
+import { LedgerlineClient, DecisionRecordBuilder } from '@vibingminers/sdk';
 
 const claude = new Anthropic();
 const ledger = new LedgerlineClient({

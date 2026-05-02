@@ -56,7 +56,7 @@ Ledgerline은 그 간극을 메웁니다. OpenLLMetry 호환 SDK로 모든 AI �
                        │ OpenLLMetry auto-instrument
                        ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  L1 · CAPTURE      @ledgerline/sdk                           │
+│  L1 · CAPTURE      @vibingminers/sdk                           │
 │    - OpenTelemetry GenAI SemConv traces                      │
 │    - Decision rationale (custom span attrs)                  │
 │    - HTTPS export → Ledgerline ingest API                    │
@@ -130,7 +130,7 @@ PNG 다이어그램은 공개 직전 `docs/architecture.png` 으로 추가됩니
 ## Quickstart
 
 ```typescript
-import { LedgerlineClient, DecisionRecordBuilder } from '@ledgerline/sdk';
+import { LedgerlineClient, DecisionRecordBuilder } from '@vibingminers/sdk';
 import Anthropic from '@anthropic-ai/sdk';
 
 const ledger = new LedgerlineClient({ apiKey: process.env.LEDGERLINE_API_KEY! });
@@ -190,7 +190,7 @@ DR-1 (Decision Record v1) 은 우리가 제안하는 audit-record 포맷입니�
 - 🟡 대시보드 (`/dashboard`, `/trace/[id]`)
 - 🟡 공개 검증 UI (`/verify`)
 - 🟡 랜딩 페이지 + 90초 데모 영상
-- 🟡 TypeScript SDK 마감 (`@ledgerline/sdk`)
+- 🟡 TypeScript SDK 마감 (`@vibingminers/sdk`)
 
 **범위 외 (Phase 2)**
 - 🔴 Bitcoin OpenTimestamps dual anchor (인터페이스 stub만)

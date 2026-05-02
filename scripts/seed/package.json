@@ -9,7 +9,7 @@
     "lint": "echo no-lint-yet"
   },
   "dependencies": {
-    "@ledgerline/schema": "workspace:*",
+    "@vibingminers/schema": "workspace:*",
     "@supabase/supabase-js": "^2.45.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^17.4.2",

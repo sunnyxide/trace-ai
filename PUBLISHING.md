@@ -4,11 +4,11 @@ The npm-publishable artifacts in this repo are:
 
 | Package | Version | Path |
 |---------|---------|------|
-| `@ledgerline/schema` | `0.1.0` | `packages/schema` |
-| `@ledgerline/sdk`    | `0.1.0` | `packages/sdk-ts` |
+| `@vibingminers/schema` | `0.1.0` | `packages/schema` |
+| `@vibingminers/sdk`    | `0.1.0` | `packages/sdk-ts` |
 
 Both are configured for **public** publish on the npm registry. Order
-matters: `@ledgerline/sdk` declares `@ledgerline/schema` as a dependency,
+matters: `@vibingminers/sdk` declares `@vibingminers/schema` as a dependency,
 so schema must be published first.
 
 ## One-time setup
@@ -40,10 +40,10 @@ pnpm -r --filter "./packages/**" test
 #    field, or `pnpm version patch` per package).
 
 # 3. Publish schema first.
-pnpm --filter @ledgerline/schema publish --access public --no-git-checks
+pnpm --filter @vibingminers/schema publish --access public --no-git-checks
 
 # 4. Then sdk. pnpm rewrites `workspace:*` to the actual published version.
-pnpm --filter @ledgerline/sdk publish --access public --no-git-checks
+pnpm --filter @vibingminers/sdk publish --access public --no-git-checks
 ```
 
 `--no-git-checks` is fine for the first publish where the working tree may
@@ -76,7 +76,7 @@ automatically via the `prepublishOnly` script before each `pnpm publish`.
    note (already done in this commit).
 2. Tweet / Slack the install command:
    ```bash
-   pnpm add @ledgerline/sdk @anthropic-ai/sdk
+   pnpm add @vibingminers/sdk @anthropic-ai/sdk
    ```
 3. Remove the "ask us for an API key" wording from any stale docs.
 

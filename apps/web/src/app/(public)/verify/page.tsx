@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { privateKeyToAccount } from 'viem/accounts';
 import { BaseEASAnchorer } from '@ledgerline/attester';
-import { canonicalJson, sha256Hex } from '@ledgerline/schema';
+import { canonicalJson, sha256Hex } from '@vibingminers/schema';
 import {
   verifyByDecisionId,
   type VerifyResult,

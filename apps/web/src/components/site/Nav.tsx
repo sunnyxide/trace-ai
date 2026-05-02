@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { TraceLogo } from './TraceLogo';
 
 type NavProps = {
-  active?: 'home' | 'how' | 'what' | 'verify' | 'dashboard' | 'team' | 'signup';
+  active?: 'home' | 'how' | 'what' | 'verify' | 'dashboard' | 'account' | 'team' | 'signup';
 };
 
 export function Nav({ active = 'home' }: NavProps) {
@@ -37,10 +37,18 @@ export function Nav({ active = 'home' }: NavProps) {
             Verify
           </Link>
           <Link
+            href="/account"
+            data-secondary
+            className={active === 'account' ? 'is-active' : undefined}
+          >
+            My decisions
+          </Link>
+          <Link
             href="/dashboard"
+            data-secondary
             className={active === 'dashboard' ? 'is-active' : undefined}
           >
-            Dashboard
+            Admin
           </Link>
           <Link
             href="/team"
@@ -57,11 +65,11 @@ export function Nav({ active = 'home' }: NavProps) {
             Get API key →
           </Link>
           <Link
-            href="https://github.com/"
+            href="https://github.com/sunnyxide/trace-ai"
             data-secondary
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="GitHub"
+            aria-label="GitHub repository"
           >
             GitHub ↗
           </Link>

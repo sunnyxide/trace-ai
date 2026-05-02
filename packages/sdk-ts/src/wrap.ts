@@ -89,7 +89,7 @@ function pickUserPrompt(messages: unknown): string {
  *
  * Usage:
  *   import Anthropic from '@anthropic-ai/sdk';
- *   import { traceClaude } from '@ledgerline/sdk';
+ *   import { traceClaude } from '@vibingminers/sdk';
  *
  *   const claude = traceClaude(new Anthropic(), { agentId: 'cs-agent-v3' });
  *   const response = await claude.messages.create({
@@ -183,7 +183,7 @@ export function traceClaude<T extends AnthropicLike>(
 
 /** Re-export viem's key generator for convenience. Usage:
  *
- *   import { generateOperatorKey } from '@ledgerline/sdk';
+ *   import { generateOperatorKey } from '@vibingminers/sdk';
  *   console.log(generateOperatorKey()); // → 0x... (save in .env as LEDGERLINE_OPERATOR_PK)
  */
 export { generatePrivateKey as generateOperatorKey } from 'viem/accounts';

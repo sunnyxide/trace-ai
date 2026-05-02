@@ -2,7 +2,7 @@ import {
   DR1Schema,
   sha256Hex,
   type DR1,
-} from '@ledgerline/schema';
+} from '@vibingminers/schema';
 
 export type DecisionClass =
   | 'approve'

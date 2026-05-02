@@ -5,12 +5,19 @@ import {
   DR1Schema,
   signingDigest,
   type DR1,
-} from '@ledgerline/schema';
+} from '@vibingminers/schema';
 
 // Mock supabase admin
 const storageUpload = vi.fn();
 const insertMock = vi.fn();
 const selectTenantsMock = vi.fn();
+
+// For GET: chainable select mock results
+let countMockResult: { count: number | null; error: null } = { count: 0, error: null };
+let rowsMockResult: { data: unknown[]; error: null | { message: string } } = {
+  data: [],
+  error: null,
+};
 
 vi.mock('@/lib/supabase', () => ({
   supabaseAdmin: () => ({
@@ -19,7 +26,24 @@ vi.mock('@/lib/supabase', () => ({
         return { select: selectTenantsMock };
       }
       if (table === 'decision_records') {
-        return { insert: insertMock };
+        return {
+          insert: insertMock,
+          select: (_cols: string, opts?: { count?: string; head?: boolean }) => {
+            if (opts?.count === 'exact' && opts?.head === true) {
+              // count query
+              return {
+                eq: () => Promise.resolve(countMockResult),
+              };
+            }
+            // rows query
+            const chain: Record<string, unknown> = {
+              eq: () => chain,
+              order: () => chain,
+              range: () => Promise.resolve(rowsMockResult),
+            };
+            return chain;
+          },
+        };
       }
       throw new Error(`unexpected table ${table}`);
     },
@@ -38,6 +62,7 @@ const VALID_ENV = {
   NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key-at-least-twenty-chars',
   SUPABASE_SERVICE_ROLE_KEY: 'service-role-key-at-least-twenty-chars',
   DEMO_PII_GUARD: 'strict' as const,
+  NEXT_PUBLIC_APP_URL: 'https://localhost',
 };
 
 const ZERO_HASH = '0x' + 'a'.repeat(64);
@@ -65,6 +90,22 @@ function makeRecord(overrides: Partial<DR1> = {}): DR1 {
 
 const originalEnv = process.env;
 
+function setOneTenantWithKey(token: string) {
+  const hash = bcrypt.hashSync(token, 4);
+  selectTenantsMock.mockResolvedValue({
+    data: [
+      {
+        id: 'tenant-1',
+        slug: 'acme',
+        name: 'Acme',
+        api_key_hash: hash,
+        operator_public_key: null,
+      },
+    ],
+    error: null,
+  });
+}
+
 describe('POST /api/v1/traces', () => {
   beforeEach(() => {
     vi.resetModules();
@@ -90,22 +131,6 @@ describe('POST /api/v1/traces', () => {
   afterEach(() => {
     process.env = originalEnv;
   });
-
-  function setOneTenantWithKey(token: string) {
-    const hash = bcrypt.hashSync(token, 4);
-    selectTenantsMock.mockResolvedValue({
-      data: [
-        {
-          id: 'tenant-1',
-          slug: 'acme',
-          name: 'Acme',
-          api_key_hash: hash,
-          operator_public_key: null,
-        },
-      ],
-      error: null,
-    });
-  }
 
   function buildRequest(opts: {
     body: unknown;
@@ -305,5 +330,140 @@ describe('POST /api/v1/traces', () => {
       }) as never,
     );
     expect(res.status).toBe(202);
+  });
+});
+
+describe('GET /api/v1/traces', () => {
+  beforeEach(() => {
+    vi.resetModules();
+    process.env = { ...originalEnv };
+    for (const k of Object.keys(process.env)) {
+      if (
+        k.startsWith('LEDGERLINE_') ||
+        k.startsWith('NEXT_PUBLIC_SUPABASE') ||
+        k === 'SUPABASE_SERVICE_ROLE_KEY' ||
+        k === 'DEMO_PII_GUARD' ||
+        k === 'VERCEL_ENV'
+      ) {
+        delete process.env[k];
+      }
+    }
+    Object.assign(process.env, VALID_ENV);
+    selectTenantsMock.mockReset();
+    countMockResult = { count: 0, error: null };
+    rowsMockResult = { data: [], error: null };
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  function buildGetRequest(opts: { bearer?: string; limit?: number; offset?: number }): Request {
+    const params = new URLSearchParams();
+    if (opts.limit !== undefined) params.set('limit', String(opts.limit));
+    if (opts.offset !== undefined) params.set('offset', String(opts.offset));
+    const qs = params.toString();
+    const url = `https://localhost/api/v1/traces${qs ? `?${qs}` : ''}`;
+    const headers: Record<string, string> = {};
+    if (opts.bearer) headers['authorization'] = `Bearer ${opts.bearer}`;
+    return new Request(url, { method: 'GET', headers });
+  }
+
+  it('401 when missing Authorization', async () => {
+    setOneTenantWithKey('lgl_token');
+    const { GET } = await import('../route');
+    const res = await GET(buildGetRequest({}) as never);
+    expect(res.status).toBe(401);
+  });
+
+  it('401 when bearer mismatch', async () => {
+    setOneTenantWithKey('lgl_correct');
+    const { GET } = await import('../route');
+    const res = await GET(buildGetRequest({ bearer: 'lgl_wrong' }) as never);
+    expect(res.status).toBe(401);
+  });
+
+  it('200 happy path returns empty records and tenant info', async () => {
+    setOneTenantWithKey('lgl_token');
+    countMockResult = { count: 0, error: null };
+    rowsMockResult = { data: [], error: null };
+    const { GET } = await import('../route');
+    const res = await GET(buildGetRequest({ bearer: 'lgl_token' }) as never);
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.records).toEqual([]);
+    expect(json.total).toBe(0);
+    expect(json.limit).toBe(20);
+    expect(json.offset).toBe(0);
+    expect(json.tenant.slug).toBe('acme');
+  });
+
+  it('200 maps batch join and verifier_url', async () => {
+    setOneTenantWithKey('lgl_token');
+    countMockResult = { count: 1, error: null };
+    rowsMockResult = {
+      data: [
+        {
+          id: 'rec-uuid',
+          decision_id: 'dec-001',
+          canonical_hash: 'abc123',
+          received_at: '2026-04-30T00:00:00.000Z',
+          batch_id: 'batch-uuid',
+          batch: { status: 'anchored', merkle_root: 'root-hex', eas_uid: 'eas-uid' },
+        },
+      ],
+      error: null,
+    };
+    const { GET } = await import('../route');
+    const res = await GET(buildGetRequest({ bearer: 'lgl_token' }) as never);
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.total).toBe(1);
+    const r = json.records[0];
+    expect(r.decision_id).toBe('dec-001');
+    expect(r.batch_status).toBe('anchored');
+    expect(r.eas_uid).toBe('eas-uid');
+    expect(r.verifier_url).toContain('/verify?id=dec-001');
+  });
+
+  it('200 record with no batch shows pending status', async () => {
+    setOneTenantWithKey('lgl_token');
+    countMockResult = { count: 1, error: null };
+    rowsMockResult = {
+      data: [
+        {
+          id: 'rec-uuid',
+          decision_id: 'dec-002',
+          canonical_hash: 'xyz',
+          received_at: '2026-04-30T00:00:00.000Z',
+          batch_id: null,
+          batch: null,
+        },
+      ],
+      error: null,
+    };
+    const { GET } = await import('../route');
+    const res = await GET(buildGetRequest({ bearer: 'lgl_token' }) as never);
+    const json = await res.json();
+    expect(json.records[0].batch_status).toBe('pending');
+    expect(json.records[0].batch_id).toBeNull();
+  });
+
+  it('respects limit param (clamped to 100)', async () => {
+    setOneTenantWithKey('lgl_token');
+    rowsMockResult = { data: [], error: null };
+    const { GET } = await import('../route');
+    const res = await GET(buildGetRequest({ bearer: 'lgl_token', limit: 200 }) as never);
+    const json = await res.json();
+    expect(json.limit).toBe(100);
+  });
+
+  it('respects offset param', async () => {
+    setOneTenantWithKey('lgl_token');
+    rowsMockResult = { data: [], error: null };
+    const { GET } = await import('../route');
+    const res = await GET(buildGetRequest({ bearer: 'lgl_token', offset: 40 }) as never);
+    const json = await res.json();
+    expect(json.offset).toBe(40);
   });
 });

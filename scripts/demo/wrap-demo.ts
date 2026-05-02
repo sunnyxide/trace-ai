@@ -17,7 +17,7 @@ import {
   traceClaude,
   LedgerlineClient,
   type ReceiptInfo,
-} from '@ledgerline/sdk';
+} from '@vibingminers/sdk';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

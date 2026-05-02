@@ -1,5 +1,5 @@
 /**
- * End-to-end demo of the @ledgerline/sdk against a live trace.ai instance.
+ * End-to-end demo of the @vibingminers/sdk against a live trace.ai instance.
  *
  * What it does:
  *   1. Builds a DR-1 decision record using DecisionRecordBuilder
@@ -22,7 +22,7 @@ import {
   LedgerlineClient,
   DecisionRecordBuilder,
   LedgerlineError,
-} from '@ledgerline/sdk';
+} from '@vibingminers/sdk';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

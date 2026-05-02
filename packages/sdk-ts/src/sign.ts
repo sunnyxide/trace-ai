@@ -1,6 +1,6 @@
 import { privateKeyToAccount } from 'viem/accounts';
 import { type Hex } from 'viem';
-import { DR1Schema, signingDigest, type DR1 } from '@ledgerline/schema';
+import { DR1Schema, signingDigest, type DR1 } from '@vibingminers/schema';
 
 export type PrivateKeyHex = `0x${string}`;
 export type AddressHex = `0x${string}`;

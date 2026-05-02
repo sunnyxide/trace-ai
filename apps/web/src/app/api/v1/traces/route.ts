@@ -7,7 +7,7 @@ import {
   canonicalJson,
   sha256Hex,
   signingDigest,
-} from '@ledgerline/schema';
+} from '@vibingminers/schema';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { supabaseAdmin } from '@/lib/supabase';
 import { authenticate, AuthError, type Tenant } from '@/lib/auth';
@@ -138,6 +138,80 @@ export async function processRecord(
   }
 
   return { ok: true, decision_id: rec.decision_id };
+}
+
+export async function GET(req: NextRequest) {
+  let tenant: Tenant;
+  try {
+    tenant = await authenticate(req.headers.get('authorization'));
+  } catch (e) {
+    if (e instanceof AuthError) {
+      return NextResponse.json({ error: e.message }, { status: e.status });
+    }
+    throw e;
+  }
+
+  const url = new URL(req.url);
+  const rawLimit = Number(url.searchParams.get('limit') ?? '20');
+  const rawOffset = Number(url.searchParams.get('offset') ?? '0');
+  const limit = Math.min(isNaN(rawLimit) ? 20 : Math.max(1, rawLimit), 100);
+  const offset = isNaN(rawOffset) ? 0 : Math.max(0, rawOffset);
+
+  const supa = supabaseAdmin();
+
+  const [countRes, rowsRes] = await Promise.all([
+    supa
+      .from('decision_records')
+      .select('*', { count: 'exact', head: true })
+      .eq('tenant_id', tenant.id),
+    supa
+      .from('decision_records')
+      .select(
+        'id, decision_id, canonical_hash, received_at, batch_id, batch:merkle_batches!batch_id(status, merkle_root, eas_uid)',
+      )
+      .eq('tenant_id', tenant.id)
+      .order('received_at', { ascending: false })
+      .range(offset, offset + limit - 1),
+  ]);
+
+  if (rowsRes.error) {
+    return NextResponse.json({ error: rowsRes.error.message }, { status: 500 });
+  }
+
+  const parsedUrl = new URL(req.url);
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL ??
+    `${parsedUrl.protocol}//${parsedUrl.host}`;
+
+  type BatchJoin = {
+    status: string;
+    merkle_root: string | null;
+    eas_uid: string | null;
+  } | null;
+
+  const records = (rowsRes.data ?? []).map((r) => {
+    const batchRaw = r.batch as unknown;
+    const batch = (Array.isArray(batchRaw) ? batchRaw[0] ?? null : batchRaw) as BatchJoin;
+    return {
+      id: r.id as string,
+      decision_id: r.decision_id as string,
+      canonical_hash: r.canonical_hash as string,
+      received_at: r.received_at as string,
+      batch_id: (r.batch_id as string | null) ?? null,
+      batch_status: batch?.status ?? 'pending',
+      merkle_root: batch?.merkle_root ?? null,
+      eas_uid: batch?.eas_uid ?? null,
+      verifier_url: `${appUrl}/verify?id=${r.decision_id}`,
+    };
+  });
+
+  return NextResponse.json({
+    records,
+    total: countRes.count ?? 0,
+    limit,
+    offset,
+    tenant: { id: tenant.id, slug: tenant.slug, name: tenant.name },
+  });
 }
 
 export async function POST(req: NextRequest) {

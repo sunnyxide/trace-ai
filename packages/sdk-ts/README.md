@@ -1,4 +1,4 @@
-# @ledgerline/sdk
+# @vibingminers/sdk
 
 TypeScript SDK for [trace.ai](https://trace-ai-inky.vercel.app) — submit DR-1
 decision receipts and verify on-chain anchored attestations on Base.
@@ -12,9 +12,9 @@ decision receipts and verify on-chain anchored attestations on Base.
 ## Install
 
 ```bash
-pnpm add @ledgerline/sdk @anthropic-ai/sdk
-# or: npm install @ledgerline/sdk @anthropic-ai/sdk
-# or: yarn add @ledgerline/sdk @anthropic-ai/sdk
+pnpm add @vibingminers/sdk @anthropic-ai/sdk
+# or: npm install @vibingminers/sdk @anthropic-ai/sdk
+# or: yarn add @vibingminers/sdk @anthropic-ai/sdk
 ```
 
 Then [grab a free API key in 60 seconds](https://trace-ai-inky.vercel.app/signup)
@@ -28,7 +28,7 @@ LEDGERLINE_API_KEY=lgl_live_...
 
 ```ts
 import Anthropic from '@anthropic-ai/sdk';
-import { traceClaude } from '@ledgerline/sdk';
+import { traceClaude } from '@vibingminers/sdk';
 
 // 1. Wrap your Anthropic client.
 const claude = traceClaude(new Anthropic(), { agentId: 'cs-agent-v3' });
@@ -65,7 +65,7 @@ If you want to construct a record without an LLM call (e.g. a pure rule-based
 decision), use the lower-level builder + client directly:
 
 ```ts
-import { LedgerlineClient, DecisionRecordBuilder } from '@ledgerline/sdk';
+import { LedgerlineClient, DecisionRecordBuilder } from '@vibingminers/sdk';
 
 const ledger = new LedgerlineClient();
 const record = new DecisionRecordBuilder({ agentId: 'rules-engine', decisionClass: 'reject' })
@@ -98,7 +98,7 @@ record came from your key, not just our server), set an operator key:
 
 ```bash
 # Generate a fresh secp256k1 key (32-byte hex, 0x-prefixed).
-node -e "console.log(require('@ledgerline/sdk').generateOperatorKey())"
+node -e "console.log(require('@vibingminers/sdk').generateOperatorKey())"
 ```
 
 ```bash

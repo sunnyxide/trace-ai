@@ -161,11 +161,11 @@ async function handleSignup(req: NextRequest): Promise<NextResponse> {
         slug: tenant.slug,
         name: tenant.name,
       },
-      dashboardUrl: `${baseUrl}/dashboard`,
+      dashboardUrl: `${baseUrl}/account`,
       docsUrl: `${baseUrl}/`,
       next: {
         envExport: `LEDGERLINE_API_KEY=${apiKey}`,
-        installCmd: 'pnpm add @ledgerline/sdk @anthropic-ai/sdk',
+        installCmd: 'pnpm add @vibingminers/sdk @anthropic-ai/sdk',
       },
     },
     { status: 201 },

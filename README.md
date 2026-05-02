@@ -46,7 +46,7 @@ This is the first record we wrote with our own infrastructure. It is permanent, 
                        │ OpenLLMetry auto-instrument
                        ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  L1 · CAPTURE      @ledgerline/sdk                           │
+│  L1 · CAPTURE      @vibingminers/sdk                           │
 │    - OpenTelemetry GenAI SemConv traces                      │
 │    - Decision rationale (custom span attrs)                  │
 │    - HTTPS export → Ledgerline ingest API                    │
@@ -120,7 +120,7 @@ This is the most important sentence in this README. Read it twice.
 ## Quickstart
 
 ```typescript
-import { LedgerlineClient, DecisionRecordBuilder } from '@ledgerline/sdk';
+import { LedgerlineClient, DecisionRecordBuilder } from '@vibingminers/sdk';
 import Anthropic from '@anthropic-ai/sdk';
 
 const ledger = new LedgerlineClient({ apiKey: process.env.LEDGERLINE_API_KEY! });
@@ -180,7 +180,7 @@ This is a 9-day sprint (2026-04-24 → 2026-05-03) for the Korean SW중심대학
 - 🟡 Dashboard (`/dashboard`, `/trace/[id]`)
 - 🟡 Public verify UI (`/verify`)
 - 🟡 Landing page + 90-second demo video
-- 🟡 TypeScript SDK polish (`@ledgerline/sdk`)
+- 🟡 TypeScript SDK polish (`@vibingminers/sdk`)
 
 **Not in scope (Phase 2)**
 - 🔴 Bitcoin OpenTimestamps dual anchor (interface stub only — see `OTSAnchorer`)

@@ -6,7 +6,7 @@ import {
   sha256Hex,
   signingDigest,
   type DR1,
-} from '@ledgerline/schema';
+} from '@vibingminers/schema';
 import {
   loadTree,
   verifyProof,

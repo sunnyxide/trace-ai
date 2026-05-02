@@ -1,5 +1,5 @@
 {
-  "name": "@ledgerline/schema",
+  "name": "@vibingminers/schema",
   "version": "0.1.0",
   "description": "DR-1 (Decision Record v1) schema, canonical JSON, and hashing utilities for trace.ai. RFC 8785 canonicalization + SHA-256 / keccak256 helpers.",
   "license": "MIT",

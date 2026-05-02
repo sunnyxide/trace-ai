@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type SignupSuccess = {
   apiKey: string;
@@ -20,7 +20,7 @@ export function SignupForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: { preventDefault(): void }) {
     e.preventDefault();
     setState({ kind: 'submitting' });
     try {
@@ -188,6 +188,15 @@ export function SignupForm() {
 }
 
 function SuccessPanel({ data }: { data: SignupSuccess }) {
+  // Persist key in localStorage so /account auto-authenticates
+  useEffect(() => {
+    try {
+      localStorage.setItem('ll_api_key', data.apiKey);
+    } catch {
+      // blocked by privacy mode — user can paste manually
+    }
+  }, [data.apiKey]);
+
   return (
     <div className="ll-card" style={{ padding: 28 }}>
       <div className="ll-eyebrow" style={{ color: 'var(--ll-ok)' }}>
@@ -222,7 +231,7 @@ function SuccessPanel({ data }: { data: SignupSuccess }) {
 {`${data.next.installCmd}
 
 import Anthropic from '@anthropic-ai/sdk';
-import { traceClaude } from '@ledgerline/sdk';
+import { traceClaude } from '@vibingminers/sdk';
 
 const claude = traceClaude(new Anthropic(), { agentId: '${data.tenant.slug}' });
 const response = await claude.messages.create({

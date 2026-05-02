@@ -82,10 +82,10 @@ export default function SignupPage() {
             className="ll-code"
             style={{ margin: 0, fontSize: '0.8125rem' }}
           >
-{`pnpm add @ledgerline/sdk @anthropic-ai/sdk
+{`pnpm add @vibingminers/sdk @anthropic-ai/sdk
 echo "LEDGERLINE_API_KEY=lgl_live_..." >> .env
 
-import { traceClaude } from '@ledgerline/sdk';
+import { traceClaude } from '@vibingminers/sdk';
 const claude = traceClaude(new Anthropic(), { agentId: 'cs-v1' });
 await claude.messages.create({ ..., trace: { decisionClass: 'approve' } });`}
           </pre>

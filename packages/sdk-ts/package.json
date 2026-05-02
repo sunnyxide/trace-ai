@@ -1,5 +1,5 @@
 {
-  "name": "@ledgerline/sdk",
+  "name": "@vibingminers/sdk",
   "version": "0.1.0",
   "description": "TypeScript SDK for trace.ai — submit DR-1 decision receipts and verify on-chain anchored attestations on Base.",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@ledgerline/schema": "workspace:*",
+    "@vibingminers/schema": "workspace:*",
     "viem": "^2.21.0"
   },
   "devDependencies": {

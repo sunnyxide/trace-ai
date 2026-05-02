@@ -17,7 +17,7 @@ import {
   generatePrivateKey,
 } from 'viem/accounts';
 import { recoverAddress } from 'viem';
-import { DR1Schema, signingDigest, type DR1 } from '@ledgerline/schema';
+import { DR1Schema, signingDigest, type DR1 } from '@vibingminers/schema';
 
 import { signRecord, verifyRecordSignature, addressFromPrivateKey } from '../lib';
 

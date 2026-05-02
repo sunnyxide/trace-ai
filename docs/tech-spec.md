@@ -29,7 +29,7 @@
                        │ OpenLLMetry auto-instrument
                        ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  L1 · CAPTURE      @ledgerline/sdk-(ts|py)                   │
+│  L1 · CAPTURE      @vibingminers/sdk-(ts|py)                   │
 │    - OpenTelemetry GenAI SemConv traces                      │
 │    - Decision rationale (custom span attrs)                  │
 │    - HTTP export → Ledgerline ingest API                     │
@@ -390,7 +390,7 @@ create policy "public read anchored batches (metadata)"
 
 | 언어 | 패키지 | 의존 | 신규 코드 |
 |------|--------|------|-----------|
-| TypeScript | `@ledgerline/sdk` | `@opentelemetry/api`, `@opentelemetry/sdk-trace-node` | ~300 LOC |
+| TypeScript | `@vibingminers/sdk` | `@opentelemetry/api`, `@opentelemetry/sdk-trace-node` | ~300 LOC |
 | Python | `ledgerline` (PyPI) | `traceloop-sdk` (OpenLLMetry) | ~200 LOC |
 
 ### 5.4 EAS 스키마 (온체인 정의)
@@ -503,7 +503,7 @@ uint64  batchTimestamp
 - [ ] **대시보드** — `/dashboard`에서 최근 trace 리스트 + 개별 trace 상세(JSON + Merkle proof + easscan 링크).
 - [ ] **공개 검증** — `/verify` 페이지에서 decision_id 입력 → 녹색 ✓ 또는 빨간 ✗ + 근거.
 - [ ] **Print-ready 감사용 뷰** — 대시보드 상세 페이지에서 ⌘P → PDF 저장 시 로고·decision_id·DR-1 필드·Merkle proof·easscan URL·QR이 A4 1페이지로 정상 출력 (React-PDF 풀 렌더는 Phase 2).
-- [ ] **TS SDK** — `@ledgerline/sdk` local workspace 패키지, Anthropic API 호출을 한 줄로 래핑하는 예제가 작동.
+- [ ] **TS SDK** — `@vibingminers/sdk` local workspace 패키지, Anthropic API 호출을 한 줄로 래핑하는 예제가 작동.
 - [ ] ~~Python SDK~~ — 삭제 (roadmap 언급만).
 - [ ] **GitHub repo** — README(한/영), LICENSE(MIT), 아키텍처 다이어그램, live demo URL, 스크린샷 GIF.
 - [ ] **CI** — `.github/workflows/ci.yml` 기준 lint + type-check + unit test 통과.

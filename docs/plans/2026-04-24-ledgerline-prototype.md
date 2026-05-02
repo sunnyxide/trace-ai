@@ -420,7 +420,7 @@ await client.submit(rec.build());
 
 ### Task 2.5: ~~Python SDK Stub~~ — **삭제 (Phase 2 roadmap)**
 
-2명 스코프 검토 반영: 완전 삭제. README에 한 줄 — "Python SDK is on the roadmap; for prototype use `@ledgerline/sdk` (TypeScript)." 끝.
+2명 스코프 검토 반영: 완전 삭제. README에 한 줄 — "Python SDK is on the roadmap; for prototype use `@vibingminers/sdk` (TypeScript)." 끝.
 
 - [ ] **Step 1:** README Quickstart 섹션에 "TS SDK only" 한 줄 추가, Python SDK 관련 폴더·내용 삭제 commit.
 

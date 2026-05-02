@@ -13,7 +13,7 @@ import {
   DR1Schema,
   signingDigest,
   type DR1,
-} from '@ledgerline/schema';
+} from '@vibingminers/schema';
 
 export type PrivateKeyHex = `0x${string}`;
 export type AddressHex = `0x${string}`;
@@ -34,7 +34,7 @@ export function addressFromPrivateKey(privateKey: string): AddressHex {
  *   1. DR1Schema.parse(input)            — fail fast on malformed records
  *   2. Strip any pre-existing operator_signature / _meta — these are not
  *      part of the canonical body and the caller's intent is to (re)sign.
- *   3. canonicalJson + keccak256          — via @ledgerline/schema.signingDigest
+ *   3. canonicalJson + keccak256          — via @vibingminers/schema.signingDigest
  *   4. account.sign({ hash })            — secp256k1 sign via viem
  *   5. Attach operator_signature
  *   6. DR1Schema.parse(output)            — defence in depth
