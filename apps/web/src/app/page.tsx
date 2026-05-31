@@ -168,7 +168,7 @@ export default function HomePage() {
             <Stat label="On-chain attestations" value="7" />
             <Stat label="Verification axes" value="6" />
             <Stat label="Anchor cost" value="< $0.01" />
-            <Stat label="LLM providers supported" value="∞" />
+            <Stat label="First-party wrappers" value="2" />
           </div>
         </section>
 
@@ -210,15 +210,11 @@ export default function HomePage() {
               >
                 <span>Anthropic Claude</span><Dot />
                 <span>OpenAI GPT</span><Dot />
-                <span>Google Gemini</span><Dot />
-                <span>LangChain</span><Dot />
-                <span>LlamaIndex</span><Dot />
-                <span>CrewAI</span><Dot />
-                <span>Ollama (local)</span><Dot />
+                <span>Manual DR-1 builder</span><Dot />
+                <span>Custom agents</span><Dot />
                 <span>Base L2</span><Dot />
                 <span>Ethereum Attestation Service</span><Dot />
                 <span>OpenZeppelin Merkle</span><Dot />
-                <span>OpenLLMetry</span><Dot />
                 <span>EU AI Act Art. 12</span><Dot />
                 <span>Korea AI Basic Act</span><Dot />
               </span>
@@ -377,7 +373,7 @@ export default function HomePage() {
             >
               {[
                 { tone: 'ok',   heading: 'A neutral notary.',   body: "An independent attester anchors every Merkle root on a public chain. Operators can't rewrite their own logs." },
-                { tone: 'ok',   heading: 'An integrator.',      body: 'OpenLLMetry, Merkle trees, on-chain attestations. Battle-tested public goods, assembled into a new primitive.' },
+                { tone: 'ok',   heading: 'An integrator.',      body: 'LLM client wrappers, Merkle trees, on-chain attestations. Battle-tested public goods, assembled into a new primitive.' },
                 { tone: 'ok',   heading: 'An open protocol.',   body: 'DR-1 is MIT-licensed and proposed for ISO/IEC 24970. The standard is the moat — not the implementation.' },
                 { tone: 'fail', heading: 'Not insurance.',      body: "We don't underwrite risk. We don't pay claims. AI insurers are our customers, not our competitors." },
                 { tone: 'fail', heading: 'Not custody.',        body: "We never hold customer funds. Ever. The platform attester wallet pays gas — that's the only money we touch." },
@@ -525,8 +521,8 @@ function Timeline() {
       name: 'Listen',
       plain: 'When your AI agent acts, we listen.',
       detail:
-        'Every prompt, every response, every tool call gets recorded the moment it happens — without changing a line of your agent code.',
-      tech: 'OpenLLMetry · OpenTelemetry GenAI',
+        'Wrap an Anthropic or OpenAI client, or create a DR-1 record at the decision boundary with the builder.',
+      tech: 'SDK wrappers · DR-1 builder',
       tone: 'brand',
     },
     {
