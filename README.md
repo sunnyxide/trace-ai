@@ -38,6 +38,8 @@ npm i @vibingminers/sdk      # get an instant key at /signup
 ```
 Minimal runnable example: [`submission/example.mjs`](./submission/example.mjs). Works under both ESM `import` and CommonJS `require()` (≥ 0.1.1).
 
+> Also in this repo: [`submission/verify_60s.sh`](./submission/verify_60s.sh) — one-command judge verification (app + independent on-chain RPC) · [`submission/SUBMISSION.md`](./submission/SUBMISSION.md) — full submission writeup.
+
 ### Honest scope
 Prototype on Base Sepolia (testnet — no legal force yet). The chain proves a decision's **integrity + timestamp**, not **authorship**; author proof needs opt-in operator signing. First-party auto-trace wrappers ship for **Anthropic** and **OpenAI**; other providers/frameworks use the manual **DR-1 builder**. It instruments the LLM SDK calls inside *your* agent — not third-party tools like Cursor or Claude Code.
 

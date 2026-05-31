@@ -38,6 +38,8 @@ npm i @vibingminers/sdk      # /signup 에서 즉시 키 발급
 ```
 실행 예제: [`submission/example.mjs`](./submission/example.mjs). ESM `import`·CommonJS `require()` 모두 동작(≥ 0.1.1).
 
+> 이 레포 안에 함께: [`submission/verify_60s.sh`](./submission/verify_60s.sh) — 원커맨드 심사 검증(앱 + 독립 온체인 RPC) · [`submission/SUBMISSION.md`](./submission/SUBMISSION.md) — 전체 제출 설명.
+
 ### 정직한 한계
 Base Sepolia testnet 프로토타입(아직 법적 효력 없음). 체인은 결정의 **무결성·타임스탬프**를 증명하지 **작성자 진위**는 아님 — 작성자 증명은 opt-in operator 서명 필요. **Anthropic·OpenAI**는 1차 자동추적 wrapper 제공, 그 외 provider/프레임워크는 수동 **DR-1 builder**. *네 에이전트 코드 안의* LLM SDK 호출을 계측하는 것이지 Cursor·Claude Code 같은 제3자 도구를 추적하는 게 아님.
 
