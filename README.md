@@ -4,13 +4,52 @@
 
 [![CI](https://img.shields.io/badge/ci-pending-lightgrey)](#) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE) [![Status: Prototype](https://img.shields.io/badge/status-prototype-orange)](#status-prototype-scope) [![Network: Base Sepolia](https://img.shields.io/badge/network-Base%20Sepolia-0052FF)](https://sepolia.basescan.org/)
 
+## 🏁 Push to Prod — evaluate this repo in 60 seconds
+
+**trace.ai turns every AI agent decision into a tamper-evident, on-chain receipt that anyone can verify — no account, no trust in us.** One SDK line; prompts/responses are stored as hashes only.
+
+- **Live product:** https://trace-ai-inky.vercel.app
+- **Built with:** Claude Code + Codex — development 100% solo (planning shared with the team).
+
+### Verify real decisions yourself — no key, no install
+Real AI decisions, anchored live on Base Sepolia. Click to verify:
+
+| Decision | Public verifier | On-chain tx (Base Sepolia) |
+|---|---|---|
+| Fraud hold — Claude | [verify](https://trace-ai-inky.vercel.app/verify?id=be68c7fd-6af4-45be-a201-d0e52336c546) | [`0xf60a2a…`](https://sepolia.basescan.org/tx/0xf60a2a9a3033a4925eec13580eb63da9bfad52b12d0ea01de3b201b534af534a) |
+| Refund approve — Claude | [verify](https://trace-ai-inky.vercel.app/verify?id=4a0368d9-7b2e-4cec-9000-86161f99dd21) | [`0x608470…`](https://sepolia.basescan.org/tx/0x608470ee814c0b971162817a1170d54976b8611e9af3044176d1d69a3b7660bf) |
+| `traceClaude` auto-trace | [verify](https://trace-ai-inky.vercel.app/verify?id=0cadac5f-803a-465d-8953-0947148fe19c) | shown inside the receipt |
+
+One command, no install:
+```bash
+curl "https://trace-ai-inky.vercel.app/api/v1/verify?decision_id=be68c7fd-6af4-45be-a201-d0e52336c546"
+# → {"verified":true,"checks":{"schema":"pass","canonicalHash":"pass","merkleProof":"pass","onChainRoot":"pass","notary":"pass"}}
+```
+Independent of our servers (raw Base Sepolia RPC):
+```bash
+curl -s https://sepolia.base.org -H 'content-type: application/json' \
+ -d '{"jsonrpc":"2.0","id":1,"method":"eth_getTransactionReceipt","params":["0xf60a2a9a3033a4925eec13580eb63da9bfad52b12d0ea01de3b201b534af534a"]}'
+# → status 0x1, to = EAS contract 0x4200000000000000000000000000000000000021
+```
+
+### Try the SDK (≥ 0.1.1)
+```bash
+npm i @vibingminers/sdk      # get an instant key at /signup
+```
+Minimal runnable example: [`submission/example.mjs`](./submission/example.mjs). Works under both ESM `import` and CommonJS `require()` (≥ 0.1.1).
+
+> Also in this repo: [`submission/verify_60s.sh`](./submission/verify_60s.sh) — one-command judge verification (app + independent on-chain RPC) · [`submission/SUBMISSION.md`](./submission/SUBMISSION.md) — full submission writeup.
+
+### Honest scope
+Prototype on Base Sepolia (testnet — no legal force yet). The chain proves a decision's **integrity + timestamp**, not **authorship**; author proof needs opt-in operator signing. First-party auto-trace wrappers ship for **Anthropic** and **OpenAI**; other providers/frameworks use the manual **DR-1 builder**. It instruments the LLM SDK calls inside *your* agent — not third-party tools like Cursor or Claude Code.
+
 ---
 
 ## What is Ledgerline?
 
 Complex AI decisions need a black box. When an autonomous agent approves a loan, denies a claim, or routes a trade, "trust me, the logs are in our database" is not third-party evidence — it is a self-attested log written by the same party whose conduct is in question.
 
-Ledgerline closes that gap. We capture every AI decision through an OpenLLMetry-compatible SDK, normalize it into a structured **DR-1** record (PROV-O–inspired), compute an **RFC 8785** canonical **SHA-256** hash, batch hashes into a **keccak256 Merkle tree**, and anchor the root on **Base L2** through the **Ethereum Attestation Service (EAS)** — independently verifiable on `base-sepolia.easscan.org` without ever asking us.
+Ledgerline closes that gap. We capture AI decisions through first-party TypeScript wrappers for Anthropic and OpenAI, or through a manual DR-1 builder for other providers and frameworks. Each record is normalized into a structured **DR-1** record (PROV-O–inspired), hashed with **RFC 8785** canonical **SHA-256**, batched into a **keccak256 Merkle tree**, and anchored on **Base L2** through the **Ethereum Attestation Service (EAS)** — independently verifiable on `base-sepolia.easscan.org` without ever asking us.
 
 The decision payload stays off-chain. Only the hash is anchored. Privacy-preserving by construction; tamper-evident by mathematics.
 
@@ -32,7 +71,7 @@ The decision payload stays off-chain. Only the hash is anchored. Privacy-preserv
 
 This is the first record we wrote with our own infrastructure. It is permanent, public, and verifiable from any wallet — no Ledgerline credentials required.
 
-**Live demo URL:** _(coming soon — Vercel deployment goes live on 2026-05-03)_
+**Live demo URL:** <https://trace-ai-inky.vercel.app>
 
 ---
 
@@ -43,12 +82,12 @@ This is the first record we wrote with our own infrastructure. It is permanent, 
 │  AI Agent (customer side)                                    │
 │  OpenAI / Anthropic SDK calls                                │
 └──────────────────────┬───────────────────────────────────────┘
-                       │ OpenLLMetry auto-instrument
+                       │ SDK wrapper / manual DR-1 builder
                        ▼
 ┌──────────────────────────────────────────────────────────────┐
 │  L1 · CAPTURE      @vibingminers/sdk                           │
-│    - OpenTelemetry GenAI SemConv traces                      │
-│    - Decision rationale (custom span attrs)                  │
+│    - First-party wrappers for Anthropic and OpenAI calls     │
+│    - Manual DecisionRecordBuilder for other providers        │
 │    - HTTPS export → Ledgerline ingest API                    │
 └──────────────────────┬───────────────────────────────────────┘
                        │ POST /v1/traces  (HTTPS, JWT)
@@ -108,7 +147,7 @@ Clarity here is more important than marketing.
 |---|---|
 | Evidence infrastructure — "Plaid for AI decisions" | An insurer (we do not underwrite or indemnify) |
 | A neutral notary for AI decision events | A custodian (we never hold customer funds) |
-| An integrator across LLM providers, frameworks, and chains | A verdict provider (we do not decide who is at fault) |
+| An integrator across LLM decision records, Merkle proofs, and chains | A verdict provider (we do not decide who is at fault) |
 | A schema steward proposing DR-1 to ISO/IEC 24970 | A financial advisor or compliance product |
 
 > **Prototype disclosure (security review, 2026-04-24):** and in this prototype, the operator_signature is signed by a key held by Ledgerline — production requires the customer to hold this key.
@@ -152,7 +191,7 @@ console.log(`Verify: ${verifyUrl}`);
 
 > Python SDK is on the roadmap. For prototype use the TypeScript SDK above.
 
-Anthropic and OpenAI are auto-instrumented out of the box. Gemini, LangChain, LlamaIndex, CrewAI, and Ollama are supported via OpenLLMetry's existing integrations — no Ledgerline-specific glue required.
+Anthropic and OpenAI have first-party drop-in wrappers in the TypeScript SDK. Gemini, LangChain, LlamaIndex, CrewAI, Ollama, and other stacks can be recorded today with `DecisionRecordBuilder`; bundled OpenLLMetry exporter support is roadmap, not shipped in this package.
 
 ---
 
@@ -225,7 +264,7 @@ ledgerline/
 - **Blockchain:** Base Sepolia (Coinbase L2) · EAS SDK `^2.9.0` · viem `^2.x`
 - **Crypto:** SHA-256 (canonical hash, RFC 8785 JCS) + keccak256 (Merkle + signing) via [`@noble/hashes`](https://github.com/paulmillr/noble-hashes)
 - **Merkle:** [`@openzeppelin/merkle-tree`](https://github.com/OpenZeppelin/merkle-tree)
-- **Capture:** [OpenLLMetry](https://github.com/traceloop/openllmetry) (OpenTelemetry GenAI SemConv) — Anthropic + OpenAI auto-instrumented; Gemini, LangChain, LlamaIndex, CrewAI, Ollama supported via OpenLLMetry's existing integrations
+- **Capture:** TypeScript SDK with first-party Anthropic + OpenAI wrappers; manual DR-1 builder for other providers and frameworks. OpenLLMetry exporter support is roadmap.
 
 ---
 

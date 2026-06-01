@@ -1,17 +1,16 @@
 {
-  "name": "@ledgerline/demo-scripts",
+  "name": "@vibingminers/examples",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "e2e": "tsx end-to-end.ts",
-    "wrap": "tsx wrap-demo.ts",
+    "loan-approval": "tsx loan-approval.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
     "@vibingminers/sdk": "workspace:*",
-    "dotenv": "^17.4.2",
-    "playwright": "^1.59.1"
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@types/node": "^20",

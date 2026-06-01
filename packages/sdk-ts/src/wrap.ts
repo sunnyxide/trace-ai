@@ -2,9 +2,9 @@
  * Drop-in wrapper for LLM SDKs that fires a DR-1 receipt on every call,
  * so a typical integration is 3 lines instead of 8.
  *
- * Currently supports the Anthropic SDK (`@anthropic-ai/sdk`); the same
- * pattern applies to OpenAI and Gemini and will land as `traceOpenAI`
- * + `traceGemini` next.
+ * Currently supports the Anthropic SDK (`@anthropic-ai/sdk`). The OpenAI
+ * wrapper lives in `wrap-openai`; other providers can use
+ * `DecisionRecordBuilder` until a first-party wrapper is added.
  */
 
 import { LedgerlineClient } from './client';

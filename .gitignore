@@ -49,6 +49,10 @@ pids
 .temp/
 .tmp/
 
+# Submission credentials (live API key inside — never commit)
+submission/judge_signup.json
+submission/decision.json
+
 # QA / dev artifacts (screenshots, playwright output, scratch images)
 .playwright-mcp/
 /qa-*.png
@@ -57,3 +61,4 @@ pids
 /credo_ai_logo.jpeg
 /credoai_logo.png
 /langsmith-color.png
+docs/demo-tts.m4a

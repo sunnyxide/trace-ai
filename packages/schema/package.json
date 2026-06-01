@@ -1,6 +1,6 @@
 {
   "name": "@vibingminers/schema",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DR-1 (Decision Record v1) schema, canonical JSON, and hashing utilities for trace.ai. RFC 8785 canonicalization + SHA-256 / keccak256 helpers.",
   "license": "MIT",
   "type": "module",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@noble/hashes": "^2.2.0",
-    "canonicalize": "^3.0.0",
+    "canonicalize": "2.0.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {

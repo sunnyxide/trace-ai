@@ -4,6 +4,47 @@
 
 [![CI](https://img.shields.io/badge/ci-pending-lightgrey)](#) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE) [![Status: Prototype](https://img.shields.io/badge/status-prototype-orange)](#상태-프로토타입-범위) [![Network: Base Sepolia](https://img.shields.io/badge/network-Base%20Sepolia-0052FF)](https://sepolia.basescan.org/)
 
+## 🏁 Push to Prod — 이 레포 60초 평가 가이드
+
+**trace.ai는 AI 에이전트의 모든 의사결정을 변조불가한 온체인 영수증으로 만든다 — 계정도, 우리에 대한 신뢰도 필요 없이 누구나 검증 가능.** SDK 한 줄 연동, 프롬프트/응답은 평문이 아니라 해시로만 저장.
+
+- **라이브 제품:** https://trace-ai-inky.vercel.app
+- **빌드 도구:** Claude Code + Codex — 개발 100% 단독(기획은 팀 공동).
+
+### 직접 검증 — 키도, 설치도 불필요
+Base Sepolia에 라이브로 앵커된 실제 AI 결정. 클릭하면 바로 검증됨:
+
+| 결정 | 공개 verifier | 온체인 tx (Base Sepolia) |
+|---|---|---|
+| 사기탐지 Hold — Claude | [verify](https://trace-ai-inky.vercel.app/verify?id=be68c7fd-6af4-45be-a201-d0e52336c546) | [`0xf60a2a…`](https://sepolia.basescan.org/tx/0xf60a2a9a3033a4925eec13580eb63da9bfad52b12d0ea01de3b201b534af534a) |
+| 환불 승인 — Claude | [verify](https://trace-ai-inky.vercel.app/verify?id=4a0368d9-7b2e-4cec-9000-86161f99dd21) | [`0x608470…`](https://sepolia.basescan.org/tx/0x608470ee814c0b971162817a1170d54976b8611e9af3044176d1d69a3b7660bf) |
+| `traceClaude` 자동추적 | [verify](https://trace-ai-inky.vercel.app/verify?id=0cadac5f-803a-465d-8953-0947148fe19c) | 영수증 내 표기 |
+
+설치 없이 한 줄로:
+```bash
+curl "https://trace-ai-inky.vercel.app/api/v1/verify?decision_id=be68c7fd-6af4-45be-a201-d0e52336c546"
+# → {"verified":true,"checks":{...,"onChainRoot":"pass"}}
+```
+우리 서버와 무관하게 (Base Sepolia RPC 직접):
+```bash
+curl -s https://sepolia.base.org -H 'content-type: application/json' \
+ -d '{"jsonrpc":"2.0","id":1,"method":"eth_getTransactionReceipt","params":["0xf60a2a9a3033a4925eec13580eb63da9bfad52b12d0ea01de3b201b534af534a"]}'
+# → status 0x1, to = EAS 컨트랙트 0x4200000000000000000000000000000000000021
+```
+
+### SDK 써보기 (≥ 0.1.1)
+```bash
+npm i @vibingminers/sdk      # /signup 에서 즉시 키 발급
+```
+실행 예제: [`submission/example.mjs`](./submission/example.mjs). ESM `import`·CommonJS `require()` 모두 동작(≥ 0.1.1).
+
+> 이 레포 안에 함께: [`submission/verify_60s.sh`](./submission/verify_60s.sh) — 원커맨드 심사 검증(앱 + 독립 온체인 RPC) · [`submission/SUBMISSION.md`](./submission/SUBMISSION.md) — 전체 제출 설명.
+
+### 정직한 한계
+Base Sepolia testnet 프로토타입(아직 법적 효력 없음). 체인은 결정의 **무결성·타임스탬프**를 증명하지 **작성자 진위**는 아님 — 작성자 증명은 opt-in operator 서명 필요. **Anthropic·OpenAI**는 1차 자동추적 wrapper 제공, 그 외 provider/프레임워크는 수동 **DR-1 builder**. *네 에이전트 코드 안의* LLM SDK 호출을 계측하는 것이지 Cursor·Claude Code 같은 제3자 도구를 추적하는 게 아님.
+
+---
+
 > 영어 README는 [`README.md`](./README.md) 에 있습니다.
 
 ---
@@ -12,7 +53,7 @@
 
 복잡한 AI 의사결정에는 블랙박스가 필요합니다. 자율 에이전트가 대출을 승인하고, 보험 청구를 거절하고, 거래를 라우팅할 때, "저희 DB 안에 로그가 있습니다"는 제3자 증거가 아닙니다 — 같은 회사가 자기 행위를 자기 로그로 증명하는 셈입니다.
 
-Ledgerline은 그 간극을 메웁니다. OpenLLMetry 호환 SDK로 모든 AI 의사결정을 캡처하여, **DR-1** (PROV-O 기반) 표준 레코드로 구조화하고, **RFC 8785** canonical **SHA-256** 해시를 계산한 뒤, **keccak256 Merkle tree** 의 root를 **Base L2** 의 **Ethereum Attestation Service (EAS)** 에 앵커링합니다. 검증은 `base-sepolia.easscan.org` 에서 누구나, Ledgerline의 협조 없이 독립적으로 수행할 수 있습니다.
+Ledgerline은 그 간극을 메웁니다. TypeScript SDK의 Anthropic/OpenAI 1차 wrapper 또는 다른 provider/framework용 수동 DR-1 builder로 AI 의사결정을 캡처하여, **DR-1** (PROV-O 기반) 표준 레코드로 구조화하고, **RFC 8785** canonical **SHA-256** 해시를 계산한 뒤, **keccak256 Merkle tree** 의 root를 **Base L2** 의 **Ethereum Attestation Service (EAS)** 에 앵커링합니다. 검증은 `base-sepolia.easscan.org` 에서 누구나, Ledgerline의 협조 없이 독립적으로 수행할 수 있습니다.
 
 의사결정 payload는 오프체인에 남고, 온체인에는 해시만 올라갑니다. 설계상 프라이버시를 보존하면서, 수학적으로 변조 불가능합니다.
 
@@ -42,7 +83,7 @@ Ledgerline은 그 간극을 메웁니다. OpenLLMetry 호환 SDK로 모든 AI �
 
 이 record는 영구적이고, 공개되어 있으며, 어떤 지갑에서도 검증 가능합니다 — Ledgerline 인증 없이.
 
-**라이브 데모 URL:** _(준비 중 — 2026-05-03 Vercel 배포 예정)_
+**라이브 데모 URL:** <https://trace-ai-inky.vercel.app>
 
 ---
 
@@ -53,12 +94,12 @@ Ledgerline은 그 간극을 메웁니다. OpenLLMetry 호환 SDK로 모든 AI �
 │  AI Agent (customer side)                                    │
 │  OpenAI / Anthropic SDK 호출                                 │
 └──────────────────────┬───────────────────────────────────────┘
-                       │ OpenLLMetry auto-instrument
+                       │ SDK wrapper / manual DR-1 builder
                        ▼
 ┌──────────────────────────────────────────────────────────────┐
 │  L1 · CAPTURE      @vibingminers/sdk                           │
-│    - OpenTelemetry GenAI SemConv traces                      │
-│    - Decision rationale (custom span attrs)                  │
+│    - Anthropic/OpenAI 호출용 1차 wrapper                     │
+│    - 기타 provider용 수동 DecisionRecordBuilder             │
 │    - HTTPS export → Ledgerline ingest API                    │
 └──────────────────────┬───────────────────────────────────────┘
                        │ POST /v1/traces  (HTTPS, JWT)
@@ -118,7 +159,7 @@ PNG 다이어그램은 공개 직전 `docs/architecture.png` 으로 추가됩니
 |---|---|
 | 증거 인프라 — "Plaid for AI decisions" | 보험사가 아닙니다 (위험 인수 안 함) |
 | AI 의사결정 이벤트의 중립 노터리 | 자금 보관 주체가 아닙니다 (custody 없음) |
-| LLM provider · 프레임워크 · 체인 통합자 | 판단 주체가 아닙니다 (책임 귀속 결정 안 함) |
+| LLM decision record · Merkle proof · chain 통합자 | 판단 주체가 아닙니다 (책임 귀속 결정 안 함) |
 | DR-1 스키마 stewards — ISO/IEC 24970 기여 제안 | 금융 자문이나 컴플라이언스 제품 아님 |
 
 > **프로토타입 한계 공개 (security review, 2026-04-24):** 그리고 이 프로토타입에서 operator_signature는 Ledgerline이 보관하는 키로 서명됩니다 — 프로덕션에서는 고객이 직접 키를 보유해야 합니다.
@@ -162,7 +203,7 @@ console.log(`Verify: ${verifyUrl}`);
 
 > Python SDK는 로드맵에 있습니다. 프로토타입에서는 위의 TypeScript SDK를 사용하십시오.
 
-Anthropic 과 OpenAI 는 별도 작업 없이 자동 instrumentation 됩니다. Gemini · LangChain · LlamaIndex · CrewAI · Ollama 는 OpenLLMetry 의 기존 integration 으로 지원됩니다.
+Anthropic 과 OpenAI 는 TypeScript SDK의 1차 wrapper로 추적할 수 있습니다. Gemini · LangChain · LlamaIndex · CrewAI · Ollama 및 기타 stack은 현재 `DecisionRecordBuilder`로 수동 기록할 수 있으며, bundled OpenLLMetry exporter는 roadmap입니다.
 
 ---
 
@@ -235,7 +276,7 @@ ledgerline/
 - **Blockchain:** Base Sepolia (Coinbase L2) · EAS SDK `^2.9.0` · viem `^2.x`
 - **Crypto:** SHA-256 (canonical hash, RFC 8785 JCS) + keccak256 (Merkle + signing) — [`@noble/hashes`](https://github.com/paulmillr/noble-hashes)
 - **Merkle:** [`@openzeppelin/merkle-tree`](https://github.com/OpenZeppelin/merkle-tree)
-- **Capture:** [OpenLLMetry](https://github.com/traceloop/openllmetry) — Anthropic + OpenAI auto-instrument; Gemini · LangChain · LlamaIndex · CrewAI · Ollama 는 OpenLLMetry 기존 integration 으로 지원
+- **Capture:** TypeScript SDK의 Anthropic + OpenAI 1차 wrapper, 기타 provider/framework용 수동 DR-1 builder. OpenLLMetry exporter는 roadmap.
 
 ---
 

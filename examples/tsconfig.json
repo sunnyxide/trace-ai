@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "moduleResolution": "bundler",
+    "paths": {
+      "@vibingminers/sdk": ["../packages/sdk-ts/src/index.ts"]
+    }
+  },
+  "include": ["./**/*.ts"]
+}
