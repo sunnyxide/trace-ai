@@ -242,6 +242,84 @@ export default async function VerifyPage({
             basescanUrl={result.batch?.basescanUrl}
           />
         </>
+      ) : result ? (
+        <>
+          {/* ============ GENERIC RECEIPT (arbitrary ?id=, no seeded story) ============ */}
+          <section style={{ padding: '8px 0 32px' }}>
+            <div className="ll-shell">
+              <div
+                className="ll-card-soft"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'minmax(0, 1fr) auto',
+                  gap: 24,
+                  alignItems: 'center',
+                  borderRadius: 20,
+                }}
+              >
+                <div>
+                  <div className="ll-caption" style={{ marginBottom: 8 }}>
+                    Live record · {result.decisionId}
+                  </div>
+                  <h2 className="ll-h2" style={{ marginBottom: 6 }}>
+                    AI decision — verified live
+                  </h2>
+                  <p className="ll-small" style={{ color: 'var(--ll-mute)' }}>
+                    {result.batch?.anchoredAt
+                      ? `Anchored on Base Sepolia · ${new Date(
+                          result.batch.anchoredAt,
+                        ).toLocaleString('en-US', {
+                          dateStyle: 'medium',
+                          timeStyle: 'short',
+                        })}`
+                      : 'Pending anchor (batches anchor within ~60s)'}
+                    {result.batch?.txHash
+                      ? ` · tx ${result.batch.txHash.slice(0, 10)}…`
+                      : ''}
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                  <span className={result.verified ? 'll-pill ll-pill-ok' : 'll-pill ll-pill-fail'}>
+                    {result.verified ? '✓ all 6 checks pass' : '✕ verification failed'}
+                  </span>
+                  {result.batch?.explorerUrl ? (
+                    <a
+                      href={result.batch.explorerUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ll-btn ll-btn-ghost"
+                    >
+                      Open on easscan ↗
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ============ WHAT THIS PROVES ============ */}
+          <WhatThisProves
+            attesterAddress={result.attesterAddress}
+            operatorAddress={result.operatorAddress}
+            anchoredAt={result.batch?.anchoredAt}
+            txHash={result.batch?.txHash}
+          />
+
+          {/* ============ TECHNICAL EVIDENCE (collapsible) ============ */}
+          <EvidenceDetails
+            decisionId={result.decisionId}
+            canonicalHash={canonicalHash}
+            merkleRoot={result.batch?.merkleRoot}
+            easUid={result.batch?.easUid}
+            txHash={result.batch?.txHash}
+            schemaUid={SCHEMA_UID}
+            attesterAddress={result.attesterAddress}
+            operatorAddress={result.operatorAddress}
+            checks={result.checks}
+            explorerUrl={result.batch?.explorerUrl}
+            basescanUrl={result.batch?.basescanUrl}
+          />
+        </>
       ) : (
         <PlaceholderBlock serverError={serverError} hadInput={!!decisionId} />
       )}
