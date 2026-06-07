@@ -124,6 +124,15 @@ export default async function VerifyPage({
     }
   }
 
+  // A record whose integrity checks pass but which hasn't been merkle-batched /
+  // anchored yet is "pending", not "failed" — render an amber pill, not red.
+  const pendingAnchor =
+    !!result &&
+    !result.verified &&
+    !result.batch &&
+    result.checks?.schema === 'pass' &&
+    result.checks?.canonicalHash === 'pass';
+
   const story = exampleN ? EXAMPLE_STORIES[exampleN] : null;
   const example = exampleN ? EXAMPLES[exampleN - 1] : null;
 
@@ -272,15 +281,27 @@ export default async function VerifyPage({
                           dateStyle: 'medium',
                           timeStyle: 'short',
                         })}`
-                      : 'Pending anchor (batches anchor within ~60s)'}
+                      : 'Pending anchor — awaiting the next batch'}
                     {result.batch?.txHash
                       ? ` · tx ${result.batch.txHash.slice(0, 10)}…`
                       : ''}
                   </p>
                 </div>
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-                  <span className={result.verified ? 'll-pill ll-pill-ok' : 'll-pill ll-pill-fail'}>
-                    {result.verified ? '✓ all 6 checks pass' : '✕ verification failed'}
+                  <span
+                    className={
+                      result.verified
+                        ? 'll-pill ll-pill-ok'
+                        : pendingAnchor
+                          ? 'll-pill ll-pill-warn'
+                          : 'll-pill ll-pill-fail'
+                    }
+                  >
+                    {result.verified
+                      ? '✓ all 6 checks pass'
+                      : pendingAnchor
+                        ? '⧗ pending anchor — not yet on-chain'
+                        : '✕ verification failed'}
                   </span>
                   {result.batch?.explorerUrl ? (
                     <a
