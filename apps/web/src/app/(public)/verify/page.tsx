@@ -259,15 +259,16 @@ export default async function VerifyPage({
               <div
                 className="ll-card-soft"
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'minmax(0, 1fr) auto',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
                   gap: 24,
                   alignItems: 'center',
                   borderRadius: 20,
                 }}
               >
-                <div>
-                  <div className="ll-caption" style={{ marginBottom: 8 }}>
+                <div style={{ flex: '1 1 320px', minWidth: 0 }}>
+                  <div className="ll-caption" style={{ marginBottom: 8, overflowWrap: 'anywhere' }}>
                     Live record · {result.decisionId}
                   </div>
                   <h2 className="ll-h2" style={{ marginBottom: 6 }}>
@@ -287,7 +288,7 @@ export default async function VerifyPage({
                       : ''}
                   </p>
                 </div>
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center', flex: '0 0 auto' }}>
                   <span
                     className={
                       result.verified
